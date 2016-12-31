@@ -1,47 +1,58 @@
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
+ScreenShots
 
-# Folder config file
-Desktop.ini
+.metadata
+*.metadata
+*.metadata/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+.maybe
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+# Eclipse Core
+.project
 
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
+# External tool builders
+.externalToolBuilders/
 
-# Windows shortcuts
-*.lnk
+# Locally stored "Eclipse launch configurations"
+*.launch
 
-# =========================
-# Operating System Files
-# =========================
+# PyDev specific (Python IDE for Eclipse)
+*.pydevproject
 
-# OSX
-# =========================
+# CDT-specific (C/C++ Development Tooling)
+.cproject
 
-.DS_Store
-.AppleDouble
-.LSOverride
+# JDT-specific (Eclipse Java Development Tools)
+.classpath
 
-# Thumbnails
-._*
+# Java annotation processor (APT)
+.factorypath
 
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
+# PDT-specific (PHP Development Tools)
+.buildpath
 
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
+# sbteclipse plugin
+.target
+
+# Tern plugin
+.tern-project
+
+# TeXlipse plugin
+.texlipse
+
+# STS (Spring Tool Suite)
+.springBeans
+
+# Code Recommenders
+.recommenders/
+*.snap
+*.gen
+*.snap
+*.snap
