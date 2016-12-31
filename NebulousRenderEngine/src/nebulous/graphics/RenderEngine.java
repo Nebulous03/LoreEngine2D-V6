@@ -19,8 +19,7 @@ public class RenderEngine {
 	
 	public void render(GameObject object) {
 		
-		if(object.getShader() != null) shader = object.getShader();
-		else shader = DEFALUT_SHADER;
+		shader = DEFALUT_SHADER;
 		
 		object.render(window, camera, shader);
 		

@@ -10,9 +10,7 @@ import nebulous.graphics.shaders.Shader;
 
 public class GameObject {
 	
-	protected Mesh    mesh 		   = null;
-	protected Texture texure 	   = null;
-	protected Shader  shader	   = null;
+	protected Mesh mesh = null;
 	
 	protected Vector3f position  = null;
 	protected Vector3f rotation  = null;
@@ -22,7 +20,6 @@ public class GameObject {
 	
 	public GameObject(Mesh mesh) {
 		this.mesh = mesh;
-		this.texure = mesh.texture;
 		this.position = new Vector3f(0);
 		this.rotation = new Vector3f(0);
 		this.scale = new Vector3f(1);
@@ -30,8 +27,6 @@ public class GameObject {
 	
 	public GameObject(Mesh mesh, Shader shader) {
 		this.mesh = mesh;
-		this.texure = mesh.texture;
-		this.shader = shader;
 		this.position = new Vector3f(0);
 		this.rotation = new Vector3f(0);
 		this.scale = new Vector3f(1);
@@ -83,11 +78,11 @@ public class GameObject {
 	}
 	
 	public Shader getShader() {
-		return shader;
+		return mesh.getShader();
 	}
 
 	public void setShader(Shader shader) {
-		this.shader = shader;
+		mesh.setShader(shader);
 	}
 
 	public Mesh getMesh() {
@@ -95,7 +90,7 @@ public class GameObject {
 	}
 
 	public Texture getTexure() {
-		return texure;
+		return mesh.getTexture();
 	}
 
 	public Vector3f getPosition() {

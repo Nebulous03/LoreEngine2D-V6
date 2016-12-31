@@ -13,7 +13,11 @@ public class TileMap extends GameObject{
 	private int	   height = 0;
 	private int	   width  = 0;
 	
-	public TileMap(Tile tile, int height, int width) {
+	public TileMap(int height, int width) {
+		this(null, height, width);
+	}
+	
+	public TileMap(Texture texture, int height, int width) {
 		
 		this.height = height;
 		this.width = width;
@@ -24,8 +28,8 @@ public class TileMap extends GameObject{
 		
 		for(int y = 0; y < height; y++){
 			for(int x = 0; x < width; x++){
-				tiles[x + y * width] = new Tile(tile.getTexure());
-				tiles[x + y * width].setPosition(y, x, 0);
+				tiles[x + y * width] = new Tile(texture);
+				tiles[x + y * width].setPosition(x, y, 0);
 			}
 		}
 		
@@ -33,7 +37,7 @@ public class TileMap extends GameObject{
 	
 	@Override
 	public void render(GameWindow window, Camera camera, Shader shader) {
-		for(int j = 0; j < Texture.maxTextureID; j++) {
+		for(int id = 1; id <= Texture.maxTextureID; id++) {
 			
 			shader.bind();
 			
@@ -44,7 +48,8 @@ public class TileMap extends GameObject{
 			
 			for(int y = 0; y < height; y++){
 				for(int x = 0; x < width; x++){
-					if(tiles[x + y * width].getTexure().textureID == j)
+					if(tiles[x + y * width].getTexure() == null) continue;
+					if(tiles[x + y * width].getTexure().textureID == id)
 						tiles[x + y * width].render(window, camera, shader);
 				}
 			}
@@ -55,8 +60,8 @@ public class TileMap extends GameObject{
 		
 	}
 	
-	public void setTile(int x, int y, Tile tile) {
-		tiles[x + y * width].getMesh().texture = tile.texure;
+	public void setTile(int x, int y, Texture texture) {
+		tiles[x + y * width].setTexture(texture);
 	}
 	
 	public Tile getTile(int x, int y) {

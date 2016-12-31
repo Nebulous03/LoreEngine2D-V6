@@ -11,20 +11,25 @@ import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
 
+import nebulous.graphics.shaders.DefaultShader;
+import nebulous.graphics.shaders.Shader;
+
 public class Mesh {
 	
-	public int vCount   = 0;
-	public int vao		= 0;
-	public int vbo		= 0;
-	public int ibo		= 0;
-	public int tbo		= 0;
+	private int vCount   = 0;
+	private int vao		= 0;
+	private int vbo		= 0;
+	private int ibo		= 0;
+	private int tbo		= 0;
 	
-	public Texture texture;
+	private Texture texture = null;
+	private Shader shader   = null;
 	
-	public Mesh(float[] vertices, int[] indices, float[] texCoords, Texture texture) {
+	public Mesh(float[] vertices, int[] indices, float[] texCoords, Texture texture, Shader shader) {
 		
-		if(texture == null) texture = Texture.UNKNOWN;
-		this.texture = texture;
+		if(texture != null) this.texture = texture;
+		if(shader != null) this.shader = shader;
+		else this.shader = new DefaultShader();
 		
 		vCount = indices.length;
 		vao = glGenVertexArrays();
@@ -93,6 +98,10 @@ public class Mesh {
 	}
 	
 	public static final Mesh PLANE(Texture texture){
+		return PLANE(texture, null);
+	}
+	
+	public static final Mesh PLANE(Texture texture, Shader shader){
 		
 		float[] vertices = new float[]{
 //		        -1.0f,  1.0f, 0.0f,
@@ -117,7 +126,23 @@ public class Mesh {
 				1,0
 		};
 
-		return new Mesh(vertices, indices, textureCoords, texture);
+		return new Mesh(vertices, indices, textureCoords, texture, shader);
+	}
+
+	public Texture getTexture() {
+		return texture;
+	}
+
+	public void setTexture(Texture texture) {
+		this.texture = texture;
+	}
+
+	public Shader getShader() {
+		return shader;
+	}
+
+	public void setShader(Shader shader) {
+		this.shader = shader;
 	}
 
 }

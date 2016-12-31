@@ -23,4 +23,8 @@ public class Tile extends GameObject{	// Make even more lightweight
 		mesh.renderMesh();
 	}
 	
+	public void setTexture(Texture texture) {
+		mesh.setTexture(texture);
+	}
+	
 }

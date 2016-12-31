@@ -4,22 +4,25 @@ import org.joml.Vector3f;
 
 import nebulous.game.Game;
 import nebulous.game.GameObject;
-import nebulous.game.Tile;
 import nebulous.game.TileMap;
 import nebulous.graphics.Camera;
 import nebulous.graphics.GameWindow;
+import nebulous.graphics.Mesh;
 import nebulous.graphics.RenderEngine;
+import nebulous.graphics.Texture;
 import nebulous.logic.Input;
 
 public class TestGame extends Game{
 
 	public GameObject player = null;
 	public TileMap map = null;
+	public TileMap map2 = null;
 	
 	@Override
 	public void preInit() {
 		window.setDisplayMode(GameWindow.DISPLAY_MODE_WINDOWED);
 		window.enableVSync(true);
+//		window.setSize(1920, 1080);
 		window.setSize(640, 480);
 	}
 	
@@ -29,13 +32,24 @@ public class TestGame extends Game{
 		camera.setPerspective(Camera.PERSPECTIVE);
 		camera.setPosition(new Vector3f(0,0,10f));
 		
-		map = new TileMap(Tile.UNKNOWN_BLUE, 32, 16);
-		map.setTile(3, 3, Tile.UNKNOWN_ORANGE);
+		Texture STONE = new Texture("/textures/stone.png");
+		Texture GRASS = new Texture("/textures/grass_side.png");
+		Texture TORCH = new Texture("/textures/torch_on.png");
 		
-		player = Tile.UNKNOWN_ORANGE;
+		map = new TileMap(STONE, 16, 32);
+		map2 = new TileMap(16, 32);
+		
+		for(int i = 0; i < map.getWidth(); i++) {
+			map.setTile(i, 0, GRASS);
+		}
+		
+		map.setTile(4, 3, GRASS);
+		map2.setTile(4, 4, TORCH);
+		
+		player = new GameObject(Mesh.PLANE(Texture.UNKNOWN2));
 	}
 
-	float scrollVelocity = 10;
+	float scrollVelocity = 0;
 	
 	@Override
 	public void update(double delta) {
@@ -44,6 +58,8 @@ public class TestGame extends Game{
 		if(Input.isKeyHeld(Input.KEY_H)) camera.setPosition(camera.getPosition().add(new Vector3f(0,0,-0.1f)));
 		if(Input.isKeyHeld(Input.KEY_E)) camera.setRotation(camera.getRotation().add(new Vector3f(0,0.1f,0)));
 		if(Input.isKeyHeld(Input.KEY_R)) camera.setRotation(camera.getRotation().add(new Vector3f(0,-0.1f,0)));
+		
+		if(Input.isKeyHeld(Input.KEY_P)) camera.setRotation(0,0,0);
 		
 		if(Input.isKeyHeld(Input.KEY_A)) camera.setPosition(camera.getPosition().add(new Vector3f(-0.1f,0,0)));
 		if(Input.isKeyHeld(Input.KEY_D)) camera.setPosition(camera.getPosition().add(new Vector3f(0.1f,0,0)));
@@ -73,8 +89,9 @@ public class TestGame extends Game{
 	public void render(RenderEngine renderer) {
 		player.setPosition(camera.getPosition().x, camera.getPosition().y, 0);
 		
-//		renderer.render(player);
 		renderer.render(map);
+		renderer.render(map2);
+		renderer.render(player);
 	}
 
 	public static void main(String[] args) {
