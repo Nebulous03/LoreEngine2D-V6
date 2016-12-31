@@ -1,5 +1,7 @@
 ScreenShots
-
+bin
+NebulousRenderEngine/bin
+TestGame/bin
 .metadata
 *.metadata
 *.metadata/
