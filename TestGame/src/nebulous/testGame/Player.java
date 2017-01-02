@@ -38,22 +38,22 @@ public class Player extends Entity2D{
 		
 		// W(UP)
 		if(Input.isKeyHeld(Input.KEY_W)){
-			deltaY = 0.1f;
+			deltaY += 0.1f;
 		}
 		
 		// A(LEFT)
 		if(Input.isKeyHeld(Input.KEY_A)){
-			deltaX = -0.1f;
+			deltaX += -0.1f;
 		}
 		
 		// S(DOWN)
 		if(Input.isKeyHeld(Input.KEY_S)){
-			deltaY = -0.1f;
+			deltaY += -0.1f;
 		}
 		
 		// D(RIGHT)
 		if(Input.isKeyHeld(Input.KEY_D)){
-			deltaX = 0.1f;
+			deltaX += 0.1f;
 		}
 		
 		attemptMove(game.getActiveLevel(), deltaX, deltaY);
