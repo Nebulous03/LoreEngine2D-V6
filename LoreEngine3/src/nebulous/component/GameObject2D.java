@@ -1,68 +1,91 @@
-package nebulous.game;
+package nebulous.component;
 
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import nebulous.graphics.Camera;
 import nebulous.graphics.GameWindow;
-import nebulous.graphics.Mesh;
-import nebulous.graphics.Texture;
+import nebulous.graphics.primatives.Mesh;
+import nebulous.graphics.primatives.Texture;
 import nebulous.graphics.shaders.Shader;
+import nebulous.physics.BoundingBox2D;
 
-public class GameObject {
+public class GameObject2D {
 	
 	protected Mesh mesh = null;
 	
-	protected Vector3f position  = null;
+	public BoundingBox2D boundingBox = null;
+	
+	protected Vector2f position  = null;
 	protected Vector3f rotation  = null;
 	protected Vector3f scale	 = null;
 	
-	protected GameObject() {}
+	protected float width = 0;
+	protected float height = 0;
 	
-	public GameObject(Mesh mesh) {
-		this.mesh = mesh;
-		this.position = new Vector3f(0);
-		this.rotation = new Vector3f(0);
-		this.scale = new Vector3f(1);
+	protected GameObject2D() {}
+	
+	public GameObject2D(Mesh mesh) {
+		this(mesh, 0, 0, null, null);
 	}
 	
-	public GameObject(Mesh mesh, Shader shader) {
+	public GameObject2D(Mesh mesh, float x, float y) {
+		this(mesh, x, y, null, null);
+	}
+	
+	public GameObject2D(Mesh mesh, BoundingBox2D box) {
+		this(mesh, 0, 0, box, null);
+	}
+	
+	public GameObject2D(Mesh mesh, Shader shader) {
+		this(mesh, 0, 0, null, shader);
+	}
+	
+	public GameObject2D(Mesh mesh, float x, float y, BoundingBox2D box) {
+		this(mesh, x, y, box, null);
+	}
+	
+	public GameObject2D(Mesh mesh, float x, float y, Shader shader) {
+		this(mesh, x, y, null, shader);
+	}
+	
+	public GameObject2D(Mesh mesh, float x, float y, BoundingBox2D box, Shader shader) {	// TODO: Add shader
 		this.mesh = mesh;
-		this.position = new Vector3f(0);
+		this.position = new Vector2f(x, y);
 		this.rotation = new Vector3f(0);
+		this.boundingBox = box;
 		this.scale = new Vector3f(1);
 	}
 	
 	public void render(GameWindow window, Camera camera, Shader shader){
 		
-		// BIND SHADER
 		shader.bind();
 		
-		// CALCULATE PROJECTION
 		shader.setUniform("projectionMatrix", camera.calculateProjectionMatrix(window));
 		shader.setUniform("viewMatrix", camera.calculateViewMatrix(window));
 		
-		// UPDATE UNIFORMS
 		shader.updateUniforms();
 		
-		// RENDER OBJECT
 		shader.setUniform("modelMatrix", camera.getModelViewMatrix(this));
 		mesh.renderMesh();
 		
-		// UNBIND SHADER
 	    shader.unbind();
 		
 	}
 	
-	public void setPosition(float x, float y, float z) {
+	public void setPosition(float x, float y) {
 		position.x = x;
 		position.y = y;
-		position.z = z;
+		
+		if(boundingBox != null){
+			boundingBox.origin.x = x;
+			boundingBox.origin.y = y;
+		}
 	}
 	
-	public void move(float offsetX, float offsetY, float offsetZ) {
+	public void move(float offsetX, float offsetY) {
 		position.x += offsetX;
 		position.y += offsetY;
-		position.z += offsetZ;
 	}
 	
 	public void setRotation(float rollX, float rollY, float rollZ) {
@@ -93,11 +116,11 @@ public class GameObject {
 		return mesh.getTexture();
 	}
 
-	public Vector3f getPosition() {
+	public Vector2f getPosition() {
 		return position;
 	}
 
-	public void setPosition(Vector3f position) {
+	public void setPosition(Vector2f position) {
 		this.position = position;
 	}
 

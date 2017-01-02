@@ -1,6 +1,6 @@
 package nebulous.graphics;
 
-import nebulous.game.GameObject;
+import nebulous.component.GameObject2D;
 import nebulous.graphics.shaders.DefaultShader;
 import nebulous.graphics.shaders.Shader;
 
@@ -8,16 +8,14 @@ public class RenderEngine {
 	
 	private static Shader DEFALUT_SHADER = null;
 	private GameWindow    window 		 = null;
-	private Camera		  camera		 = null;
 	private Shader		  shader 		 = null;
 	
-	public void init(GameWindow window, Camera camera) {
+	public void init(GameWindow window) {
 		this.window = window;
-		this.camera = camera;
 		DEFALUT_SHADER = new DefaultShader();
 	}
 	
-	public void render(GameObject object) {
+	public void render(Camera camera, GameObject2D object) {
 		
 		shader = DEFALUT_SHADER;
 		

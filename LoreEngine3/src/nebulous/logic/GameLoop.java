@@ -2,8 +2,7 @@ package nebulous.logic;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-import nebulous.game.Game;
-import nebulous.graphics.Camera;
+import nebulous.Game;
 import nebulous.graphics.GameWindow;
 import nebulous.graphics.RenderEngine;
 import nebulous.utils.Console;
@@ -13,7 +12,7 @@ public class GameLoop {
 	
 	private double UPS = 60.0D;
 	
-	public void start(Game game, GameWindow window, RenderEngine renderer, Camera camera) {
+	public void start(Game game, GameWindow window, RenderEngine renderer) {
 		int frames = 0;
         double frameCounter = 0;
 		
@@ -23,7 +22,7 @@ public class GameLoop {
 		game.preInit();
 		
 		window.createWindow();
-		renderer.init(window, camera);
+		renderer.init(window);
 		window.init();
 		
 		Input.init(window);
@@ -41,7 +40,7 @@ public class GameLoop {
 			while(unprocessedTime > (1.0 / UPS)){
 				unprocessedTime -= (1.0 / UPS);
 				
-				game.update(pastTime);
+				game.updateGame(game, pastTime);
 				Input.update();
 				window.update();
 				
@@ -53,7 +52,7 @@ public class GameLoop {
 				}
 			}
 			
-			game.render(renderer);
+			game.renderGame(renderer);
 			window.render();
 			
 			frames++;

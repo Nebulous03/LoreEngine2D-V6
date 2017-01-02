@@ -3,7 +3,7 @@ package nebulous.graphics;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
-import nebulous.game.GameObject;
+import nebulous.component.GameObject2D;
 
 public class Camera {
 	
@@ -56,10 +56,10 @@ public class Camera {
 	
 	Vector3f vecRotation;
 	
-	public Matrix4f getModelViewMatrix(GameObject object) {
+	public Matrix4f getModelViewMatrix(GameObject2D object) {	// Add support for 3D
 		
 		vecRotation = object.getRotation();
-		modelMatrix.identity().translate(object.getPosition()).
+		modelMatrix.identity().translate(object.getPosition().x, object.getPosition().y, 0).
 	        rotateX((float)Math.toRadians(-vecRotation.x)).
 	        rotateY((float)Math.toRadians(-vecRotation.y)).
 	        rotateZ((float)Math.toRadians(-vecRotation.z)).

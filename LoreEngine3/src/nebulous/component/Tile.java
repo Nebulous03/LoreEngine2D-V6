@@ -1,12 +1,12 @@
-package nebulous.game;
+package nebulous.component;
 
 import nebulous.graphics.Camera;
 import nebulous.graphics.GameWindow;
-import nebulous.graphics.Mesh;
-import nebulous.graphics.Texture;
+import nebulous.graphics.primatives.Mesh;
+import nebulous.graphics.primatives.Texture;
 import nebulous.graphics.shaders.Shader;
 
-public class Tile extends GameObject{	// Make even more lightweight
+public class Tile extends GameObject2D{	// Make even more lightweight
 	
 	public static final Tile UNKNOWN_BLUE   = new Tile(Texture.UNKNOWN);
 	public static final Tile UNKNOWN_ORANGE = new Tile(Texture.UNKNOWN2);

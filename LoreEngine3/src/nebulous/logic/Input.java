@@ -9,6 +9,7 @@ import org.lwjgl.glfw.GLFWScrollCallback;
 
 import nebulous.graphics.GameWindow;
 
+@SuppressWarnings("unused")
 public class Input{
 	
 	public static final int KEY_UNKNOWN = -1;
@@ -207,7 +208,7 @@ public class Input{
 
 		};
 		
-		for(@SuppressWarnings("unused") boolean k : keys) k = false;
+		for(boolean k : keys) k = false;
 		
 		glfwSetKeyCallback(windowID, keyCallback);
 		glfwSetScrollCallback(windowID, scrollCallback);
@@ -217,8 +218,8 @@ public class Input{
 	}
 	
 	public static void update(){
-		for(@SuppressWarnings("unused") boolean k : keys) k = false;
-		for(@SuppressWarnings("unused") int k : keyStates) k = -1;
+		for(boolean k : keys) k = false;
+		for(int k : keyStates) k = -1;
 		mouseScroll = 0;
 	}
 	

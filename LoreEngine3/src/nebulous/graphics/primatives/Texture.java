@@ -1,4 +1,4 @@
-package nebulous.graphics;
+package nebulous.graphics.primatives;
 
 import static  org.lwjgl.opengl.GL11.*;
 import java.awt.image.BufferedImage;
