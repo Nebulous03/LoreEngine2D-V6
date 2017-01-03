@@ -115,42 +115,20 @@ public class TileMap extends GameObject2D{
 		
 	}
 	
-//	public ArrayList<Collision2D> collisions = new ArrayList<Collision2D>();
-//	
-//	public ArrayList<Collision2D> checkForCollisions(GameObject2D collider, int searchX, int searchY) {
-//		
-//		for(int i = 0; i < collisions.size(); i++) {
-//			collisions.remove(i);
-//		}
-//		
-//		if(collisionLayer) {
-//			
-//			int posX = (int)(collider.getPosition().x);
-//			int posY = (int)(collider.getPosition().y);
-//			
-//			for(int y = posY; y < posY + searchY; y++) {
-//				for(int x = posX; x < posX + searchX; x++) {
-//					if(tiles[x + y * width].getTexure() != null){
-//						if(tiles[x + y * width].boundingBox != null){
-//							collisions.add(Collision2D.getCollision(collider.boundingBox, tiles[x + y * width].boundingBox));
-//						}
-//					}
-//				}
-//			}
-//			
-//			return collisions;
-//			
-//		}
-//		
-//		return null;
-//	}
-	
 	public void setTile(int x, int y, Texture texture) {
 		tiles[x + y * width].setTexture(texture);
-		if(texture != null) tiles[x + y * width].boundingBox = new BoundingBox2D(1, 1, new Vector2f(x,y));
+		if(texture == null) {
+			tiles[x + y * width].boundingBox = null;
+		} else {
+			tiles[x + y * width].boundingBox = new BoundingBox2D(1, 1, new Vector2f(x,y));
+		}
 	}
 	
 	public Tile getTile(int x, int y) {
+		if((x + y * width) < 0) return null;
+		if((x + y * width) > tiles.length - 1) return null;
+		if(x > width)return null;
+		if(y > height) return null;
 		return tiles[x + y * width];
 	}
 

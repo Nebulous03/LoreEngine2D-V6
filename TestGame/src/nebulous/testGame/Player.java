@@ -24,6 +24,7 @@ public class Player extends Entity2D{
 		System.out.println("Player initialized");
 	}
 
+	float speed = 0.1f;
 	
 	@Override
 	public void update(Game game, double delta) {
@@ -38,22 +39,22 @@ public class Player extends Entity2D{
 		
 		// W(UP)
 		if(Input.isKeyHeld(Input.KEY_W)){
-			deltaY += 0.1f;
+			deltaY += speed;
 		}
 		
 		// A(LEFT)
 		if(Input.isKeyHeld(Input.KEY_A)){
-			deltaX += -0.1f;
+			deltaX += -speed;
 		}
 		
 		// S(DOWN)
 		if(Input.isKeyHeld(Input.KEY_S)){
-			deltaY += -0.1f;
+			deltaY += -speed;
 		}
 		
 		// D(RIGHT)
 		if(Input.isKeyHeld(Input.KEY_D)){
-			deltaX += 0.1f;
+			deltaX += speed;
 		}
 		
 		attemptMove(game.getActiveLevel(), deltaX, deltaY);
@@ -90,32 +91,47 @@ public class Player extends Entity2D{
 				if(boundingBox.origin.x > map.getWidth() - 1) boundingBox.origin.x = map.getWidth() - 1;
 				if(boundingBox.origin.y > map.getHeight() - 1) boundingBox.origin.y = map.getHeight() - 1 ;
 				
+				int posX = (int)(position.x + 0.5f);
+				int posY = (int)(position.y + 0.5f);
+				
 				// CENTER
-				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile((int)(position.x + 0.5f), (int)(position.y + 0.5f)).boundingBox));
+				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile(posX, posY).boundingBox));
 				
 				// NORTH
-				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile((int)(position.x + 0.5f), (int)(position.y + 0.5f) + 1).boundingBox));
+				if(posY < map.getHeight() -1)
+				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile(posX, posY + 1).boundingBox));
 				
 				// SOUTH
-				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile((int)(position.x + 0.5f), (int)(position.y + 0.5f) - 1).boundingBox));
+				if(posY > 0)
+				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile(posX, posY - 1).boundingBox));
 				
 				// EAST
-				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile((int)(position.x + 0.5f) + 1, (int)(position.y + 0.5f)).boundingBox));
+				if(posX < map.getWidth() - 1)
+				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile(posX + 1, posY).boundingBox));
 				
 				// WEST
-				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile((int)(position.x + 0.5f) - 1, (int)(position.y + 0.5f)).boundingBox));
+				if(posX > 0)
+				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile(posX - 1, posY).boundingBox));
 			
 				// NORTH EAST
-				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile((int)(position.x + 0.5f) + 1, (int)(position.y + 0.5f) + 1).boundingBox));
+				if(posX < map.getWidth() - 1)
+				if(posY < map.getHeight() -1)
+				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile(posX + 1, posY + 1).boundingBox));
 			
 				// NORTH WEST
-				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile((int)(position.x + 0.5f) - 1, (int)(position.y + 0.5f) + 1).boundingBox));
+				if(posX > 0)
+				if(posY < map.getHeight() -1)
+				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile(posX - 1, posY + 1).boundingBox));
 			
 				// SOUTH EAST
-				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile((int)(position.x + 0.5f) + 1, (int)(position.y + 0.5f) - 1).boundingBox));
+				if(posX < map.getWidth() - 1)
+				if(posY - 1 > 0)
+				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile(posX + 1, posY - 1).boundingBox));
 			
 				// SOUTH WEST
-				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile((int)(position.x + 0.5f) - 1, (int)(position.y + 0.5f) - 1).boundingBox));
+				if(posX > 0)
+				if(posY - 1 > 0)
+				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile(posX - 1, posY - 1).boundingBox));
 			
 			}
 			

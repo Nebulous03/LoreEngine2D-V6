@@ -189,4 +189,8 @@ public class GameWindow {
         " " + System.getProperty("user.dir")
         );
     }
+
+	public boolean resized() {
+		return WINDOW_RESIZED;
+	}
 }

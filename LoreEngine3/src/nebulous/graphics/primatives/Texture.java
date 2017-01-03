@@ -13,8 +13,11 @@ import nebulous.utils.Console;
 
 public class Texture {
 
-	public static Texture UNKNOWN = new Texture("/textures/unknown.png");
+	public static Texture UNKNOWN  = new Texture("/textures/unknown.png");
 	public static Texture UNKNOWN2 = new Texture("/textures/unknown2.png");
+	
+	private int width  = 0;
+	private int height = 0;
 
 	public int textureID;
 	public static int maxTextureID;
@@ -24,7 +27,7 @@ public class Texture {
 		maxTextureID++;
 	}
 	
-	private static int loadTexture(String filename){
+	private int loadTexture(String filename){
 		boolean successful = true;
 		BufferedImage image;
 		try {
@@ -37,8 +40,8 @@ public class Texture {
 				successful = false;
 			}
 
-			int width = image.getWidth();
-			int height = image.getHeight();
+			width = image.getWidth();
+			height = image.getHeight();
 
 			int[] pixels = new int[width * height * 4];
 			pixels = image.getRGB(0, 0, width, height, null, 0, width);
@@ -84,6 +87,14 @@ public class Texture {
 	
 	public int getTextureID() {
 		return textureID;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
 	}
 	
 }

@@ -16,24 +16,22 @@ public class Camera {
     
     private float aspectRatio = 0;
 	
-	private Matrix4f projectionMatrix = null;
-	private Matrix4f modelMatrix      = null;
-	private Matrix4f viewMatrix 	  = null;
+    private Matrix4f transformationMatrix = null;
+	private Matrix4f projectionMatrix     = null;
+	private Matrix4f modelMatrix          = null;
+	private Matrix4f viewMatrix 	      = null;
 
-	private int perspective = 0;
+	private int perspective = 1;
 	
 	private Vector3f position = null;
 	private Vector3f rotation = null;
 	
 	public Camera() {
-		projectionMatrix = new Matrix4f();
-		modelMatrix = new Matrix4f();
-		viewMatrix = new Matrix4f();
-		position = new Vector3f(0, 0, 0);
-		rotation = new Vector3f(0, 0, 0);
+		this(new Vector3f(0), new Vector3f(0));
 	}
 	
 	public Camera(Vector3f pos, Vector3f rot) {
+		transformationMatrix = new Matrix4f();
 		projectionMatrix = new Matrix4f();
 		modelMatrix = new Matrix4f();
 		viewMatrix = new Matrix4f();
@@ -65,6 +63,14 @@ public class Camera {
 	        rotateZ((float)Math.toRadians(-vecRotation.z)).
 	        scale(object.getScale());
 		return modelMatrix;
+		
+	}
+	
+	public Matrix4f calculateTransformationMatrix(GameObject2D object){
+		
+		return transformationMatrix.identity()
+			.translate(object.getPosition().x, object.getPosition().y, 0)
+			.scale(object.getScale());
 		
 	}
 	
@@ -121,8 +127,9 @@ public class Camera {
 		this.rotation = rotation;
 	}
 	
-	public void setPerspective(int perspective) {
+	public Camera setPerspective(int perspective) {
 		this.perspective = perspective;
+		return this;
 	}
 	
 }

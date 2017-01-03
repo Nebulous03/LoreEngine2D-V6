@@ -20,8 +20,7 @@ public class GameObject2D {
 	protected Vector3f rotation  = null;
 	protected Vector3f scale	 = null;
 	
-	protected float width = 0;
-	protected float height = 0;
+	protected Shader shader = null;
 	
 	protected GameObject2D() {}
 	
@@ -54,6 +53,7 @@ public class GameObject2D {
 		this.position = new Vector2f(x, y);
 		this.rotation = new Vector3f(0);
 		this.boundingBox = box;
+		this.shader = shader;
 		this.scale = new Vector3f(1);
 	}
 	
@@ -61,12 +61,12 @@ public class GameObject2D {
 		
 		shader.bind();
 		
+		shader.updateUniforms();
+
 		shader.setUniform("projectionMatrix", camera.calculateProjectionMatrix(window));
 		shader.setUniform("viewMatrix", camera.calculateViewMatrix(window));
-		
-		shader.updateUniforms();
-		
 		shader.setUniform("modelMatrix", camera.getModelViewMatrix(this));
+		
 		mesh.renderMesh();
 		
 	    shader.unbind();
@@ -101,11 +101,11 @@ public class GameObject2D {
 	}
 	
 	public Shader getShader() {
-		return mesh.getShader();
+		return shader;
 	}
 
 	public void setShader(Shader shader) {
-		mesh.setShader(shader);
+		this.shader = shader;
 	}
 
 	public Mesh getMesh() {

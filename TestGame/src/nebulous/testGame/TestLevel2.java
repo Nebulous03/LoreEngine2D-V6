@@ -7,7 +7,7 @@ import nebulous.graphics.RenderEngine;
 public class TestLevel2 extends Level2D{
 
 	@Override
-	public void init() {
+	public void init(Game game) {
 		System.out.println("Loaded level 2");
 	}
 

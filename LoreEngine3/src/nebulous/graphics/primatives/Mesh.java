@@ -11,9 +11,6 @@ import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
 
-import nebulous.graphics.shaders.DefaultShader;
-import nebulous.graphics.shaders.Shader;
-
 public class Mesh {
 	
 	private int vCount   = 0;
@@ -23,13 +20,10 @@ public class Mesh {
 	private int tbo		= 0;
 	
 	private Texture texture = null;
-	private Shader shader   = null;
 	
-	public Mesh(float[] vertices, int[] indices, float[] texCoords, Texture texture, Shader shader) {
+	public Mesh(float[] vertices, int[] indices, float[] texCoords, Texture texture) {
 		
 		if(texture != null) this.texture = texture;
-		if(shader != null) this.shader = shader;
-		else this.shader = new DefaultShader();
 		
 		vCount = indices.length;
 		vao = glGenVertexArrays();
@@ -98,17 +92,8 @@ public class Mesh {
 	}
 	
 	public static final Mesh PLANE(Texture texture){
-		return PLANE(texture, null);
-	}
-	
-	public static final Mesh PLANE(Texture texture, Shader shader){
 		
 		float[] vertices = new float[]{
-//		        -1.0f,  1.0f, 0.0f,
-//		        -1.0f, -1.0f, 0.0f,
-//		         1.0f, -1.0f, 0.0f,
-//		         1.0f,  1.0f, 0.0f,
-				
 				 -0.5f,  0.5f, 0.0f,
 			     -0.5f, -0.5f, 0.0f,
 			      0.5f, -0.5f, 0.0f,
@@ -126,7 +111,30 @@ public class Mesh {
 				1,0
 		};
 
-		return new Mesh(vertices, indices, textureCoords, texture, shader);
+		return new Mesh(vertices, indices, textureCoords, texture);
+	}
+	
+	public static final Mesh PLANE_GUI(Texture texture){
+		
+		float[] vertices = new float[]{
+		        -1.0f,  1.0f, 0.0f,
+		        -1.0f, -1.0f, 0.0f,
+		         1.0f, -1.0f, 0.0f,
+		         1.0f,  1.0f, 0.0f,
+		    };
+		
+		int[] indices = new int[]{
+		        0, 1, 3, 3, 1, 2,
+		    };
+
+		float[] textureCoords = new float[]{
+				0,0,
+				0,1,
+				1,1,
+				1,0
+		};
+
+		return new Mesh(vertices, indices, textureCoords, texture);
 	}
 
 	public Texture getTexture() {
@@ -135,14 +143,6 @@ public class Mesh {
 
 	public void setTexture(Texture texture) {
 		this.texture = texture;
-	}
-
-	public Shader getShader() {
-		return shader;
-	}
-
-	public void setShader(Shader shader) {
-		this.shader = shader;
 	}
 
 }

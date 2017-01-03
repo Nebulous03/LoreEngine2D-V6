@@ -55,8 +55,8 @@ public abstract class Game{
 	
 	public void loadLevel(String tag) {
 		activeLevel = getLevel(tag);
-		activeLevel.init();
-		activeLevel.initLevel();
+		activeLevel.init(this);
+		activeLevel.initLevel(this);
 	}
 
 	public Level2D getActiveLevel() {
