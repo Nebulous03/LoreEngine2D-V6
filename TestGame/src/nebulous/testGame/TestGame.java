@@ -24,14 +24,22 @@ public class TestGame extends Game{
 		loadLevel("testLevel");
 	}
 	
+	int cooldown = 0;
+	
 	@Override
 	public void update(Game game, double delta) {
 		
+		if(cooldown > 0) cooldown--;
+		
 		if(Input.isKeyPressed(Input.KEY_1)) {
+			cooldown += 20000;
+			unloadLevel();
 			loadLevel("testLevel");
 		}
 		
 		if(Input.isKeyPressed(Input.KEY_2)) {
+			cooldown += 20000;
+			unloadLevel();
 			loadLevel("testLevel2");
 		}
 		

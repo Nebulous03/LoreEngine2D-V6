@@ -47,6 +47,8 @@ public abstract class Game{
 	
 	public void addLevel(String tag, Level2D level) {
 		levels.put(tag, level);
+		level.init(this);
+		level.initLevel(this);
 	}
 	
 	public Level2D getLevel(String tag) {
@@ -54,13 +56,13 @@ public abstract class Game{
 	}
 	
 	public void unloadLevel() {
+		activeLevel.onUnload();
 		activeLevel = null;
 	}
 	
 	public void loadLevel(String tag) {
 		activeLevel = getLevel(tag);
-		activeLevel.init(this);
-		activeLevel.initLevel(this);
+		activeLevel.onLoad();
 	}
 
 	public Level2D getActiveLevel() {

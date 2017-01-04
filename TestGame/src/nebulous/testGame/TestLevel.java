@@ -143,4 +143,13 @@ public class TestLevel extends Level2D {
 		
 	}
 
+	public void onLoad() {
+		
+	}
+
+	@Override
+	public void onUnload() {
+		
+	}
+
 }

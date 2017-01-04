@@ -39,7 +39,11 @@ public abstract class Level2D {
 	
 	public abstract void init(Game game);
 	
+	public abstract void onLoad();
+	
 	public abstract void update(Game game, double delta);
+	
+	public abstract void onUnload();
 	
 	public void initLevel(Game game) {
 		for(Entity2D entity : entityList) {
@@ -71,6 +75,10 @@ public abstract class Level2D {
 		for(int i = 0; i < guiElements.size(); i++) {
 			renderer.render(camera, guiElements.get(i));
 		}
+	}
+	
+	public void unloadLevel() {
+		
 	}
 	
 	public ArrayList<TileMap> getTileMaps() {
@@ -155,4 +163,5 @@ public abstract class Level2D {
 		return camera;
 	}
 
+	
 }
