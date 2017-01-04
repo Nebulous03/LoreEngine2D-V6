@@ -11,6 +11,7 @@ import nebulous.utils.Time;
 public class GameLoop {
 	
 	private double UPS = 60.0D;
+	private boolean stop = false;
 	
 	public void start(Game game, GameWindow window, RenderEngine renderer) {
 		int frames = 0;
@@ -29,7 +30,7 @@ public class GameLoop {
 		
 		game.init();
 		
-		while(!glfwWindowShouldClose(window.getWindow())){
+		while(!glfwWindowShouldClose(window.getWindow()) && !stop){
 			
 			double startTime = Time.getTime();
             double pastTime = startTime - lastTime;
@@ -58,6 +59,12 @@ public class GameLoop {
 			frames++;
 			
 		}
+		
+		glfwTerminate();
+	}
+
+	public void stop() {
+		stop = true;
 	}
 
 }

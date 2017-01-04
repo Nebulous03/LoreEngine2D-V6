@@ -150,6 +150,9 @@ public class Input{
     public static final int MOUSE_BUTTON_LEFT = 0;
     public static final int MOUSE_BUTTON_RIGHT = 1;
     public static final int MOUSE_BUTTON_MIDDLE = 2;
+    
+    public static double mousePosX = 0;
+    public static double mousePosY = 0;
 	
 	private static long windowID;
 	private static final int SIZE = 512;
@@ -157,8 +160,6 @@ public class Input{
 	private static boolean[] keys;
 	private static int[] keyStates;
 	
-	private static double mousePosX = 0;
-	private static double mousePosY = 0;
 	
 	private static double mouseScroll = 0;
 

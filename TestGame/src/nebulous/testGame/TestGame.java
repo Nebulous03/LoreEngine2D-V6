@@ -34,6 +34,11 @@ public class TestGame extends Game{
 		if(Input.isKeyPressed(Input.KEY_2)) {
 			loadLevel("testLevel2");
 		}
+		
+		if(Input.isKeyPressed(Input.KEY_ESCAPE)) {
+			game.stop();
+		}
+		
 	}
 
 	public static void main(String[] args) {

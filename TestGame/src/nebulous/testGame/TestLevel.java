@@ -3,7 +3,6 @@ package nebulous.testGame;
 import org.joml.Vector3f;
 
 import nebulous.Game;
-import nebulous.component.GuiElement;
 import nebulous.component.Level2D;
 import nebulous.component.TileMap;
 import nebulous.graphics.Camera;
@@ -23,7 +22,7 @@ public class TestLevel extends Level2D {
 	public BlockEntity block3 = null;
 	public BlockEntity block4 = null;
 	
-	public GuiElement logoGUI = null;
+	public LogoGui logoGUI = null;
 	
 	@Override
 	public void init(Game game) {
@@ -39,7 +38,7 @@ public class TestLevel extends Level2D {
 		map2 = new TileMap(32, 32, 24, 14, true);
 		map3 = new TileMap(32, 32, 24, 14, false);
 		
-		logoGUI = new LogoGui();
+		logoGUI = new LogoGui(100 , game.getWindow().getHeight() - 100);
 		
 		for(int i = 0; i < map2.getWidth(); i++) {
 			map2.setTile(i, 0, GRASS);
@@ -110,7 +109,6 @@ public class TestLevel extends Level2D {
 		else block4.move(0, -0.05f);
 		
 		controlCamera();
-		
 		
 	}
 	

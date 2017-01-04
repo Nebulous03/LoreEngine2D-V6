@@ -8,8 +8,8 @@ public class LogoGui extends GuiElement{
 
 	private static Texture LOGO = new Texture("/textures/testImage.png");
 	
-	public LogoGui() {
-		super(-0.7f, -0.7f, 0.2f, 0.2f, LOGO);
+	public LogoGui(int pixelX, int pixelY) {
+		super(pixelX, pixelY, 0.2f, 0.2f, LOGO);
 	}
 
 	@Override
@@ -19,8 +19,8 @@ public class LogoGui extends GuiElement{
 
 	@Override
 	public void update(Game game, double delta) {
-		if(game.window.resized()) {
-			System.out.println(game.window.getWidth() + ", " + game.window.getHeight());
+		if(game.getWindow().resized()) {
+			position = toWorldSpace(game.getWindow(), customCamera, 100 , game.getWindow().getHeight() - 100);
 		}
 	}
 

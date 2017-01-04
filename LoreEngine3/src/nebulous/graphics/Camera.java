@@ -131,5 +131,21 @@ public class Camera {
 		this.perspective = perspective;
 		return this;
 	}
+
+	public Matrix4f getTransformationMatrix() {
+		return transformationMatrix;
+	}
+
+	public Matrix4f getProjectionMatrix() {
+		return projectionMatrix;
+	}
+
+	public Matrix4f getModelMatrix() {
+		return modelMatrix;
+	}
+
+	public Matrix4f getViewMatrix() {
+		return viewMatrix;
+	}
 	
 }

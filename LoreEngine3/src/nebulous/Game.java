@@ -9,12 +9,12 @@ import nebulous.logic.GameLoop;
 
 public abstract class Game{
 	
-	public GameLoop		loop	 = null;
-	public GameWindow   window 	 = null;
-	public RenderEngine renderer = null;
+	protected GameLoop	   loop	     = null;
+	protected GameWindow   window 	 = null;
+	protected RenderEngine renderer  = null;
 	
-	public HashMap<String, Level2D> levels;
-	public Level2D activeLevel = null;
+	protected HashMap<String, Level2D> levels;
+	protected Level2D activeLevel = null;
 	
 	public Game() {
 		this.loop = new GameLoop();
@@ -41,6 +41,10 @@ public abstract class Game{
 		if(activeLevel != null) activeLevel.render(renderer);
 	}
 	
+	public void stop() {
+		loop.stop();
+	}
+	
 	public void addLevel(String tag, Level2D level) {
 		levels.put(tag, level);
 	}
@@ -61,6 +65,18 @@ public abstract class Game{
 
 	public Level2D getActiveLevel() {
 		return activeLevel;
+	}
+
+	public GameWindow getWindow() {
+		return window;
+	}
+
+	public RenderEngine getRenderer() {
+		return renderer;
+	}
+
+	public HashMap<String, Level2D> getLevels() {
+		return levels;
 	}
 
 }
