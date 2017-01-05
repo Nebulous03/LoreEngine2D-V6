@@ -5,17 +5,18 @@ import java.util.HashMap;
 
 import nebulous.Game;
 import nebulous.graphics.Camera;
-import nebulous.graphics.RenderEngine;
+import nebulous.graphics.GameWindow;
+import nebulous.graphics.shaders.DefaultShader;
 
 public abstract class Level2D {
 	
 	protected Camera camera	= null;
 	protected ArrayList<GameObject2D> worldElements;
-	protected ArrayList<GuiElement> guiElements;
+	protected ArrayList<GuiComponent> guiElements;
 	protected HashMap<String, TileMap> tileMapHash;
 	protected HashMap<String, Entity2D> entityHash;
 	protected HashMap<String, GameObject2D> objectHash;
-	protected HashMap<String, GuiElement> guiElementHash;
+	protected HashMap<String, GuiComponent> guiElementHash;
 	protected ArrayList<TileMap> tileMapList;
 	protected ArrayList<GameObject2D> objectList;
 	protected ArrayList<Entity2D> entityList;
@@ -26,11 +27,11 @@ public abstract class Level2D {
 	
 	public Level2D(Camera camera) {
 		this.worldElements = new ArrayList<GameObject2D>();
-		this.guiElements = new ArrayList<GuiElement>();
+		this.guiElements = new ArrayList<GuiComponent>();
 		this.tileMapHash = new HashMap<String, TileMap>();
 		this.entityHash = new HashMap<String, Entity2D>();
 		this.objectHash = new HashMap<String, GameObject2D>();
-		this.guiElementHash = new HashMap<String, GuiElement>();
+		this.guiElementHash = new HashMap<String, GuiComponent>();
 		this.tileMapList = new ArrayList<TileMap>();
 		this.entityList = new ArrayList<Entity2D>();
 		this.objectList = new ArrayList<GameObject2D>();
@@ -50,8 +51,8 @@ public abstract class Level2D {
 			entity.init();
 		}
 		
-		for(GuiElement element : guiElements) {
-			element.initGuiElement(game);
+		for(GuiComponent element : guiElements) {
+			element.initGuiComponent(game);
 			element.init(game);
 		}
 	}
@@ -62,18 +63,20 @@ public abstract class Level2D {
 		}
 		
 		for(int i = 0; i < guiElements.size(); i++) {
-			guiElements.get(i).updateGuiElement(game, delta);
+			guiElements.get(i).updateGuiComponent(game, delta);
 			guiElements.get(i).update(game, delta);
 		}
 	}
 	
-	public void render(RenderEngine renderer) {
+	public static DefaultShader shader = new DefaultShader();
+	
+	public void render(GameWindow window) {
 		for(int i = 0; i < worldElements.size(); i++) {
-			renderer.render(camera, worldElements.get(i));
+			worldElements.get(i).render(window, camera, shader);
 		}
 		
 		for(int i = 0; i < guiElements.size(); i++) {
-			renderer.render(camera, guiElements.get(i));
+			guiElements.get(i).render(window, GuiComponent.getCamera(), shader);
 		}
 	}
 	
@@ -93,7 +96,7 @@ public abstract class Level2D {
 		return objectList;
 	}
 	
-	public ArrayList<GuiElement> getGuiElements() {
+	public ArrayList<GuiComponent> getGuiElements() {
 		return guiElements;
 	}
 	
@@ -133,12 +136,12 @@ public abstract class Level2D {
 		objectHash.remove(tag);
 	}
 	
-	public void addGuiElement(String tag, GuiElement element) {
+	public void addGuiComponent(String tag, GuiComponent element) {
 		guiElementHash.put(tag, element);
 		guiElements.add(element);
 	}
 	
-	public void removeGuiElement(String tag) {
+	public void removeGuiComponent(String tag) {
 		guiElements.remove(guiElementHash.get(tag));
 		guiElementHash.remove(tag);
 	}
@@ -155,7 +158,7 @@ public abstract class Level2D {
 		return objectHash.get(tag);
 	}
 	
-	public GuiElement getGuiElement(String tag) {
+	public GuiComponent getGuiElement(String tag) {
 		return guiElementHash.get(tag);
 	}
 

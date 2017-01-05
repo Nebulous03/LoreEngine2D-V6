@@ -1,16 +1,16 @@
 package nebulous.testGame;
 
 import nebulous.Game;
-import nebulous.component.GuiElement;
+import nebulous.component.GuiComponent;
 import nebulous.graphics.primatives.Texture;
 import nebulous.utils.PositionHelper;
 
-public class LogoGui extends GuiElement{
+public class LogoGui extends GuiComponent{
 
 	private static Texture LOGO = new Texture("/textures/testImage.png");
 	
-	public LogoGui(int pixelX, int pixelY) {
-		super(pixelX, pixelY, 0.2f, 0.2f, LOGO);
+	public LogoGui(int x, int y, float size) {
+		super(LOGO, x, y, size, true);
 	}
 
 	@Override
@@ -21,27 +21,12 @@ public class LogoGui extends GuiElement{
 	@Override
 	public void update(Game game, double delta) {
 		if(game.getWindow().resized()) {
-			position = PositionHelper.toWorldSpace2D(game.getWindow(), customCamera, 100 , game.getWindow().getHeight() - 100);
+			position = PositionHelper.toWorldSpace2D(game.getWindow(), camera, 100 , game.getWindow().getHeight() - 100);
 		}
 	}
 
 	@Override
-	public void onClick(boolean rightClick) {
-		
-	}
-
-	@Override
-	public void onMouseover() {
-		
-	}
-
-	@Override
-	public void onMouseEnter() {
-		
-	}
-
-	@Override
-	public void onMouseExit() {
+	public void onMouseOver() {
 		
 	}
 

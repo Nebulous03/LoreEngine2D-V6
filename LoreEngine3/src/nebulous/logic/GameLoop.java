@@ -53,7 +53,7 @@ public class GameLoop {
 				}
 			}
 			
-			game.renderGame(renderer);
+			game.renderGame(window);
 			window.render();
 			
 			frames++;

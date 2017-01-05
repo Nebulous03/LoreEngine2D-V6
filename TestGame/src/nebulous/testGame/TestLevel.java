@@ -6,7 +6,7 @@ import nebulous.Game;
 import nebulous.component.Level2D;
 import nebulous.component.TileMap;
 import nebulous.graphics.Camera;
-import nebulous.graphics.RenderEngine;
+import nebulous.graphics.GameWindow;
 import nebulous.graphics.primatives.Mesh;
 import nebulous.graphics.primatives.Texture;
 import nebulous.logic.Input;
@@ -44,7 +44,7 @@ public class TestLevel extends Level2D {
 		map2 = new TileMap(32, 32, 24, 14, true);
 		map3 = new TileMap(32, 32, 24, 14, false);
 		
-		logoGUI = new LogoGui(100 , game.getWindow().getHeight() - 100);
+		logoGUI = new LogoGui(0, 0, 1);
 		
 		for(int i = 0; i < map2.getWidth(); i++) {
 			map2.setTile(i, 0, GRASS);
@@ -130,7 +130,7 @@ public class TestLevel extends Level2D {
 		map2.collisionLayer = true;
 		
 		if(Input.isKeyHeld(Input.KEY_LEFT_SHIFT)) {
-			Vector3f pos = PositionHelper.toWorldSpace3D(map, game.getWindow(), camera, (float) Input.mousePosX, (float) Input.mousePosY, camera.getPosition().z);
+			Vector3f pos = PositionHelper.toWorldSpace3D(game.getWindow(), camera, (float) Input.mousePosX, (float) Input.mousePosY, camera.getPosition().z);
 			mouseBlock.setPosition(pos.x, pos.y);
 			System.out.println("-------\nX - " + pos.x);
 			System.out.println("Y - " + pos.y);
@@ -181,11 +181,11 @@ public class TestLevel extends Level2D {
 	}
 	
 	@Override
-	public void render(RenderEngine renderer) {
-		super.render(renderer);
+	public void render(GameWindow window) {
+		super.render(window);
 		
 		if(Input.isKeyHeld(Input.KEY_LEFT_SHIFT)) {
-			renderer.render(camera, mouseBlock);
+			mouseBlock.render(window, camera, mouseBlock.getShader());
 		}
 	}
 

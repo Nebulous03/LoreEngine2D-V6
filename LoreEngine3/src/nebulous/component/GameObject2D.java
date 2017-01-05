@@ -48,7 +48,7 @@ public class GameObject2D {
 		this(mesh, x, y, null, shader);
 	}
 	
-	public GameObject2D(Mesh mesh, float x, float y, BoundingBox2D box, Shader shader) {	// TODO: Add shader
+	public GameObject2D(Mesh mesh, float x, float y, BoundingBox2D box, Shader shader) {
 		this.mesh = mesh;
 		this.position = new Vector2f(x, y);
 		this.rotation = new Vector3f(0);

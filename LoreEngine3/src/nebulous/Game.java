@@ -37,8 +37,8 @@ public abstract class Game{
 		
 	}
 	
-	public void renderGame(RenderEngine renderer){
-		if(activeLevel != null) activeLevel.render(renderer);
+	public void renderGame(GameWindow window){
+		if(activeLevel != null) activeLevel.render(window);
 	}
 	
 	public void stop() {
