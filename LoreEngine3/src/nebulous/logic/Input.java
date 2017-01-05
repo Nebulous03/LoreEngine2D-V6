@@ -155,20 +155,24 @@ public class Input{
     public static double mousePosY = 0;
 	
 	private static long windowID;
-	private static final int SIZE = 512;
+	private static final int KEYS_SIZE = 512;
+	private static final int BUTTONS_SIZE = 8;
 	
 	private static boolean[] keys;
+	private static boolean[] buttons;
 	private static int[] keyStates;
-	
+	private static int[] buttonStates;
 	
 	private static double mouseScroll = 0;
 
 	public static void init(GameWindow window){
 		windowID = window.getWindow();
-		keys = new boolean[SIZE];
-		keyStates = new int[SIZE];
+		keys = new boolean[KEYS_SIZE];
+		buttons = new boolean[BUTTONS_SIZE];
+		keyStates = new int[KEYS_SIZE];
+		buttonStates = new int[BUTTONS_SIZE];
 		
-		for (int i = 0; i < SIZE; i++){
+		for (int i = 0; i < KEYS_SIZE; i++){
 			keys[i] = false;
             keyStates[i] = -1;
         }
@@ -194,7 +198,8 @@ public class Input{
 
 			@Override
 			public void invoke(long window, int button, int action, int mods) {
-				//TODO: Do
+				buttons[button] = true;
+				buttonStates[button] = action;
 			}
             
 		};
@@ -220,8 +225,18 @@ public class Input{
 	
 	public static void update(){
 		for(boolean k : keys) k = false;
+		for(int i = 0; i < BUTTONS_SIZE; i++) buttons[i] = false;
+		for(int i = 0; i < BUTTONS_SIZE; i++) buttonStates[i] = -1;
 		for(int k : keyStates) k = -1;
 		mouseScroll = 0;
+	}
+	
+	public static boolean isMouseButtonClicked(int button) {
+		return buttonStates[button] == GLFW_PRESS;
+	}
+	
+	public static boolean isMouseButtonHeld(int button) {
+		return glfwGetMouseButton(windowID, button) == GLFW_PRESS;
 	}
 	
 	public static boolean isMouseScrollIncrease(){

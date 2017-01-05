@@ -6,10 +6,12 @@ import nebulous.Game;
 import nebulous.component.Level2D;
 import nebulous.component.TileMap;
 import nebulous.graphics.Camera;
+import nebulous.graphics.RenderEngine;
 import nebulous.graphics.primatives.Mesh;
 import nebulous.graphics.primatives.Texture;
 import nebulous.logic.Input;
 import nebulous.physics.BoundingBox2D;
+import nebulous.utils.PositionHelper;
 
 public class TestLevel extends Level2D {
 
@@ -22,7 +24,13 @@ public class TestLevel extends Level2D {
 	public BlockEntity block3 = null;
 	public BlockEntity block4 = null;
 	
+	public BlockEntity mouseBlock = null;
+	
 	public LogoGui logoGUI = null;
+	
+	Texture STONE = new Texture("/textures/stone.png");
+	Texture GRASS = new Texture("/textures/grass_side.png");
+	Texture TORCH = new Texture("/textures/torch_on.png");
 	
 	@Override
 	public void init(Game game) {
@@ -30,9 +38,6 @@ public class TestLevel extends Level2D {
 		camera.setPerspective(Camera.PERSPECTIVE);
 		camera.setPosition(new Vector3f(0,0,10f));
 		
-		Texture STONE = new Texture("/textures/stone.png");
-		Texture GRASS = new Texture("/textures/grass_side.png");
-		Texture TORCH = new Texture("/textures/torch_on.png");
 		
 		map = new TileMap(STONE, 32, 32, 24, 14, false);
 		map2 = new TileMap(32, 32, 24, 14, true);
@@ -90,6 +95,10 @@ public class TestLevel extends Level2D {
 		addEntity("block4", block4);
 		addGuiElement("test", logoGUI);
 		
+		// MOUSE BLOCK THING
+		
+		mouseBlock = new BlockEntity(Mesh.PLANE(GRASS), 0, 0);
+		
 	}
 
 	boolean moveUp = true;
@@ -109,6 +118,24 @@ public class TestLevel extends Level2D {
 		else block4.move(0, -0.05f);
 		
 		controlCamera();
+		
+		// MOUSE BLOCK
+		
+		map2.collisionLayer = true;
+		
+		if(Input.isKeyHeld(Input.KEY_LEFT_SHIFT)) {
+			Vector3f pos = PositionHelper.toWorldSpace3D(map, game.getWindow(), camera, (float) Input.mousePosX, (float) Input.mousePosY, 10f);
+			mouseBlock.setPosition(pos.x, pos.y);
+			System.out.println("-------\nX - " + pos.x);
+			System.out.println("Y - " + pos.y);
+			System.out.println("Z - " + pos.z);
+			
+			if(Input.isMouseButtonHeld(0)) {
+				map2.setTile((int)(pos.x + 0.5f), (int)(pos.y + 0.5f), GRASS);
+				map2.collisionLayer = false;
+			}
+			
+		}
 		
 	}
 	
@@ -142,7 +169,17 @@ public class TestLevel extends Level2D {
 		}
 		
 	}
+	
+	@Override
+	public void render(RenderEngine renderer) {
+		super.render(renderer);
+		
+		if(Input.isKeyHeld(Input.KEY_LEFT_SHIFT)) {
+			renderer.render(camera, mouseBlock);
+		}
+	}
 
+	@Override
 	public void onLoad() {
 		
 	}

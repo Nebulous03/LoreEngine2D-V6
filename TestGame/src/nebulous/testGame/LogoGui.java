@@ -3,6 +3,7 @@ package nebulous.testGame;
 import nebulous.Game;
 import nebulous.component.GuiElement;
 import nebulous.graphics.primatives.Texture;
+import nebulous.utils.PositionHelper;
 
 public class LogoGui extends GuiElement{
 
@@ -20,7 +21,7 @@ public class LogoGui extends GuiElement{
 	@Override
 	public void update(Game game, double delta) {
 		if(game.getWindow().resized()) {
-			position = toWorldSpace(game.getWindow(), customCamera, 100 , game.getWindow().getHeight() - 100);
+			position = PositionHelper.toWorldSpace2D(game.getWindow(), customCamera, 100 , game.getWindow().getHeight() - 100);
 		}
 	}
 
