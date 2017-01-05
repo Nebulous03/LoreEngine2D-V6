@@ -23,6 +23,8 @@ public class TestLevel extends Level2D {
 	public BlockEntity block2 = null;
 	public BlockEntity block3 = null;
 	public BlockEntity block4 = null;
+	public BigBlock bigBlock  = null;
+	public HalfBlock halfBlock = null;
 	
 	public BlockEntity mouseBlock = null;
 	
@@ -37,7 +39,6 @@ public class TestLevel extends Level2D {
 		
 		camera.setPerspective(Camera.PERSPECTIVE);
 		camera.setPosition(new Vector3f(0,0,10f));
-		
 		
 		map = new TileMap(STONE, 32, 32, 24, 14, false);
 		map2 = new TileMap(32, 32, 24, 14, true);
@@ -85,6 +86,9 @@ public class TestLevel extends Level2D {
 		block3 = new BlockEntity(Mesh.PLANE(Texture.UNKNOWN), 10, 8);
 		block4 = new BlockEntity(Mesh.PLANE(Texture.UNKNOWN), 11, 8);
 		
+		bigBlock = new BigBlock(Mesh.PLANE(GRASS), 20, 20);
+		halfBlock = new HalfBlock(Mesh.PLANE(GRASS), 15, 15);
+		
 		addTileMap("map1", map);
 		addTileMap("map2", map2);
 		addTileMap("map3", map3);
@@ -93,7 +97,9 @@ public class TestLevel extends Level2D {
 		addEntity("block2", block2);
 		addEntity("block3", block3);
 		addEntity("block4", block4);
-		addGuiElement("test", logoGUI);
+		addEntity("bigBlock", bigBlock);
+		addEntity("halfBlock", halfBlock);
+//		addGuiElement("test", logoGUI);
 		
 		// MOUSE BLOCK THING
 		
@@ -124,15 +130,19 @@ public class TestLevel extends Level2D {
 		map2.collisionLayer = true;
 		
 		if(Input.isKeyHeld(Input.KEY_LEFT_SHIFT)) {
-			Vector3f pos = PositionHelper.toWorldSpace3D(map, game.getWindow(), camera, (float) Input.mousePosX, (float) Input.mousePosY, 10f);
+			Vector3f pos = PositionHelper.toWorldSpace3D(map, game.getWindow(), camera, (float) Input.mousePosX, (float) Input.mousePosY, camera.getPosition().z);
 			mouseBlock.setPosition(pos.x, pos.y);
 			System.out.println("-------\nX - " + pos.x);
 			System.out.println("Y - " + pos.y);
 			System.out.println("Z - " + pos.z);
+			map2.collisionLayer = false;
 			
 			if(Input.isMouseButtonHeld(0)) {
 				map2.setTile((int)(pos.x + 0.5f), (int)(pos.y + 0.5f), GRASS);
-				map2.collisionLayer = false;
+			}
+			
+			if(Input.isMouseButtonHeld(1)) {
+				map2.setTile((int)(pos.x + 0.5f), (int)(pos.y + 0.5f), null);
 			}
 			
 		}

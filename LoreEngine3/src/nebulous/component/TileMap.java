@@ -116,11 +116,13 @@ public class TileMap extends GameObject2D{
 	}
 	
 	public void setTile(int x, int y, Texture texture) {
-		tiles[x + y * width].setTexture(texture);
-		if(texture == null) {
-			tiles[x + y * width].boundingBox = null;
-		} else {
-			tiles[x + y * width].boundingBox = new BoundingBox2D(1, 1, new Vector2f(x,y));
+		if(y < height && x < width) {
+			tiles[x + y * width].setTexture(texture);
+			if(texture == null) {
+				tiles[x + y * width].boundingBox = null;
+			} else {
+				tiles[x + y * width].boundingBox = new BoundingBox2D(1, 1, new Vector2f(x,y));
+			}
 		}
 	}
 	
