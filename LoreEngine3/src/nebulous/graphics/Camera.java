@@ -1,6 +1,7 @@
 package nebulous.graphics;
 
 import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import nebulous.component.GameObject2D;
@@ -117,6 +118,11 @@ public class Camera {
 
 	public void setPosition(Vector3f position) {
 		this.position = position;
+	}
+	
+	public void setPosition(Vector2f position) {
+		this.position.x = position.x;
+		this.position.y = position.y;
 	}
 
 	public Vector3f getRotation() {

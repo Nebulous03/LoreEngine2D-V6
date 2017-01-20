@@ -1,31 +1,30 @@
-package nebulous.testGame;
+package nebulous.terrariaClone;
 
 import nebulous.Game;
 import nebulous.component.Entity2D;
 import nebulous.component.Level2D;
 import nebulous.component.TileMap;
+import nebulous.graphics.Camera;
+import nebulous.graphics.GameWindow;
 import nebulous.graphics.primatives.Mesh;
+import nebulous.graphics.shaders.Shader;
 import nebulous.logic.Input;
-import nebulous.physics.BoundingBox2D;
 import nebulous.physics.Collision2D;
+import nebulous.utils.Console;
 
 public class Player extends Entity2D{
 	
-	public boolean gravity = true;
-	public float gravityForce = -0.3f;
-
-	public Player(Mesh mesh, int x, int y) {
-		super(mesh, x, y);
+	private float walkSpeed = 24f;
+	
+	public Player(float x, float y) {
+		super(Mesh.PLANE(Textures.PLAYER), x, y);
 	}
 
 	@Override
 	public void init() {
-		boundingBox = new BoundingBox2D(1f, 1f, position);
-		System.out.println("Player initialized");
+		Console.println("Player", "Player initialized...");
 	}
 
-	float speed = 0.1f;
-	
 	@Override
 	public void update(Game game, double delta) {
 		
@@ -39,31 +38,32 @@ public class Player extends Entity2D{
 		
 		// W(UP)
 		if(Input.isKeyHeld(Input.KEY_W)){
-			deltaY += speed;
+			deltaY += walkSpeed * delta;
 		}
 		
 		// A(LEFT)
 		if(Input.isKeyHeld(Input.KEY_A)){
-			deltaX += -speed;
+			deltaX += -(walkSpeed * delta);
 		}
 		
 		// S(DOWN)
 		if(Input.isKeyHeld(Input.KEY_S)){
-			deltaY += -speed;
+			deltaY += -(walkSpeed * delta);
 		}
 		
 		// D(RIGHT)
 		if(Input.isKeyHeld(Input.KEY_D)){
-			deltaX += speed;
+			deltaX += walkSpeed * delta;
 		}
 		
 		attemptMove(game.getActiveLevel(), deltaX, deltaY);
-		
-		game.getActiveLevel().getCamera().setPosition(position.x, position.y, game.getActiveLevel().getCamera().getPosition().z); //TODO: Simplify
+		game.getActiveLevel().getCamera().setPosition(position);
 		
 	}
 	
 	Collision2D collision = null;
+	
+	//TODO: Move these to a helper class
 	
 	public void attemptMove(Level2D level, float deltaX, float deltaY){
 		
@@ -160,6 +160,11 @@ public class Player extends Entity2D{
 			}
 			
 		}
+	}
+	
+	@Override
+	public void render(GameWindow window, Camera camera, Shader shader) {
+		super.render(window, camera, shader);
 	}
 
 }

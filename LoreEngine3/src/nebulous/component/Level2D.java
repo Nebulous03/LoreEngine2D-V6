@@ -11,10 +11,12 @@ public abstract class Level2D {
 	
 	protected Camera camera	= null;
 	protected ArrayList<GameObject2D> worldElements;
+	protected ArrayList<BackgroundElement> backgroundElements;
 	protected ArrayList<GuiElement> guiElements;
 	protected HashMap<String, TileMap> tileMapHash;
 	protected HashMap<String, Entity2D> entityHash;
 	protected HashMap<String, GameObject2D> objectHash;
+	protected HashMap<String, BackgroundElement> backgroundElementHash;
 	protected HashMap<String, GuiElement> guiElementHash;
 	protected ArrayList<TileMap> tileMapList;
 	protected ArrayList<GameObject2D> objectList;
@@ -26,10 +28,12 @@ public abstract class Level2D {
 	
 	public Level2D(Camera camera) {
 		this.worldElements = new ArrayList<GameObject2D>();
+		this.backgroundElements = new ArrayList<BackgroundElement>();
 		this.guiElements = new ArrayList<GuiElement>();
 		this.tileMapHash = new HashMap<String, TileMap>();
 		this.entityHash = new HashMap<String, Entity2D>();
 		this.objectHash = new HashMap<String, GameObject2D>();
+		this.backgroundElementHash = new HashMap<String, BackgroundElement>();
 		this.guiElementHash = new HashMap<String, GuiElement>();
 		this.tileMapList = new ArrayList<TileMap>();
 		this.entityList = new ArrayList<Entity2D>();
@@ -45,9 +49,14 @@ public abstract class Level2D {
 	
 	public abstract void onUnload();
 	
-	public void initLevel(Game game) {
+	public void initLevel(Game game) {				// TODO: Handle these better
 		for(Entity2D entity : entityList) {
 			entity.init();
+		}
+		
+		for(BackgroundElement element : backgroundElements) {
+			element.initBackgroundElement(game);
+			element.init(game);
 		}
 		
 		for(GuiElement element : guiElements) {
@@ -61,6 +70,11 @@ public abstract class Level2D {
 			entityList.get(i).update(game, delta);
 		}
 		
+		for(int i = 0; i < backgroundElements.size(); i++) {
+			backgroundElements.get(i).updateBackgroundElement(game, delta);
+			backgroundElements.get(i).update(game, delta);
+		}
+		
 		for(int i = 0; i < guiElements.size(); i++) {
 			guiElements.get(i).updateGuiElement(game, delta);
 			guiElements.get(i).update(game, delta);
@@ -68,6 +82,10 @@ public abstract class Level2D {
 	}
 	
 	public void render(RenderEngine renderer) {
+		for(int i = 0; i < backgroundElements.size(); i++) {
+			renderer.render(camera, backgroundElements.get(i));
+		}
+		
 		for(int i = 0; i < worldElements.size(); i++) {
 			renderer.render(camera, worldElements.get(i));
 		}
@@ -91,6 +109,10 @@ public abstract class Level2D {
 	
 	public ArrayList<GameObject2D> getObjects() {
 		return objectList;
+	}
+	
+	public ArrayList<BackgroundElement> getBackgroundElements() {
+		return backgroundElements;
 	}
 	
 	public ArrayList<GuiElement> getGuiElements() {
@@ -119,6 +141,7 @@ public abstract class Level2D {
 		entityList.remove(objectHash.get(tag));
 		worldElements.remove(objectHash.get(tag));
 		entityHash.remove(tag);
+		System.out.println("removed " + tag);
 	}
 	
 	public void addObject(String tag, GameObject2D object) {
@@ -131,6 +154,16 @@ public abstract class Level2D {
 		objectList.remove(objectHash.get(tag));
 		worldElements.remove(objectHash.get(tag));
 		objectHash.remove(tag);
+	}
+	
+	public void addBackgroundElement(String tag, BackgroundElement element) {
+		backgroundElementHash.put(tag, element);
+		backgroundElements.add(element);
+	}
+	
+	public void removeBackgroundElement(String tag) {
+		backgroundElementHash.remove(guiElementHash.get(tag));
+		backgroundElements.remove(tag);
 	}
 	
 	public void addGuiElement(String tag, GuiElement element) {

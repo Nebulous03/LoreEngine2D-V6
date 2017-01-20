@@ -34,10 +34,11 @@ public class Texture {
 			try{
 				image = ImageIO.read(Texture.class.getResource(filename));
 			} catch(Exception e){
-				Console.printErr("UNABLE TO READ FILE: '" + filename + "'");
-				Console.println("Texture - Error reading buffered image, replaced with 'unknown.png'.");
+				Console.printErr("ERROR","UNABLE TO READ FILE: '" + filename + "'");
+				Console.println("ERROR", "Error reading buffered image, replaced with 'unknown.png'.");
 				image = ImageIO.read(Texture.class.getResource("/textures/unknown.png"));
 				successful = false;
+				e.printStackTrace();
 			}
 
 			width = image.getWidth();
@@ -73,12 +74,12 @@ public class Texture {
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixelBuffer);
 
 			if(successful)
-			Console.println("Texture successfully created: " + filename + " (id:" + id + ")");
+			Console.println("Textures","Texture successfully created: " + filename + " (id:" + id + ")");
 			
 			return id;
 
 		} catch (IOException e) {
-			Console.println("Texture - Error reading buffered image");
+			Console.println("Error","Unknown error generating textures");
 			e.printStackTrace();
 		}
 		

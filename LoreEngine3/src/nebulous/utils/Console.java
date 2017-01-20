@@ -31,7 +31,7 @@ public class Console {
 	
 	public static void println(String prefix, String text) {
 		if(enablePrefix)
-			text = prefix + text;
+			text = "[" + prefix + "]" + text;
 		if(enableTimestamp) {
 			date = new Date();
 			text = "[" + format.format(date).toString() + "]" + (enablePrefix ? "" : " ") + text;
@@ -44,7 +44,7 @@ public class Console {
 	
 	public static void printErr(String prefix, String text) {
 		if(enablePrefix)
-			text = prefix + text;
+			text = "[" + prefix + "]" + text;
 		if(enableTimestamp) {
 			date = new Date();
 			text = "[" + format.format(date).toString() + "]" + (enablePrefix ? "" : " ") + text;

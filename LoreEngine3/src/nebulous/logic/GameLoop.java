@@ -20,6 +20,7 @@ public class GameLoop {
 		double lastTime = Time.getTime();
 		double unprocessedTime = 0;
 		
+		
 		game.preInit();
 		
 		window.createWindow();
@@ -46,7 +47,7 @@ public class GameLoop {
 				window.update();
 				
 				if(frameCounter >= 1.0){
-					Console.println("FPS: " + frames);
+					Console.println("Debug", "FPS: " + frames);
 					window.setWindowTitle("NebulousGameEngine V6.0 - FPS: " + frames);
 					frameCounter = 0;
 					frames = 0;

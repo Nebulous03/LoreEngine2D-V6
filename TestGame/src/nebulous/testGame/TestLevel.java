@@ -1,5 +1,6 @@
 package nebulous.testGame;
 
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import nebulous.Game;
@@ -100,6 +101,8 @@ public class TestLevel extends Level2D {
 		addEntity("bigBlock", bigBlock);
 		addEntity("halfBlock", halfBlock);
 //		addGuiElement("test", logoGUI);
+		
+		removeEntity("block");
 		
 		// MOUSE BLOCK THING
 		
