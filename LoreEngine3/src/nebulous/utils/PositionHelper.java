@@ -5,9 +5,9 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
-import nebulous.component.GameObject2D;
 import nebulous.graphics.Camera;
 import nebulous.graphics.GameWindow;
+import nebulous.logic.Input;
 
 public class PositionHelper {
 	
@@ -55,6 +55,19 @@ public class PositionHelper {
 		return new Vector2f(worldCoords.x, worldCoords.y);
 	}
 	
+	public static float pixelToWorldDistance2D(GameWindow window, Camera camera, float pixelDistance) {
+		return toWorldSpace2D(window, camera, pixelDistance, 0).x;
+	}
+	
+	static float mouseX = 0;
+	static float mouseY = 0;
+	
+	public static Vector2f getMouseWorldPos(GameWindow window, Camera camera) {
+		mouseX = (float)Input.mousePosX;
+		mouseY = (float)Input.mousePosY;
+		return toWorldSpace2D(window, camera, mouseX, mouseY);
+	}
+	
 	public static Vector3f getRay3D(GameWindow window, Camera camera, float pixelX, float pixelY) {
 		
 		// TO NORMALIZED DEVICE COORDS
@@ -82,26 +95,9 @@ public class PositionHelper {
 		return new Vector3f(worldCoords.x, worldCoords.y, worldCoords.z);
 	}
 	
-	public static Vector3f toWorldSpace3D(GameObject2D object, GameWindow window, Camera camera, float pixelX, float pixelY, float distance){
-		Vector3f ray = getRay3D(window, camera, pixelX, pixelY).mul(distance).add(camera.getPosition());
-//		Vector3f pos = itterateRay3D(object, camera.getPosition(), ray, distance, 0);
-		
-		return ray;
+	public static Vector3f toWorldSpace3D(GameWindow window, Camera camera, float pixelX, float pixelY, float distance){
+		return getRay3D(window, camera, pixelX, pixelY).mul(distance).add(camera.getPosition());
 	}
-	
-//	public static int MAX_COUNT = 12;
-//	
-//	public static Vector3f itterateRay3D(GameObject2D object, Vector3f startPoint, Vector3f ray, float distance, int count) {
-//		float half = distance / 2;
-//		if(count >= MAX_COUNT) {
-//			Vector3f endPoint = getPointOnRay(ray, half);
-//			if()
-//		}
-//	}
-//	
-//	public static Vector3f getPointOnRay(Vector3f ray, float distance) {
-//		return ray.mul(distance);
-//	}
 	
 	public static Vector2f toPixelSpace(GameWindow window, float glCoordX, float glCoordY) { // TODO: Move these to helper class
 		

@@ -7,7 +7,6 @@ import nebulous.Game;
 import nebulous.component.Level2D;
 import nebulous.component.TileMap;
 import nebulous.graphics.Camera;
-import nebulous.graphics.RenderEngine;
 import nebulous.graphics.primatives.Mesh;
 import nebulous.graphics.primatives.Texture;
 import nebulous.logic.Input;
@@ -39,18 +38,24 @@ public class MapEditor extends Game{
 		
 		private TileMap map1 = null;
 		private MouseEntity mouseEntity = null;
+		private GuiBackground background = null;
+		private GuiButton button = null;
 
 		@Override
 		public void init(Game game) {
 			camera.setPerspective(Camera.PERSPECTIVE);
 			camera.setPosition(0f, 0f, 10f);
 			
+			background = new GuiBackground(0, 0);
+			button = new GuiButton(12, 12, 0.35f, 0.1f);
+			
 			map1 = new TileMap(Texture.UNKNOWN, 32, 32, false);
-			
 			mouseEntity = new MouseEntity(Mesh.PLANE(Texture.UNKNOWN2), 0, 0);
-			
+
 			addTileMap("map1", map1);
 			addEntity("mouseEntity", mouseEntity);
+			addGuiComponent("background", background);
+			addGuiComponent("button", button);
 		}
 
 		@Override
@@ -66,37 +71,29 @@ public class MapEditor extends Game{
 			
 			// MOUSE DRAG
 			
-			float width = game.getWindow().getWidth();
-			float height = game.getWindow().getHeight();
-			
 			previousMousePos = currentMousePos;
 			currentMousePos = new Vector2f((float)Input.mousePosX, (float)Input.mousePosY);
 			
-			if(Input.isKeyHeld(Input.KEY_LEFT_SHIFT)) {
-				if(Input.isMouseButtonHeld(0)){
-					
-					float differenceX = previousMousePos.x - currentMousePos.x;
-					float differenceY = previousMousePos.y - currentMousePos.y;
-					
-					camera.move(differenceX / 30, -differenceY  / 30, 0);
-				}
+			if(!Input.isKeyHeld(Input.KEY_LEFT_SHIFT) && (Input.isMouseButtonHeld(1) || Input.isMouseButtonHeld(2))){
+				
+				float differenceX = previousMousePos.x - currentMousePos.x;
+				float differenceY = previousMousePos.y - currentMousePos.y;
+				
+				camera.move(differenceX / 30, -differenceY  / 30, 0);
+			}
+		
+			// TILE BRUSH
+			
+			Vector3f pos = PositionHelper.toWorldSpace3D(game.getWindow(), camera, (float) Input.mousePosX, (float) Input.mousePosY, camera.getPosition().z);
+			
+			if(!Input.isKeyHeld(Input.KEY_LEFT_SHIFT) && Input.isMouseButtonHeld(0)) {
+				map1.setTile((int)(pos.x + 0.5f), (int)(pos.y + 0.5f), Texture.UNKNOWN2);
 			}
 			
-			if(!Input.isKeyHeld(Input.KEY_LEFT_SHIFT)) {
-				Vector3f pos = PositionHelper.toWorldSpace3D(map1, game.getWindow(), camera, (float) Input.mousePosX, (float) Input.mousePosY, camera.getPosition().z);
-				System.out.println("-------\nX - " + pos.x);
-				System.out.println("Y - " + pos.y);
-				System.out.println("Z - " + pos.z);
-				
-				if(Input.isMouseButtonHeld(0)) {
-					map1.setTile((int)(pos.x + 0.5f), (int)(pos.y + 0.5f), Texture.UNKNOWN2);
-				}
-				
-				if(Input.isMouseButtonHeld(1)) {
-					map1.setTile((int)(pos.x + 0.5f), (int)(pos.y + 0.5f), null);
-				}
-				
+			if(Input.isKeyHeld(Input.KEY_LEFT_SHIFT) && Input.isMouseButtonHeld(0)) {
+				map1.setTile((int)(pos.x + 0.5f), (int)(pos.y + 0.5f), null);
 			}
+				
 			
 			controlCamera();
 		}
@@ -135,13 +132,6 @@ public class MapEditor extends Game{
 		@Override
 		public void onUnload() {
 			
-		}
-		
-		@Override
-		public void render(RenderEngine renderer) {
-			super.render(renderer);
-			
-//			mouseEntity.setPosition(camera.getPosition().x, camera.getPosition().y);
 		}
 		
 	}
