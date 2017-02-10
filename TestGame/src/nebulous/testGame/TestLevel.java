@@ -8,6 +8,7 @@ import nebulous.component.Level2D;
 import nebulous.component.TileMap;
 import nebulous.graphics.Camera;
 import nebulous.graphics.GameWindow;
+import nebulous.graphics.RenderEngine;
 import nebulous.graphics.primatives.Mesh;
 import nebulous.graphics.primatives.Texture;
 import nebulous.logic.Input;
@@ -184,11 +185,11 @@ public class TestLevel extends Level2D {
 	}
 	
 	@Override
-	public void render(GameWindow window) {
-		super.render(window);
+	public void render(RenderEngine renderer) {
+		super.render(renderer);
 		
 		if(Input.isKeyHeld(Input.KEY_LEFT_SHIFT)) {
-			mouseBlock.render(window, camera, mouseBlock.getShader());
+			mouseBlock.render(renderer.getWindow(), camera, renderer.getShader());
 		}
 	}
 

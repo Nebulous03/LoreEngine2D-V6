@@ -27,4 +27,12 @@ public class RenderEngine {
 		
 	}
 
+	public GameWindow getWindow() {
+		return window;
+	}
+
+	public Shader getShader() {
+		return shader;
+	}
+
 }

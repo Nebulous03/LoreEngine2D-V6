@@ -54,8 +54,8 @@ public class MapEditor extends Game{
 
 			addTileMap("map1", map1);
 			addEntity("mouseEntity", mouseEntity);
-			addGuiComponent("background", background);
-			addGuiComponent("button", button);
+//			addGuiComponent("background", background);
+//			addGuiComponent("button", button);
 		}
 
 		@Override
