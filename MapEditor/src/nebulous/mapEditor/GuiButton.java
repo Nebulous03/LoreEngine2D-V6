@@ -1,10 +1,10 @@
 package nebulous.mapEditor;
 
 import nebulous.Game;
-import nebulous.component.GuiComponent;
+import nebulous.component.GuiElement;
 import nebulous.graphics.primatives.Texture;
 
-public class GuiButton extends GuiComponent{
+public class GuiButton extends GuiElement{
 	
 	private static final Texture button_blue = new Texture("/textures/button_blue.png");
 	private static final Texture button_red = new Texture("/textures/button_red.png");

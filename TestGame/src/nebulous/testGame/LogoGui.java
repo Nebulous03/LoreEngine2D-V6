@@ -1,11 +1,11 @@
 package nebulous.testGame;
 
 import nebulous.Game;
-import nebulous.component.GuiComponent;
+import nebulous.component.GuiElement;
 import nebulous.graphics.primatives.Texture;
 import nebulous.utils.PositionHelper;
 
-public class LogoGui extends GuiComponent{
+public class LogoGui extends GuiElement{
 
 	private static Texture LOGO = new Texture("/textures/testImage.png");
 	

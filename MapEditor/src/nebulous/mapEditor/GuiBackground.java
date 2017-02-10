@@ -1,10 +1,10 @@
 package nebulous.mapEditor;
 
 import nebulous.Game;
-import nebulous.component.GuiComponent;
+import nebulous.component.GuiElement;
 import nebulous.graphics.primatives.Texture;
 
-public class GuiBackground extends GuiComponent{
+public class GuiBackground extends GuiElement{
 	
 	private static final Texture sideBar = new Texture("/textures/sidebar_test.png");;
 

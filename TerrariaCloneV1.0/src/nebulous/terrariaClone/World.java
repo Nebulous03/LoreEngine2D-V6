@@ -3,11 +3,8 @@ package nebulous.terrariaClone;
 import org.joml.Vector3f;
 
 import nebulous.Game;
-import nebulous.component.GuiElement;
-import nebulous.component.GuiElement;
 import nebulous.component.Level2D;
 import nebulous.component.TileMap;
-import nebulous.graphics.Camera;
 import nebulous.logic.Input;
 import nebulous.utils.Console;
 
