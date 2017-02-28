@@ -1,8 +1,8 @@
 package nebulous.graphics;
 
-import nebulous.component.GameObject2D;
 import nebulous.graphics.shaders.DefaultShader;
 import nebulous.graphics.shaders.Shader;
+import nebulous.object.GameObject2D;
 
 public class RenderEngine {
 	

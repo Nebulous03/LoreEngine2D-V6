@@ -1,8 +1,8 @@
 package nebulous.testGame;
 
 import nebulous.Game;
-import nebulous.component.GuiElement;
 import nebulous.graphics.primatives.Texture;
+import nebulous.object.GuiElement;
 import nebulous.utils.PositionHelper;
 
 public class LogoGui extends GuiElement{

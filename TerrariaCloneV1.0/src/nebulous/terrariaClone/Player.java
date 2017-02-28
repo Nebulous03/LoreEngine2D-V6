@@ -1,14 +1,14 @@
 package nebulous.terrariaClone;
 
 import nebulous.Game;
-import nebulous.component.Entity2D;
-import nebulous.component.Level2D;
-import nebulous.component.TileMap;
 import nebulous.graphics.Camera;
 import nebulous.graphics.GameWindow;
 import nebulous.graphics.primatives.Mesh;
 import nebulous.graphics.shaders.Shader;
 import nebulous.logic.Input;
+import nebulous.object.Entity2D;
+import nebulous.object.Level2D;
+import nebulous.object.TileMap;
 import nebulous.physics.Collision2D;
 import nebulous.utils.Console;
 

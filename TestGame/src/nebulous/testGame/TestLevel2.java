@@ -3,12 +3,12 @@ package nebulous.testGame;
 import org.joml.Vector3f;
 
 import nebulous.Game;
-import nebulous.component.Level2D;
-import nebulous.component.TileMap;
 import nebulous.graphics.Camera;
 import nebulous.graphics.primatives.Mesh;
 import nebulous.graphics.primatives.Texture;
 import nebulous.logic.Input;
+import nebulous.object.Level2D;
+import nebulous.object.TileMap;
 
 public class TestLevel2 extends Level2D {
 	

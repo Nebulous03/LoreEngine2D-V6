@@ -9,7 +9,7 @@ public class TestGame extends Game{
 	@Override
 	public void preInit() {
 		window.setDisplayMode(GameWindow.DISPLAY_MODE_WINDOWED);
-		window.enableVSync(true);
+		window.enableVSync(false);
 //		window.setSize(1920, 1080);
 		window.setSize(640, 480);
 //		window.setSize(640, 640);

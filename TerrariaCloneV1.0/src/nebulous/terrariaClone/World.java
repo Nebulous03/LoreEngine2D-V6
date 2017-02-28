@@ -3,9 +3,9 @@ package nebulous.terrariaClone;
 import org.joml.Vector3f;
 
 import nebulous.Game;
-import nebulous.component.Level2D;
-import nebulous.component.TileMap;
 import nebulous.logic.Input;
+import nebulous.object.Level2D;
+import nebulous.object.TileMap;
 import nebulous.utils.Console;
 
 public class World extends Level2D{

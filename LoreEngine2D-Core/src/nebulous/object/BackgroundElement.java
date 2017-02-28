@@ -1,4 +1,4 @@
-package nebulous.component;
+package nebulous.object;
 
 import org.joml.Vector3f;
 

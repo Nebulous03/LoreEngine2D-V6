@@ -1,4 +1,4 @@
-package nebulous.component;
+package nebulous.object;
 
 import nebulous.Game;
 import nebulous.graphics.primatives.Mesh;

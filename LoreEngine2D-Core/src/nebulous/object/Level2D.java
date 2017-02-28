@@ -1,4 +1,4 @@
-package nebulous.component;
+package nebulous.object;
 
 import java.util.ArrayList;
 import java.util.HashMap;

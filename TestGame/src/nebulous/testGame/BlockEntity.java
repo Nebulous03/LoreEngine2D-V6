@@ -1,8 +1,8 @@
 package nebulous.testGame;
 
 import nebulous.Game;
-import nebulous.component.Entity2D;
 import nebulous.graphics.primatives.Mesh;
+import nebulous.object.Entity2D;
 import nebulous.physics.BoundingBox2D;
 
 public class BlockEntity extends Entity2D{

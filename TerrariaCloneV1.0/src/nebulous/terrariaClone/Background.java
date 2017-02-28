@@ -1,8 +1,8 @@
 package nebulous.terrariaClone;
 
 import nebulous.Game;
-import nebulous.component.BackgroundElement;
 import nebulous.graphics.primatives.Texture;
+import nebulous.object.BackgroundElement;
 
 public class Background extends BackgroundElement{
 

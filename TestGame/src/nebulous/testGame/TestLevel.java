@@ -4,14 +4,14 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import nebulous.Game;
-import nebulous.component.Level2D;
-import nebulous.component.TileMap;
 import nebulous.graphics.Camera;
 import nebulous.graphics.GameWindow;
 import nebulous.graphics.RenderEngine;
 import nebulous.graphics.primatives.Mesh;
 import nebulous.graphics.primatives.Texture;
 import nebulous.logic.Input;
+import nebulous.object.Level2D;
+import nebulous.object.TileMap;
 import nebulous.physics.BoundingBox2D;
 import nebulous.utils.PositionHelper;
 

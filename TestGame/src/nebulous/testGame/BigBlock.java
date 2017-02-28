@@ -3,8 +3,8 @@ package nebulous.testGame;
 import org.joml.Vector3f;
 
 import nebulous.Game;
-import nebulous.component.Entity2D;
 import nebulous.graphics.primatives.Mesh;
+import nebulous.object.Entity2D;
 import nebulous.physics.BoundingBox2D;
 
 public class BigBlock extends Entity2D{

@@ -1,4 +1,4 @@
-package nebulous.component;
+package nebulous.object;
 
 import nebulous.graphics.Camera;
 import nebulous.graphics.GameWindow;

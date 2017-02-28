@@ -4,8 +4,8 @@ import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
-import nebulous.component.GameObject2D;
-import nebulous.component.GuiElement;
+import nebulous.object.GameObject2D;
+import nebulous.object.GuiElement;
 
 public class Camera {
 	

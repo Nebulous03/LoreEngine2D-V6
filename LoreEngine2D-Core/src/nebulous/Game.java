@@ -2,10 +2,10 @@ package nebulous;
 
 import java.util.HashMap;
 
-import nebulous.component.Level2D;
 import nebulous.graphics.GameWindow;
 import nebulous.graphics.RenderEngine;
 import nebulous.logic.GameLoop;
+import nebulous.object.Level2D;
 
 public abstract class Game{
 	
