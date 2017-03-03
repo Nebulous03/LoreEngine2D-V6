@@ -1,34 +1,60 @@
-package nebulous.graphics.primatives;
+package nebulous.entity.component;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL13.*;
-import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL11.GL_FLOAT;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
+import static org.lwjgl.opengl.GL11.glBindTexture;
+import static org.lwjgl.opengl.GL11.glDrawElements;
+import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
+import static org.lwjgl.opengl.GL13.glActiveTexture;
+import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
+import static org.lwjgl.opengl.GL15.glBindBuffer;
+import static org.lwjgl.opengl.GL15.glBufferData;
+import static org.lwjgl.opengl.GL15.glDeleteBuffers;
+import static org.lwjgl.opengl.GL15.glGenBuffers;
+import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
+import static org.lwjgl.opengl.GL30.glBindVertexArray;
+import static org.lwjgl.opengl.GL30.glDeleteVertexArrays;
+import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
 
-public class Mesh {
+public class Mesh extends Component {
 	
-	private int vCount   = 0;
+	private int vCount  = 0;
 	private int vao		= 0;
 	private int vbo		= 0;
 	private int ibo		= 0;
-	private int tbo		= 0;
 	
-	private Texture texture = null;
+	private int tbo     = 0;
 	
-	public Mesh(float[] vertices, int[] indices, float[] texCoords, Texture texture) {
-		
-		if(texture != null) this.texture = texture;
-		
+	protected float[] vertices;
+	protected int[]   indices;
+	protected float[] texCoords;
+	
+	protected Texture texture;
+	
+	public Mesh(float[] vertices, int[] indices, float[] texCoords) {
 		vCount = indices.length;
-		vao = glGenVertexArrays();
-		tbo = glGenBuffers();
+		this.vertices = vertices;
+		this.indices = indices;
+		this.texCoords = texCoords;
+	}
+	
+	@Override
+	public void init() {
 		
+		texture = (Texture) parent.getComponent(Texture.class);
+		
+		vao = glGenVertexArrays();
 		glBindVertexArray(vao);
 		
 		// BIND VBO
@@ -46,7 +72,7 @@ public class Mesh {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBuffer, GL_STATIC_DRAW);
 		
-		// BIND TEXCOORDS
+		// BIND TBO
 		tbo = glGenBuffers();
 		FloatBuffer textureBuffer = BufferUtils.createFloatBuffer(texCoords.length);
 		textureBuffer.put(texCoords).flip();
@@ -60,6 +86,7 @@ public class Mesh {
 	}
 	
 	public void renderMesh() {
+		
         // Bind VAO Data
         glBindVertexArray(vao);
         glEnableVertexAttribArray(0);
@@ -67,7 +94,7 @@ public class Mesh {
         
         // Bind Texture Data
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture.textureID);
+        glBindTexture(GL_TEXTURE_2D, texture.getTextureID());
         
         // Draw Mesh
         glDrawElements(GL_TRIANGLES, vCount, GL_UNSIGNED_INT, 0);
@@ -76,6 +103,7 @@ public class Mesh {
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
         glBindVertexArray(0);
+        
 	}
 	
 	public void cleanup() {
@@ -91,7 +119,7 @@ public class Mesh {
 	    
 	}
 	
-	public static final Mesh PLANE(Texture texture){
+	public static final Mesh PLANE(){
 		
 		float[] vertices = new float[]{
 				 -0.5f,  0.5f, 0.0f,
@@ -111,38 +139,36 @@ public class Mesh {
 				1,0
 		};
 
-		return new Mesh(vertices, indices, textureCoords, texture);
-	}
-	
-	public static final Mesh PLANE_GUI(Texture texture){
-		
-		float[] vertices = new float[]{
-		        -1.0f,  1.0f, 0.0f,
-		        -1.0f, -1.0f, 0.0f,
-		         1.0f, -1.0f, 0.0f,
-		         1.0f,  1.0f, 0.0f,
-		    };
-		
-		int[] indices = new int[]{
-		        0, 1, 3, 3, 1, 2,
-		    };
-
-		float[] textureCoords = new float[]{
-				0,0,
-				0,1,
-				1,1,
-				1,0
-		};
-
-		return new Mesh(vertices, indices, textureCoords, texture);
+		return new Mesh(vertices, indices, textureCoords);
+		//TODO: DONT USE NEW MESH
 	}
 
-	public Texture getTexture() {
-		return texture;
+	public int getVCount() {
+		return vCount;
 	}
 
-	public void setTexture(Texture texture) {
-		this.texture = texture;
+	public int getVao() {
+		return vao;
+	}
+
+	public int getVbo() {
+		return vbo;
+	}
+
+	public int getIbo() {
+		return ibo;
+	}
+
+	public float[] getVertices() {
+		return vertices;
+	}
+
+	public int[] getIndices() {
+		return indices;
+	}
+
+	public float[] getTexCoords() {
+		return texCoords;
 	}
 
 }

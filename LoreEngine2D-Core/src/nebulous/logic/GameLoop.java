@@ -1,10 +1,10 @@
 package nebulous.logic;
 
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.glfwTerminate;
+import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
 import nebulous.Game;
 import nebulous.graphics.GameWindow;
-import nebulous.graphics.RenderEngine;
 import nebulous.utils.Console;
 import nebulous.utils.Time;
 
@@ -13,18 +13,16 @@ public class GameLoop {
 	private double UPS = 60.0D;
 	private boolean stop = false;
 	
-	public void start(Game game, GameWindow window, RenderEngine renderer) {
+	public void start(Game game, GameWindow window) {
 		int frames = 0;
         double frameCounter = 0;
 		
 		double lastTime = Time.getTime();
 		double unprocessedTime = 0;
 		
-		
 		game.preInit();
 		
 		window.createWindow();
-		renderer.init(window);
 		window.init();
 		
 		Input.init(window);
@@ -54,7 +52,8 @@ public class GameLoop {
 				}
 			}
 			
-			game.renderGame(window);
+			if(game.getActiveLevel() != null) //TODO: Switch to instance
+				game.renderGame(window);
 			window.render();
 			
 			frames++;

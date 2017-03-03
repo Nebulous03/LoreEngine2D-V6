@@ -12,7 +12,7 @@ import nebulous.object.TileMap;
 import nebulous.physics.Collision2D;
 import nebulous.utils.Console;
 
-public class Player extends Entity2D{
+public class Player extends Entity2D
 	
 	private float walkSpeed = 24f;
 	

@@ -7,7 +7,7 @@ import nebulous.entity.EntityBuilder;
 import nebulous.entity.EntitySystem;
 import nebulous.entity.Instance;
 import nebulous.entity.component.Component;
-import nebulous.entity.component.Translation;
+import nebulous.entity.component.Transform;
 import nebulous.entity.component.Update;
 
 public class EntityTest {
@@ -27,7 +27,7 @@ public class EntityTest {
 		
 		for(int i = 0; i < sampleSize; i++) {
 			Entity e = new EntityBuilder(instance)
-					.add(new Translation())
+					.add(new Transform())
 					.add(new Update())
 					.build();
 		}

@@ -2,39 +2,52 @@ package nebulous.entity;
 
 import java.util.ArrayList;
 
+import nebulous.Game;
 import nebulous.entity.component.Component;
-import nebulous.object.GameObject;
 
-public class Entity implements GameObject {
+public class Entity {
 	
 	public long ID = -1;
-	public Instance instance;
+	private Instance instance;
 	
 	private ArrayList<Component> components = null;
 	
-	public void addComponent(Component component){
-		if(components == null) {
+	public void init(Game game) {}
+	
+	public Entity add(Component component){	//TODO: add ability to add/remove after registering
+		if(components == null)
 			components = new ArrayList<Component>();
-		} else {
-			components.add(component);
-			instance.getEntitySystem().addComponent(this, component);
-		}
+		components.add(component);
+		return this;
 	}
 	
-	public void removeComponent(Component component){
+	public Entity remove(Component component){
 		components.remove(component);
-		instance.getEntitySystem().removeComponent(this, component);
+		return this;
 	}
 	
-	public boolean hasComponent(Component component) {
-		return components.contains(component);
+	public boolean hasComponent(Class<?> componentClass) {
+		return instance.getEntitySystem().hasComponent(this, componentClass);
 	}
 	
-	public Component getComponent(Class<?> componentClass) {
-		return instance.getEntitySystem().getComponentFromEntity(this, componentClass);
+	@SuppressWarnings("unchecked")
+	public <T> T getComponent(Class<?> componentClass) {
+		T component = (T) instance.getEntitySystem().getComponentFromEntity(this, componentClass);
+		if(component == null)
+			new Exception("Component '" + componentClass.getSimpleName() + "' is not bound to entity").printStackTrace();
+		return component;
 	}
 
 	public ArrayList<Component> getComponents() {
 		return components;
 	}
+
+	public Instance getInstance() {
+		return instance;
+	}
+
+	public void setInstance(Instance instance) {
+		this.instance = instance;
+	}
+
 }

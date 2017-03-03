@@ -2,10 +2,13 @@ package game;
 
 import nebulous.Game;
 import nebulous.object.Level;
+import nebulous.utils.Console;
 
 public class EntityTestGame extends Game {
 	
 	public static void main(String[] args) {
+		Console.enablePrefix(true);
+		Console.enableTimestamp(true);
 		new EntityTestGame();
 	}
 
@@ -17,7 +20,8 @@ public class EntityTestGame extends Game {
 	@Override
 	public void init() {
 		Level test = new TestLevel();
-		test.load();
+		addLevel("test", test);
+		loadLevel("test");
 	}
 
 	@Override

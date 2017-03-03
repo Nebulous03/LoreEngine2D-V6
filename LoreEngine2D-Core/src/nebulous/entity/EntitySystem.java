@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import nebulous.Game;
 import nebulous.entity.component.Component;
+import nebulous.utils.Console;
 
 public class EntitySystem {
 	
@@ -30,11 +32,18 @@ public class EntitySystem {
 		allEntities.add(entity);
 		idHash.put(entity.ID, entity);
 		
-		for(Component c : components) {
-			if(componentHash.get(c.getClass()) == null)
-				componentHash.put(c.getClass(), new LinkedHashMap<Long, Component>());
-			componentHash.get(c.getClass()).put(entity.ID, c);
+		try{
+			for(Component c : components) {	//TODO: Maybe switch all these out with index for loops?
+				if(componentHash.get(c.getClass()) == null)
+					componentHash.put(c.getClass(), new LinkedHashMap<Long, Component>());
+				componentHash.get(c.getClass()).put(entity.ID, c);
+				c.setParent(entity);
+			}
+		} catch (Exception e) {
+			Console.printErr("Entity/Warning", "Entity '" + entity.ID + "' was added but contains no data.");
 		}
+		
+//		for(Component c : components) c.init();	//TODO: I dont like this second loop
 		
 		return entity;
 	}
@@ -62,8 +71,14 @@ public class EntitySystem {
 		
 	}
 	
-	public Component getComponentFromEntity(Entity entity, Class<?> componentClass) {
-		return componentHash.get(componentClass).get(entity.ID);
+	public Component getComponentFromEntity(Entity entity, Class<?> componentClass) {	//TODO: fix this?
+		LinkedHashMap<Long, Component> map = componentHash.get(componentClass);
+		if(map == null) return null;
+		else {
+			Component result = map.get(entity.ID);
+			if(result == null) return null;
+			return result;
+		}
 	}
 	
 	public ArrayList<Entity> getAllEntities() { 
@@ -94,6 +109,32 @@ public class EntitySystem {
 
 	public void removeComponent(Entity entity, Component component) {
 		//TODO: do
+	}
+	
+	public void printEntity(Entity entity) {
+		System.out.println(entity.getClass().getSimpleName() + ":" + entity.ID);
+		for(Class<?> c : componentHash.keySet()) {
+			Component comp = componentHash.get(c).get(entity.ID);
+			System.out.println("\t" + comp.getClass().getSimpleName() + ":" + comp);
+		}
+	}
+	
+	public void initAllEntities(Game game) {
+		for(Entity e : allEntities){
+			e.init(game);
+		}
+	}
+
+	public void initAllComponents(Game game) {
+		for(Class<?> c : componentHash.keySet()) {
+			for(Long l : componentHash.get(c).keySet()) {
+				componentHash.get(c).get(l).init();
+			}
+		}
+	}
+
+	public boolean hasComponent(Entity entity, Class<?> componentClass) {
+		return getComponentFromEntity(entity, componentClass) != null;
 	}
 
 }

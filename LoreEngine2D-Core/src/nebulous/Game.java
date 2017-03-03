@@ -3,25 +3,22 @@ package nebulous;
 import java.util.HashMap;
 
 import nebulous.graphics.GameWindow;
-import nebulous.graphics.RenderEngine;
 import nebulous.logic.GameLoop;
-import nebulous.object.Level2D;
+import nebulous.object.Level;
 
 public abstract class Game{
 	
 	protected GameLoop	   loop	     = null;
 	protected GameWindow   window 	 = null;
-	protected RenderEngine renderer  = null;
 	
-	protected HashMap<String, Level2D> levels;
-	protected Level2D activeLevel = null;
+	protected HashMap<String, Level> levels;
+	protected Level activeLevel = null;
 	
 	public Game() {
 		this.loop = new GameLoop();
 		this.window = new GameWindow();
-		this.renderer = new RenderEngine();
-		this.levels = new HashMap<String, Level2D>();
-		loop.start(this, window, renderer);
+		this.levels = new HashMap<String, Level>();
+		loop.start(this, window);
 	}
 	
 	public abstract void preInit();
@@ -32,26 +29,25 @@ public abstract class Game{
 	
 	public void updateGame(Game game, double delta){
 		update(game, delta);
-		if(activeLevel != null) activeLevel.update(game, delta);
-		if(activeLevel != null) activeLevel.updateLevel(game, delta);
-		
+		if(activeLevel != null){
+			activeLevel.update(game, delta);
+			activeLevel.updateAll(game, delta);
+		}
 	}
 	
 	public void renderGame(GameWindow window){
-		if(activeLevel != null) activeLevel.render(renderer);
+		if(activeLevel != null) activeLevel.renderAll();
 	}
 	
 	public void stop() {
 		loop.stop();
 	}
 	
-	public void addLevel(String tag, Level2D level) {
+	public void addLevel(String tag, Level level) {
 		levels.put(tag, level);
-		level.init(this);
-		level.initLevel(this);
 	}
 	
-	public Level2D getLevel(String tag) {
+	public Level getLevel(String tag) {
 		return levels.get(tag);
 	}
 	
@@ -62,10 +58,10 @@ public abstract class Game{
 	
 	public void loadLevel(String tag) {
 		activeLevel = getLevel(tag);
-		activeLevel.onLoad();
+		activeLevel.initAll(this);
 	}
 
-	public Level2D getActiveLevel() {
+	public Level getActiveLevel() {
 		return activeLevel;
 	}
 
@@ -73,11 +69,7 @@ public abstract class Game{
 		return window;
 	}
 
-	public RenderEngine getRenderer() {
-		return renderer;
-	}
-
-	public HashMap<String, Level2D> getLevels() {
+	public HashMap<String, Level> getLevels() {
 		return levels;
 	}
 

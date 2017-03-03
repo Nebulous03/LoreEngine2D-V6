@@ -3,13 +3,14 @@ package nebulous.object;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
+import nebulous.entity.Entity;
 import nebulous.graphics.Camera;
 import nebulous.graphics.GameWindow;
 import nebulous.graphics.primatives.Texture;
 import nebulous.graphics.shaders.Shader;
 import nebulous.physics.BoundingBox2D;
 
-public class TileMap extends GameObject2D{
+public class TileMap extends Entity{
 	
 	private Tile[]  tiles   = null;
 	private int	    height  = 0;

@@ -4,8 +4,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
-import nebulous.object.GameObject2D;
-import nebulous.object.GuiElement;
+import nebulous.entity.component.Transform;
 
 public class Camera {
 	
@@ -54,38 +53,15 @@ public class Camera {
 		
 	}
 	
-	Vector3f vecRotation3D = new Vector3f(0);
+	Vector3f scale = new Vector3f(0);
 	
-	public Matrix4f getModelViewMatrix(GameObject2D object) {	// Add support for 3D
+	public Matrix4f getModelViewMatrix(Transform trans) {
 		
-		vecRotation3D = object.getRotation();
-		modelMatrix.identity().translate(object.getPosition().x, object.getPosition().y, 0).
-	        rotateX((float)Math.toRadians(-vecRotation3D.x)).
-	        rotateY((float)Math.toRadians(-vecRotation3D.y)).
-	        rotateZ((float)Math.toRadians(-vecRotation3D.z)).
-	        scale(object.getScale());
+		scale.x = trans.scale.x;
+		scale.y = trans.scale.y;
+		modelMatrix.identity().translate(trans.position.x, trans.position.y, 0).
+			rotateX((float)Math.toRadians(-trans.rotation)).scale(scale);
 		return modelMatrix;
-		
-	}
-	
-	Vector3f vecRotation2D = new Vector3f(0);
-	
-	public Matrix4f getModelViewMatrix(GuiElement object) {	// Add support for 3D
-		
-		vecRotation2D.set(object.getRotation().x, object.getRotation().y, 0);
-		modelMatrix.identity().translate(object.getPosition().x, object.getPosition().y, 0).
-	        rotateX((float)Math.toRadians(-vecRotation2D.x)).
-	        rotateY((float)Math.toRadians(-vecRotation2D.y)).
-	        scale(object.getScale().x, object.getScale().y, 0);
-		return modelMatrix;
-		
-	}
-	
-	public Matrix4f calculateTransformationMatrix(GameObject2D object){
-		
-		return transformationMatrix.identity()
-			.translate(object.getPosition().x, object.getPosition().y, 0)
-			.scale(object.getScale());
 		
 	}
 	
