@@ -6,4 +6,4 @@ Primarily a 2D game engine developed in lwjgl and java.
 
 -------------------------------------------------------
 
-Latest Release: https://github.com/NebulousDev/LoreEngine2D-V6/releases/tag/0.4.1
+Latest Release: https://github.com/NebulousDev/LoreEngine2D-V6/releases/tag/0.5.1
