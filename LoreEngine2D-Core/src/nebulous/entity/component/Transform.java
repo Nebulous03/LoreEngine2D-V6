@@ -19,5 +19,12 @@ public class Transform extends Component {
 		scale = new Vector2f(1f);
 		rotation = 0;
 	}
+	
+	@Override
+	public String toString() {
+		return "Position = " + "(" + position.x + ", " + position.y + ")"
+				+ "\n\t\tRotation = " + rotation
+				+ "\n\t\tScale = " + "(" + scale.x + ", " + scale.y + ")";
+	}
 
 }

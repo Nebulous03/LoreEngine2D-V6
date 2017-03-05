@@ -1,19 +1,12 @@
 package nebulous.testGame;
 
 import nebulous.Game;
-import nebulous.graphics.primatives.Mesh;
-import nebulous.object.Entity2D;
-import nebulous.physics.BoundingBox2D;
+import nebulous.entity.simple.EntityMovable;
 
-public class BlockEntity extends Entity2D{
+public class BlockEntity extends EntityMovable {
 
-	public BlockEntity(Mesh mesh, float x, float y) {
-		super(mesh, x, y);
-	}
-
-	@Override
-	public void init() {
-		boundingBox = new BoundingBox2D(1, 1, position);
+	public BlockEntity(float x, float y) {
+		super(x,y);
 	}
 
 	@Override

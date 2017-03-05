@@ -4,13 +4,13 @@ import org.joml.Vector3f;
 
 import nebulous.Game;
 import nebulous.logic.Input;
-import nebulous.object.Level2D;
+import nebulous.object.Level;
 import nebulous.object.TileMap;
 import nebulous.utils.Console;
 
-public class World extends Level2D{
+public class World extends Level{
 	
-	private Background bg = null;
+//	private Background bg = null;
 	private TileMap map = null;
 	private TileMap map2 = null;
 	private Player player = null;
@@ -19,22 +19,23 @@ public class World extends Level2D{
 	public void init(Game game) {
 		camera.setPosition(0, 0, 20f);
 		
-		bg = new Background(game.getWindow().getWidth()/2, game.getWindow().getHeight()/2, 2, 1, Textures.BG);
-		map = new TileMap(null, 128, 32, 32, 32, false);
-		map2 = new TileMap(null, 128, 32, 48, 32, true);
+//		bg = new Background(game.getWindow().getWidth()/2, game.getWindow().getHeight()/2, 2, 1, Textures.BG);
+		map = new TileMap(128, 32);
+		map2 = new TileMap(128, 32).enableCulling();
+		map2.enableCollision();
 		
 		for(int i = 0; i < map2.getWidth(); i++) {
 			for(int j = 0; j < 12; j++) {
-				map2.setTile(i, j, Textures.GRASS);
+				map2.get(i, j).setTexture(Textures.GRASS);
 			}
 		}
 		
 		player = new Player(12, 12);
 		
-		addBackgroundElement("bg", bg);
-		addTileMap("layer_1", map);
-		addTileMap("layer_2", map2);
-		addEntity("player", player);
+//		addBackgroundElement("bg", bg);
+		add(map);
+		add(map2);
+		add(player);
 	}
 
 	@Override

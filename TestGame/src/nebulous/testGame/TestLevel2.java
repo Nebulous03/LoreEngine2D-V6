@@ -3,14 +3,13 @@ package nebulous.testGame;
 import org.joml.Vector3f;
 
 import nebulous.Game;
+import nebulous.entity.component.Texture;
 import nebulous.graphics.Camera;
-import nebulous.graphics.primatives.Mesh;
-import nebulous.graphics.primatives.Texture;
 import nebulous.logic.Input;
-import nebulous.object.Level2D;
+import nebulous.object.Level;
 import nebulous.object.TileMap;
 
-public class TestLevel2 extends Level2D {
+public class TestLevel2 extends Level {
 	
 	private Player player = null;
 	private TileMap map   = null;
@@ -21,11 +20,11 @@ public class TestLevel2 extends Level2D {
 		camera.setPerspective(Camera.PERSPECTIVE);
 		camera.setPosition(new Vector3f(0,0,10f));
 		
-		player = new Player(Mesh.PLANE(Texture.UNKNOWN2), 0, 0);
-		map = new TileMap(Texture.UNKNOWN, 12, 12, false);
+		player = (Player) new Player(0, 0).setTexture(Texture.UNKNOWN2);
+		map = new TileMap(12, 12).populate(Texture.UNKNOWN);
 		
-		addTileMap("map", map);
-		addEntity("player", player);
+		add(map);
+		add(player);
 	}
 
 	@Override

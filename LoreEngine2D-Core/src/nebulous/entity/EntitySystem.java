@@ -45,6 +45,8 @@ public class EntitySystem {
 		
 //		for(Component c : components) c.init();	//TODO: I dont like this second loop
 		
+		entity.setRegistered(true);
+		
 		return entity;
 	}
 	
@@ -115,7 +117,7 @@ public class EntitySystem {
 		System.out.println(entity.getClass().getSimpleName() + ":" + entity.ID);
 		for(Class<?> c : componentHash.keySet()) {
 			Component comp = componentHash.get(c).get(entity.ID);
-			System.out.println("\t" + comp.getClass().getSimpleName() + ":" + comp);
+			System.out.println("\t" + comp.getClass().getSimpleName() + ":\n\t\t" + comp);
 		}
 	}
 	
@@ -128,7 +130,7 @@ public class EntitySystem {
 	public void initAllComponents(Game game) {
 		for(Class<?> c : componentHash.keySet()) {
 			for(Long l : componentHash.get(c).keySet()) {
-				componentHash.get(c).get(l).init();
+				componentHash.get(c).get(l).init(game);
 			}
 		}
 	}

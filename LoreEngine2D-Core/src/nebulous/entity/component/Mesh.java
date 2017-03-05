@@ -1,13 +1,6 @@
 package nebulous.entity.component;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
-import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
-import static org.lwjgl.opengl.GL11.glBindTexture;
-import static org.lwjgl.opengl.GL11.glDrawElements;
-import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
-import static org.lwjgl.opengl.GL13.glActiveTexture;
 import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
@@ -16,7 +9,6 @@ import static org.lwjgl.opengl.GL15.glBufferData;
 import static org.lwjgl.opengl.GL15.glDeleteBuffers;
 import static org.lwjgl.opengl.GL15.glGenBuffers;
 import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
-import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glDeleteVertexArrays;
@@ -27,20 +19,20 @@ import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
 
+import nebulous.Game;
+
 public class Mesh extends Component {
 	
-	private int vCount  = 0;
-	private int vao		= 0;
-	private int vbo		= 0;
-	private int ibo		= 0;
+	public int vCount   = 0;
+	public int vao		= 0;
+	public int vbo		= 0;
+	public int ibo		= 0;
 	
 	private int tbo     = 0;
 	
 	protected float[] vertices;
 	protected int[]   indices;
 	protected float[] texCoords;
-	
-	protected Texture texture;
 	
 	public Mesh(float[] vertices, int[] indices, float[] texCoords) {
 		vCount = indices.length;
@@ -50,9 +42,7 @@ public class Mesh extends Component {
 	}
 	
 	@Override
-	public void init() {
-		
-		texture = (Texture) parent.getComponent(Texture.class);
+	public void init(Game game) {
 		
 		vao = glGenVertexArrays();
 		glBindVertexArray(vao);
@@ -85,27 +75,6 @@ public class Mesh extends Component {
 		
 	}
 	
-	public void renderMesh() {
-		
-        // Bind VAO Data
-        glBindVertexArray(vao);
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
-        
-        // Bind Texture Data
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture.getTextureID());
-        
-        // Draw Mesh
-        glDrawElements(GL_TRIANGLES, vCount, GL_UNSIGNED_INT, 0);
-
-        // Restore state
-        glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
-        glBindVertexArray(0);
-        
-	}
-	
 	public void cleanup() {
 		
 		glDisableVertexAttribArray(0);
@@ -119,7 +88,7 @@ public class Mesh extends Component {
 	    
 	}
 	
-	public static final Mesh PLANE(){
+	public static final Mesh PLANE() {
 		
 		float[] vertices = new float[]{
 				 -0.5f,  0.5f, 0.0f,
@@ -140,7 +109,6 @@ public class Mesh extends Component {
 		};
 
 		return new Mesh(vertices, indices, textureCoords);
-		//TODO: DONT USE NEW MESH
 	}
 
 	public int getVCount() {
@@ -169,6 +137,11 @@ public class Mesh extends Component {
 
 	public float[] getTexCoords() {
 		return texCoords;
+	}
+	
+	@Override
+	public String toString() {
+		return "Mesh = " + "PLANE";
 	}
 
 }

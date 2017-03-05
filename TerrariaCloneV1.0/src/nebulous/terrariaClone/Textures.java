@@ -1,6 +1,6 @@
 package nebulous.terrariaClone;
 
-import nebulous.graphics.primatives.Texture;
+import nebulous.entity.component.Texture;
 
 public class Textures {
 	

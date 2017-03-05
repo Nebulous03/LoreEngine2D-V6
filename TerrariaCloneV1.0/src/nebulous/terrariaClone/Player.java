@@ -1,27 +1,30 @@
 package nebulous.terrariaClone;
 
 import nebulous.Game;
-import nebulous.graphics.Camera;
-import nebulous.graphics.GameWindow;
-import nebulous.graphics.primatives.Mesh;
-import nebulous.graphics.shaders.Shader;
+import nebulous.entity.Entity;
+import nebulous.entity.component.CollisionBox;
+import nebulous.entity.component.Transform;
+import nebulous.entity.simple.EntityMovable;
 import nebulous.logic.Input;
-import nebulous.object.Entity2D;
-import nebulous.object.Level2D;
+import nebulous.object.Level;
 import nebulous.object.TileMap;
-import nebulous.physics.Collision2D;
+import nebulous.physics.Collision;
 import nebulous.utils.Console;
 
-public class Player extends Entity2D
+public class Player extends EntityMovable {
 	
-	private float walkSpeed = 24f;
+	private float walkSpeed = 0.1f;
+	
+	protected CollisionBox box = null;
 	
 	public Player(float x, float y) {
-		super(Mesh.PLANE(Textures.PLAYER), x, y);
+		super(x, y);
 	}
-
+	
 	@Override
-	public void init() {
+	public void init(Game game) {
+		super.init(game);
+		box = (CollisionBox)getComponent(CollisionBox.class);
 		Console.println("Player", "Player initialized...");
 	}
 
@@ -38,133 +41,130 @@ public class Player extends Entity2D
 		
 		// W(UP)
 		if(Input.isKeyHeld(Input.KEY_W)){
-			deltaY += walkSpeed * delta;
+			deltaY += walkSpeed;					//TODO: FIX and multiply with delta
 		}
 		
 		// A(LEFT)
 		if(Input.isKeyHeld(Input.KEY_A)){
-			deltaX += -(walkSpeed * delta);
+			deltaX += -(walkSpeed);
 		}
 		
 		// S(DOWN)
 		if(Input.isKeyHeld(Input.KEY_S)){
-			deltaY += -(walkSpeed * delta);
+			deltaY += -(walkSpeed);
 		}
 		
 		// D(RIGHT)
 		if(Input.isKeyHeld(Input.KEY_D)){
-			deltaX += walkSpeed * delta;
+			deltaX += walkSpeed;
 		}
 		
 		attemptMove(game.getActiveLevel(), deltaX, deltaY);
-		game.getActiveLevel().getCamera().setPosition(position);
+		game.getActiveLevel().getCamera().setPosition(((Transform)getComponent(Transform.class)).position);
 		
 	}
 	
-	Collision2D collision = null;
+	Collision collision = null;
 	
 	//TODO: Move these to a helper class
 	
-	public void attemptMove(Level2D level, float deltaX, float deltaY){
+	public void attemptMove(Level level, float deltaX, float deltaY){
 		
 		// "Ghost" move the bounding box
-		boundingBox.origin.x += deltaX;
-		boundingBox.origin.y += deltaY;
+		box.origin.x += deltaX;
+		box.origin.y += deltaY;
 		
-		if(boundingBox.origin.x < 0) boundingBox.origin.x = 0;
-		if(boundingBox.origin.y < 0) boundingBox.origin.y = 0;
+		if(box.origin.x < 0) box.origin.x = 0;
+		if(box.origin.y < 0) box.origin.y = 0;
 		
 		// Check for collisions with entities
-		for(Entity2D entity : level.getEntities()) {
+		for(Entity entity : level.getEntitySystem().getAllEntities()) {
 			if(entity != this) {
-				if(entity.boundingBox != null){
-					collision = Collision2D.getCollision(boundingBox, entity.boundingBox);
+				if(entity instanceof TileMap){
+					collideWithTileMap((TileMap)entity);
+				} else if(!entity.hasComponent(CollisionBox.class)){
+					collision = Collision.getCollision(box, ((CollisionBox)entity.getComponent(CollisionBox.class)));
 					resolveCollision(collision);
 				}
 			}
 		}
 		
-		// Check collision with TileMap
-		for(TileMap map : level.getTileMaps()) {
-			if(map.collisionLayer) {
-				
-				if(boundingBox.origin.x > map.getWidth() - 1) boundingBox.origin.x = map.getWidth() - 1;
-				if(boundingBox.origin.y > map.getHeight() - 1) boundingBox.origin.y = map.getHeight() - 1 ;
-				
-				int posX = (int)(position.x + 0.5f);
-				int posY = (int)(position.y + 0.5f);
-				
-				// CENTER
-				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile(posX, posY).boundingBox));
-				
-				// NORTH
-				if(posY < map.getHeight() -1)
-				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile(posX, posY + 1).boundingBox));
-				
-				// SOUTH
-				if(posY > 0)
-				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile(posX, posY - 1).boundingBox));
-				
-				// EAST
-				if(posX < map.getWidth() - 1)
-				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile(posX + 1, posY).boundingBox));
-				
-				// WEST
-				if(posX > 0)
-				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile(posX - 1, posY).boundingBox));
+	}
+	
+	public void collideWithTileMap(TileMap map) {	//TODO: move to TileMapCollider class
+		
+		if(map.isCollider()) {
 			
-				// NORTH EAST
-				if(posX < map.getWidth() - 1)
-				if(posY < map.getHeight() -1)
-				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile(posX + 1, posY + 1).boundingBox));
+			if(box.origin.x > map.getWidth() - 1) box.origin.x = map.getWidth() - 1;
+			if(box.origin.y > map.getHeight() - 1) box.origin.y = map.getHeight() - 1 ;
 			
-				// NORTH WEST
-				if(posX > 0)
-				if(posY < map.getHeight() -1)
-				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile(posX - 1, posY + 1).boundingBox));
+			int posX = (int)(getPosition().x + 0.5f);
+			int posY = (int)(getPosition().y + 0.5f);
 			
-				// SOUTH EAST
-				if(posX < map.getWidth() - 1)
-				if(posY - 1 > 0)
-				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile(posX + 1, posY - 1).boundingBox));
+			// CENTER
+			if(map.get(posX, posY).textureID != -1) resolveCollision(Collision.getCollision(this.box, map.get(posX, posY).box));
 			
-				// SOUTH WEST
-				if(posX > 0)
-				if(posY - 1 > 0)
-				resolveCollision(Collision2D.getCollision(this.boundingBox, map.getTile(posX - 1, posY - 1).boundingBox));
+			// NORTH
+			if(posY < map.getHeight() -1)
+				if(map.get(posX, posY + 1).textureID != -1) resolveCollision(Collision.getCollision(this.box, map.get(posX, posY + 1).box));
 			
+			// SOUTH
+			if(posY > 0)
+				if(map.get(posX, posY -1).textureID != -1) resolveCollision(Collision.getCollision(this.box, map.get(posX, posY - 1).box));
+			
+			// EAST
+			if(posX < map.getWidth() - 1)
+				if(map.get(posX + 1, posY).textureID != -1) resolveCollision(Collision.getCollision(this.box, map.get(posX + 1, posY).box));
+			
+			// WEST
+			if(posX > 0)
+				if(map.get(posX - 1, posY).textureID != -1) resolveCollision(Collision.getCollision(this.box, map.get(posX - 1, posY).box));
+		
+			// NORTH EAST
+			if(posX < map.getWidth() - 1)
+			if(posY < map.getHeight() -1)
+				if(map.get(posX + 1, posY + 1).textureID != -1) resolveCollision(Collision.getCollision(this.box, map.get(posX + 1, posY + 1).box));
+		
+			// NORTH WEST
+			if(posX > 0)
+			if(posY < map.getHeight() -1)
+				if(map.get(posX - 1, posY + 1).textureID != -1) resolveCollision(Collision.getCollision(this.box, map.get(posX - 1, posY + 1).box));
+		
+			// SOUTH EAST
+			if(posX < map.getWidth() - 1)
+			if(posY - 1 > 0)
+				if(map.get(posX + 1, posY - 1).textureID != -1) resolveCollision(Collision.getCollision(this.box, map.get(posX + 1, posY - 1).box));
+	
+			// SOUTH WEST
+			if(posX > 0)
+			if(posY - 1 > 0)
+				if(map.get(posX - 1, posY - 1).textureID != -1) resolveCollision(Collision.getCollision(this.box, map.get(posX - 1, posY - 1).box));
+		
+		}
+			
+	}
+	
+	public void resolveCollision(Collision collision) {
+		
+		if(collision.getSide() != Collision.SIDE_NONE){
+			
+			if(collision.getSide() == Collision.SIDE_NORTH) {
+				box.origin.sub(0, collision.getDistanceY());
+			}
+			
+			if(collision.getSide() == Collision.SIDE_SOUTH) {
+				box.origin.sub(0, -collision.getDistanceY());
+			}
+			
+			if(collision.getSide() == Collision.SIDE_EAST) {
+				box.origin.sub(collision.getDistanceX(), 0);
+			}
+			
+			if(collision.getSide() == Collision.SIDE_WEST) {
+				box.origin.sub(-collision.getDistanceX(), 0);
 			}
 			
 		}
-		
-	}
-	
-	public void resolveCollision(Collision2D collision) {
-		
-		if(collision.getSide() != Collision2D.SIDE_NONE){
-			
-			if(collision.getSide() == Collision2D.SIDE_NORTH) {
-				boundingBox.origin.sub(0, collision.getDistanceY());
-			}
-			
-			if(collision.getSide() == Collision2D.SIDE_SOUTH) {
-				boundingBox.origin.sub(0, -collision.getDistanceY());
-			}
-			
-			if(collision.getSide() == Collision2D.SIDE_EAST) {
-				boundingBox.origin.sub(collision.getDistanceX(), 0);
-			}
-			
-			if(collision.getSide() == Collision2D.SIDE_WEST) {
-				boundingBox.origin.sub(-collision.getDistanceX(), 0);
-			}
-			
-		}
-	}
-	
-	@Override
-	public void render(GameWindow window, Camera camera, Shader shader) {
-		super.render(window, camera, shader);
 	}
 
 }

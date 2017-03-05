@@ -2,12 +2,16 @@ package nebulous.entity;
 
 import java.util.ArrayList;
 
+import com.sun.istack.internal.Nullable;
+
 import nebulous.Game;
 import nebulous.entity.component.Component;
 
 public class Entity {
 	
 	public long ID = -1;
+	private boolean registered;
+	
 	private Instance instance;
 	
 	private ArrayList<Component> components = null;
@@ -27,15 +31,32 @@ public class Entity {
 	}
 	
 	public boolean hasComponent(Class<?> componentClass) {
-		return instance.getEntitySystem().hasComponent(this, componentClass);
+		
+		if(registered)
+			return instance.getEntitySystem().hasComponent(this, componentClass);
+		else {
+			for(Component c : components)
+				if(c.getClass().equals(componentClass)) return true;
+		}
+		
+		return false;
 	}
 	
+	@Nullable
 	@SuppressWarnings("unchecked")
 	public <T> T getComponent(Class<?> componentClass) {
-		T component = (T) instance.getEntitySystem().getComponentFromEntity(this, componentClass);
-		if(component == null)
-			new Exception("Component '" + componentClass.getSimpleName() + "' is not bound to entity").printStackTrace();
-		return component;
+		
+		if(registered) {
+			T component = (T) instance.getEntitySystem().getComponentFromEntity(this, componentClass);
+			if(component == null)
+				new Exception("Component '" + componentClass.getSimpleName() + "' is not bound to entity").printStackTrace();
+			return component;
+		} else {
+			for(Component c : components)
+				if(c.getClass().equals(componentClass)) return (T)c;
+		} 
+		
+		return null;
 	}
 
 	public ArrayList<Component> getComponents() {
@@ -48,6 +69,14 @@ public class Entity {
 
 	public void setInstance(Instance instance) {
 		this.instance = instance;
+	}
+
+	public boolean isRegistered() {
+		return registered;
+	}
+
+	public void setRegistered(boolean registered) {
+		this.registered = registered;
 	}
 
 }

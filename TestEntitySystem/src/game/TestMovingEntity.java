@@ -5,7 +5,8 @@ import nebulous.entity.simple.EntityMovable;
 
 public class TestMovingEntity extends EntityMovable {
 	
-	float speed = 0.1f;
+	float speedX = 0.05f;
+	float speedY = 0.05f;
 	
 	public TestMovingEntity(float x, float y) {
 		super(x, y);
@@ -14,22 +15,37 @@ public class TestMovingEntity extends EntityMovable {
 	@Override
 	public void update(Game game, double delta) {
 		
-		move((float)(speed), 0);
+		move(speedX, speedY);
 		
 		if(getX() > 6){
 			setPosition(6, getY());
-			speed *= -1;
+			speedX *= -1;
 		}
 		
 		if(getX() < -6){
 			setPosition(-6, getY());
-			speed *= -1;
+			speedX *= -1;
+		}
+		
+		if(getY() > 5){
+			setPosition(getX(), 5);
+			speedY *= -1;
+		}
+		
+		if(getY() < -5){
+			setPosition(getX(), -5);
+			speedY *= -1;
 		}
 		
 	}
 
-	public TestMovingEntity reverse() {
-		speed *= -1;
+	public TestMovingEntity reverseX() {
+		speedX *= -1;
+		return this;
+	}
+	
+	public TestMovingEntity reverseY() {
+		speedY *= -1;
 		return this;
 	}
 

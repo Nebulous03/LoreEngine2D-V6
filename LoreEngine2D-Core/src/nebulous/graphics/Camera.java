@@ -53,7 +53,7 @@ public class Camera {
 		
 	}
 	
-	Vector3f scale = new Vector3f(0);
+	Vector3f scale = new Vector3f(1);
 	
 	public Matrix4f getModelViewMatrix(Transform trans) {
 		
@@ -61,6 +61,16 @@ public class Camera {
 		scale.y = trans.scale.y;
 		modelMatrix.identity().translate(trans.position.x, trans.position.y, 0).
 			rotateX((float)Math.toRadians(-trans.rotation)).scale(scale);
+		return modelMatrix;
+		
+	}
+	
+	public Matrix4f getModelViewMatrix(float x, float y, float scaleX, float scaleY, float rotation) {
+		
+		scale.x = scaleX;
+		scale.y = scaleY;
+		modelMatrix.identity().translate(x, y, 0).
+			rotateX((float)Math.toRadians(rotation)).scale(scale);
 		return modelMatrix;
 		
 	}

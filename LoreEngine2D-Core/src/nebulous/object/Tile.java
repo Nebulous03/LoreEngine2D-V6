@@ -1,30 +1,53 @@
 package nebulous.object;
 
-import nebulous.graphics.Camera;
-import nebulous.graphics.GameWindow;
-import nebulous.graphics.primatives.Mesh;
-import nebulous.graphics.primatives.Texture;
-import nebulous.graphics.shaders.Shader;
+import com.sun.istack.internal.Nullable;
 
-public class Tile extends GameObject2D{	// Make even more lightweight
-	
-	public static final Tile UNKNOWN_BLUE   = new Tile(Texture.UNKNOWN);
-	public static final Tile UNKNOWN_ORANGE = new Tile(Texture.UNKNOWN2);
+import nebulous.entity.component.CollisionBox;
+import nebulous.entity.component.Mesh;
+import nebulous.entity.component.Texture;
 
-	public Tile() {}
+public class Tile {
 	
-	public Tile(Texture texture) {
-		super(Mesh.PLANE(texture));
+	public int x = 0;
+	public int y = 0;
+	
+	public int textureID = -1;
+	public Mesh mesh;
+	public CollisionBox box;
+	
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public int getTextureID() {
+		return textureID;
+	}
+
+	public Tile setTexture(int textureID) {
+		this.textureID = textureID;
+		return this;
 	}
 	
-	@Override
-	public void render(GameWindow window, Camera camera, Shader shader) {
-		shader.setUniform("modelMatrix", camera.getModelViewMatrix(this));
-		mesh.renderMesh();
+	public Tile setTexture(@Nullable Texture texture) {
+		this.textureID = texture == null ? -1 : texture.getTextureID();
+		return this;
 	}
-	
-	public void setTexture(Texture texture) {
-		mesh.setTexture(texture);
+
+	public void setPos(int x, int y) {
+		this.x = x;
+		this.y = y;
 	}
 	
 }

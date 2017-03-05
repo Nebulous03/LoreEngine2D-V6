@@ -1,6 +1,5 @@
 package nebulous.entity.component;
 
-import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL11.GL_NEAREST;
 import static org.lwjgl.opengl.GL11.GL_REPEAT;
 import static org.lwjgl.opengl.GL11.GL_RGBA;
@@ -16,18 +15,10 @@ import static org.lwjgl.opengl.GL11.glGenTextures;
 import static org.lwjgl.opengl.GL11.glTexImage2D;
 import static org.lwjgl.opengl.GL11.glTexParameterf;
 import static org.lwjgl.opengl.GL11.glTexParameteri;
-import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
-import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
-import static org.lwjgl.opengl.GL15.glBindBuffer;
-import static org.lwjgl.opengl.GL15.glBufferData;
-import static org.lwjgl.opengl.GL15.glGenBuffers;
-import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
 
 import javax.imageio.ImageIO;
 
@@ -40,9 +31,9 @@ public class Texture extends Component {
 	private int textureID;
 	private String fileLocation;
 	
-	public static Texture UNKNOWN  = new Texture("/textures/unknown.png");
-	public static Texture UNKNOWN2 = new Texture("/textures/unknown2.png");
-	public static int textureIndexSize;
+	public static int UNKNOWN  = new Texture("/textures/unknown.png").getTextureID();
+	public static int UNKNOWN2 = new Texture("/textures/unknown2.png").getTextureID();
+	private static int textureIndexSize;
 	
 	private int width  = 0;
 	private int height = 0;
@@ -53,9 +44,10 @@ public class Texture extends Component {
 		textureIndexSize++;
 	}
 	
-	@Override
-	public void init() {
-
+	public Texture(int textureID) {
+		this.textureID = textureID;
+		// this.fileLocation = getById( blahh... )
+		//TODO: Add global texture hash
 	}
 	
 	private int loadTexture(String filename){
@@ -133,8 +125,21 @@ public class Texture extends Component {
 		return fileLocation;
 	}
 
-	public static int getTextureIndexSize() {
+	public static int getIndexSize() {
 		return textureIndexSize;
+	}
+
+	public void set(Texture texture) {
+		this.textureID = texture.textureID;
+	}
+	
+	public void set(int textureID) {
+		this.textureID = textureID;
+	}
+	
+	@Override
+	public String toString() {
+		return "TextureID = " + textureID;
 	}
 
 }

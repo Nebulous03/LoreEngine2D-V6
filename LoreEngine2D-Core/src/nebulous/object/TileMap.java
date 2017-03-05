@@ -1,138 +1,96 @@
 package nebulous.object;
 
 import org.joml.Vector2f;
-import org.joml.Vector3f;
 
+import nebulous.Game;
 import nebulous.entity.Entity;
-import nebulous.graphics.Camera;
-import nebulous.graphics.GameWindow;
-import nebulous.graphics.primatives.Texture;
-import nebulous.graphics.shaders.Shader;
-import nebulous.physics.BoundingBox2D;
+import nebulous.entity.component.CollisionBox;
+import nebulous.entity.component.Mesh;
+import nebulous.entity.component.Render;
+import nebulous.entity.component.Texture;
+import nebulous.graphics.renderers.TileMapRenderer;
 
-public class TileMap extends Entity{
+public class TileMap extends Entity {
 	
-	private Tile[]  tiles   = null;
-	private int	    height  = 0;
-	private int	    width   = 0;
-	private int	    cullX   = 0;
-	private int	    cullY   = 0;
-	private boolean culling = true;
+	private Tile[] tiles = null;
+	private int width	 = 16;
+	private int height   = 16;
+	private int cullX	 = 16;
+	private int cullY	 = 16;
+	private boolean cull = false;
+	private boolean collisions = false;
 	
-	public boolean collisionLayer = false;
-	
-	public TileMap(int width, int height, boolean collisionLayer) {
-		this(null, width, height, collisionLayer);
-	}
-	
-	public TileMap(int width, int height, int cullX, int cullY, boolean collisionLayer) {
-		this(null, width, height, cullX, cullY, collisionLayer);
-	}
-	
-	public TileMap(Texture texture, int width, int height, boolean collisionLayer) {
-		this(texture, width, height, -1, -1, collisionLayer);
-	}
-	
-	public TileMap(Texture texture, int width, int height, int cullX, int cullY, boolean collisionLayer) {
-		
+	public TileMap(int width, int height) {
 		this.width = width;
 		this.height = height;
-		this.cullX = cullX;
-		this.cullY = cullY;
-		this.position = new Vector2f(0);
-		this.rotation = new Vector3f(0);
-		this.scale = new Vector3f(1);
-		this.collisionLayer = collisionLayer;
 		tiles = new Tile[width * height];
-		
-		if(cullX == -1 || cullY == -1) {
-			culling = false;
-		}
-		
-		for(int y = 0; y < height; y++){
-			for(int x = 0; x < width; x++){
-				tiles[x + y * width] = new Tile(texture);
-				tiles[x + y * width].setPosition(x, y);
-			}
-		}
-		
+		add(new Render(new TileMapRenderer(this)));
+		for(int i = 0; i < tiles.length; i++) tiles[i] = new Tile(); //TODO: Move to init?
 	}
-	
-	int cameraX = 0;
-	int cameraY = 0;
-	
-	int posXStart = 0;
-	int posYStart = 0;
 	
 	@Override
-	public void render(GameWindow window, Camera camera, Shader shader) {
-		
-		cameraX = (int)(camera.getPosition().x + 0.5f);
-		cameraY = (int)(camera.getPosition().y + 0.5f);
-		
-		for(int id = 1; id <= Texture.maxTextureID; id++) {
-			
-			shader.bind();
-			
-			shader.setUniform("projectionMatrix", camera.calculateProjectionMatrix(window));
-			shader.setUniform("viewMatrix", camera.calculateViewMatrix(window));
-			
-			shader.updateUniforms();
-			
-			if(culling) {
-			
-				int posXStart = cameraX - (cullX / 2);
-				int posYStart = cameraY - (cullY / 2);
-				
-				if(posYStart + cullY > height) posYStart = height - cullY;
-				if(posXStart + cullX > width) posXStart = width - cullX;
-				
-				if(posYStart < 0) posYStart = 0;
-				if(posXStart < 0) posXStart = 0;
-				
-				for(int y = posYStart; y < posYStart + cullY; y++) {
-					for(int x = posXStart; x < posXStart + cullX; x++) {
-						if(tiles[x + y * width].getTexure() == null) continue;
-						if(tiles[x + y * width].getTexure().textureID == id)
-							tiles[x + y * width].render(window, camera, shader);
-					}
-				}
-			
-			} else {
-			
-				for(int y = 0; y < height; y++){
-					for(int x = 0; x < width; x++){
-						if(tiles[x + y * width].getTexure() == null) continue;
-						if(tiles[x + y * width].getTexure().textureID == id)
-							tiles[x + y * width].render(window, camera, shader);
-					}
-				}
-				
-			}
-			
-			shader.unbind();
-			
+	public void init(Game game) {
+
+		for(int i = 0; i < tiles.length; i++) {
+			tiles[i].mesh = Mesh.PLANE();
+			tiles[i].mesh.init(game);
+			tiles[i].setPos(i,i); //TODO: fin
 		}
 		
-	}
-	
-	public void setTile(int x, int y, Texture texture) {
-		if(y < height && x < width) {
-			tiles[x + y * width].setTexture(texture);
-			if(texture == null) {
-				tiles[x + y * width].boundingBox = null;
-			} else {
-				tiles[x + y * width].boundingBox = new BoundingBox2D(1, 1, new Vector2f(x,y));
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
+				tiles[x + (y * width)].setPos(x,y);
+				tiles[x + (y * width)].box = new CollisionBox(1, 1);
+				tiles[x + (y * width)].box.origin = new Vector2f(x,y);	 //TODO: I dont like this
 			}
 		}
 	}
 	
-	public Tile getTile(int x, int y) {
-		if((x + y * width) < 0) return null;
-		if((x + y * width) > tiles.length - 1) return null;
-		if(x > width)return null;
-		if(y > height) return null;
-		return tiles[x + y * width];
+	public TileMap populate(Texture texture) {
+		for(int i = 0; i < tiles.length; i++) tiles[i].setTexture(texture.getTextureID());
+		return this;
+	}
+	
+	public TileMap populate(int texture) {
+		for(int i = 0; i < tiles.length; i++) tiles[i].setTexture(texture);
+		return this;
+	}
+	
+	public void fill(int x, int y, int width, int height) {
+		//TODO: do
+	}
+	
+	public Tile get(int x, int y) {
+		return tiles[x + (y * width)];
+	}
+
+	public void set(int x, int y, Texture texture) {
+		if(texture != null) get(x, y).setTexture(texture.getTextureID());
+		else get(x, y).setTexture(-1);
+	}
+	
+	public void set(int x, int y, int texture) {
+		get(x, y).setTexture(texture);
+	}
+
+	public TileMap setCull(int cullX, int cullY) {
+		this.cullX = cullX;
+		this.cullY = cullY;
+		return this;
+	}
+	
+	public TileMap enableCulling() {
+		cull = true;
+		return this;
+	}
+	
+	public TileMap disableCulling() {
+		cull = false;
+		return this;
+	}
+	
+	public boolean isCulling() {
+		return cull;
 	}
 
 	public Tile[] getTiles() {
@@ -151,24 +109,22 @@ public class TileMap extends Entity{
 		return cullX;
 	}
 
-	public void setCullX(int cullX) {
-		this.cullX = cullX;
-	}
-
 	public int getCullY() {
 		return cullY;
 	}
 
-	public void setCullY(int cullY) {
-		this.cullY = cullY;
+	public boolean isCollider() {
+		return collisions;
 	}
 
-	public boolean isCulling() {
-		return culling;
+	public TileMap enableCollision() {
+		collisions = true;
+		return this;
 	}
-
-	public void enableCulling(boolean culling) {
-		this.culling = culling;
+	
+	public TileMap disableCollision() {
+		collisions = false;
+		return this;
 	}
-
+	
 }
