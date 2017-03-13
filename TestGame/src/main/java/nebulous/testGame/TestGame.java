@@ -10,9 +10,8 @@ public class TestGame extends Game {
 	public void preInit() {
 		window.setDisplayMode(Window.DisplayMode.WINDOWED);
 //		window.enableVSync(true);
-//		window.setSize(1920, 1080);
 		window.setSize(640, 480);
-//		window.setSize(640, 640);
+//		capFrames(60);
 	}
 	
 	@Override

@@ -1,4 +1,4 @@
-package nebulous.graphics;
+package nebulous.graphics.sprite;
 
 import static org.lwjgl.opengl.GL11.GL_NEAREST;
 import static org.lwjgl.opengl.GL11.GL_REPEAT;

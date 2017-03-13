@@ -6,8 +6,8 @@ import nebulous.Game;
 import nebulous.entity.simple.GUIElement;
 import nebulous.entity.simple.TextElement;
 import nebulous.graphics.Camera;
-import nebulous.graphics.SpriteSheet;
 import nebulous.graphics.component.Texture;
+import nebulous.graphics.sprite.SpriteSheet;
 import nebulous.logic.Input;
 import nebulous.object.Level;
 import nebulous.object.TileMap;
@@ -107,7 +107,7 @@ public class TestLevel extends Level {
 		add(map);	//TODO: add tag functionality back
 		add(map2);
 		add(map3);
-		add(player);
+		add("player", player);
 		add(block);
 		add(block2);
 		add(block3);

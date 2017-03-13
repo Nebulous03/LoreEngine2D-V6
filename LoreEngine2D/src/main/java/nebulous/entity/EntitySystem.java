@@ -18,11 +18,9 @@ public class EntitySystem {
 	private static Instance activeInstance = null;
 	
 	public EntitySystem() {
-		
 		allEntities = new ArrayList<Entity>();
 		idHash = new HashMap<Long, Entity>();
 		componentHash = new HashMap<Class<?>, LinkedHashMap<Long, Component>>();
-		
 	}
 	
 	public Entity addEntity(Entity entity, ArrayList<Component> components) {
@@ -43,8 +41,6 @@ public class EntitySystem {
 			Console.printErr("Entity/Warning", "Entity '" + entity.ID + "' was added but contains no data.");
 		}
 		
-//		for(Component c : components) c.init();	//TODO: I dont like this second loop
-		
 		entity.setRegistered(true);
 		
 		return entity;
@@ -58,15 +54,14 @@ public class EntitySystem {
 		return idCount++;
 	}
 
-	public Entity removeEntity(Entity entity) {
-		
-		allEntities.remove(entity);
-		idHash.remove(entity.ID);
-		
-		return entity;
+	public void removeEntity(Entity entity) {
+		removeEntity(entity.ID);
 	}
-	
+
 	public void removeEntity(long id) {
+		
+		for(Component c : idHash.get((Long)id).getComponents())
+			componentHash.get(c.getClass()).remove(id);
 		
 		allEntities.remove(idHash.get(id));
 		idHash.remove(id);
@@ -137,6 +132,10 @@ public class EntitySystem {
 
 	public boolean hasComponent(Entity entity, Class<?> componentClass) {
 		return getComponentFromEntity(entity, componentClass) != null;
+	}
+
+	public static void clearAll() {
+		//TODO: DO
 	}
 
 }

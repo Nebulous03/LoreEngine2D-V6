@@ -24,11 +24,13 @@ public abstract class Game {
 	protected HashMap<String, Level> levels = null;
 	protected Level activeLevel 			= null;
 	
+	private double FPS = 60.0D;
 	private double TPS = 60.0D;
-	private boolean running = false;
+	private boolean frameCap = false;
+	private boolean running  = false;
 	
 	/**
-	 *  Constructor
+	 *  Constructor:
 	 *  Do not override this method. Use the init methods to
 	 *  add pre-game logic.
 	 *  @author Nebulous
@@ -40,19 +42,43 @@ public abstract class Game {
 	}
 	
 	/**
-	 * PreInit();
-	 * This method runs as soon as the game starts. You may modify
-	 * window / game parameters here. 
-	 * Note: GL Context is NOT created at this point.
+	 * Runs as soon as the game starts, before OpenGL is
+	 * initialized. You may modify window / game parameters here. 
+	 * Note: GL Context has NOT been created at this point.
+	 * @author Nebulous
 	 */
 	
 	public abstract void preInit();
 	
+	/**
+	 * Runs after the engine and OpenGL is initialized.
+	 * Note: GL Context has been created.
+	 * @author Nebulous
+	 */
+	
 	public abstract void init();
+	
+	/**
+	 * Runs after all other init methods. Game is about to start.
+	 * @author Nebulous
+	 */
 	
 	public abstract void postInit();
 	
+	/**
+	 * Runs every game tick. Do not run level or component update methods through
+	 * this method. They are updated internally.
+	 * @param game
+	 * @param delta
+	 * @author Nebulous
+	 */
+	
 	public abstract void update(Game game, double delta);
+	
+	/**
+	 * Internal initialization method.
+	 * @author Nebulous
+	 */
 	
 	private void initialize() {
 		preInit();
@@ -65,20 +91,35 @@ public abstract class Game {
 	}
 	
 	/**
+	 * Internal update method
 	 * @param delta
+	 * @author Nebulous
 	 */
 	
 	private void update(double delta) {
-		updateGame(this, delta);
+		update(this, delta);
+		if(activeLevel != null)
+			activeLevel.updateAll(this, delta);
 		Input.update();
 		window.update();
 	}
 	
+	/**
+	 * Internal render method
+	 * @author Nebulous
+	 */
+	
 	private void render() {
-		if(activeLevel != null) //TODO: Switch to instance
-			renderGame(window);
+		if(activeLevel != null) activeLevel.renderAll();
 		window.render();
 	}
+	
+	/**
+	 * Starts the game loop. All update and render functionality is updated
+	 * according to TPS and FPS. The loop maybe stopped with the stop() method
+	 * or paused with the pause() method.
+	 * @author Nebulous
+	 */
 	
 	public void start() {
 		
@@ -124,23 +165,34 @@ public abstract class Game {
 			
 		}
 		
+		cleanUp();
 		glfwTerminate();
 	}
 	
-	public void updateGame(Game game, double delta){
-		update(game, delta);
-		if(activeLevel != null){
-			activeLevel.update(game, delta);
-			activeLevel.updateAll(game, delta);
-		}
-	}
-	
-	public void renderGame(Window window){
-		if(activeLevel != null) activeLevel.renderAll();
-	}
+	/**
+	 * Stops the game loop. 
+	 * Call stop() to safely stop the loop and terminate OpenGL before exiting.
+	 */
 	
 	public void stop() {
 		running = true;
+	}
+	
+	private void cleanUp() {		//TODO: Do
+//		window.cleanUp();
+	}
+	
+	public void capFrames(double frames) {
+		this.FPS = frames;
+		this.frameCap = true;
+	}
+	
+	public void uncapFrames() {
+		this.frameCap = false;
+	}
+	
+	public double getMaxFrames() {
+		return FPS;
 	}
 
 	public void setTickrate(double tps) {
@@ -150,7 +202,6 @@ public abstract class Game {
 	public double getTickrate() {
 		return TPS;
 	}
-	
 	
 	public void addLevel(String tag, Level level) {
 		levels.put(tag, level);

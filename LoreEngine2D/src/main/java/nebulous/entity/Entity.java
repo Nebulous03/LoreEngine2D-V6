@@ -16,15 +16,25 @@ public class Entity {
 	
 	public void init(Game game) {}
 	
-	public Entity add(Component component){	//TODO: add ability to add/remove after registering
+	public Entity add(Component component){
+		
 		if(components == null)
 			components = new ArrayList<Component>();
 		components.add(component);
+		
+		if(registered)
+			instance.getEntitySystem().addComponent(this, component);
+		
 		return this;
 	}
 	
 	public Entity remove(Component component){
+		
 		components.remove(component);
+		
+		if(registered)
+			instance.getEntitySystem().removeComponent(this, component);
+		
 		return this;
 	}
 	
