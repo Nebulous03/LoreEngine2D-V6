@@ -115,7 +115,7 @@ public class TestLevel extends Level {
 		add(bigBlock);
 		add(halfBlock);
 //		add(text);
-		add(gui);
+//		add(gui);
 	}
 
 	boolean moveUp = true;

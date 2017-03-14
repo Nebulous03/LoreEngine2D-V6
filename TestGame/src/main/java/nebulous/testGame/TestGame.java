@@ -18,9 +18,9 @@ public class TestGame extends Game {
 	public void init() {
 		window.printGLStats();
 		
-		addLevel("testLevel", new TestLevel());
-		addLevel("testLevel2", new TestLevel2());
-		loadLevel("testLevel");
+		add("testLevel", new TestLevel());
+		add("testLevel2", new TestLevel2());
+		load("testLevel");
 	}
 	
 	@Override
@@ -37,14 +37,14 @@ public class TestGame extends Game {
 		
 		if(Input.isKeyPressed(Input.KEY_1)) {
 			cooldown += 20000;
-			unloadLevel();
-			loadLevel("testLevel");
+			unloadActiveLevel();
+			load("testLevel");
 		}
 		
 		if(Input.isKeyPressed(Input.KEY_2)) {
 			cooldown += 20000;
-			unloadLevel();
-			loadLevel("testLevel2");
+			unloadActiveLevel();
+			load("testLevel2");
 		}
 		
 		if(Input.isKeyPressed(Input.KEY_ESCAPE)) {

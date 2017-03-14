@@ -12,7 +12,7 @@ import nebulous.utils.Console;
 import nebulous.utils.Time;
 
 /**
- * The Game class is the top of the LoreEngine archetecture.
+ * The Game class is the top of the LoreEngine architecture.
  * Extend this class and run the start() method to run
  * your game.
  * @author Nebulous
@@ -26,8 +26,10 @@ public abstract class Game {
 	
 	private double FPS = 60.0D;
 	private double TPS = 60.0D;
+	
 	private boolean frameCap = false;
 	private boolean running  = false;
+	private boolean paused   = false;
 	
 	/**
 	 *  Constructor:
@@ -98,10 +100,12 @@ public abstract class Game {
 	
 	private void update(double delta) {
 		update(this, delta);
-		if(activeLevel != null)
+		if(!paused) {
+			if(activeLevel != null)
 			activeLevel.updateAll(this, delta);
-		Input.update();
-		window.update();
+			Input.update();
+			window.update();
+		}
 	}
 	
 	/**
@@ -122,6 +126,11 @@ public abstract class Game {
 	 */
 	
 	public void start() {
+		
+		if(paused) {
+			unpause();
+			return;
+		}
 		
 		int frames = 0;
         double frameCounter = 0;
@@ -172,10 +181,30 @@ public abstract class Game {
 	/**
 	 * Stops the game loop. 
 	 * Call stop() to safely stop the loop and terminate OpenGL before exiting.
+	 * @author Nebulous
 	 */
 	
 	public void stop() {
 		running = true;
+	}
+	
+	/**
+	 * Pauses the game loop. Only the game update method will be called while pause is active.
+	 * Use the unpause() method to unpause. Do not use start()
+	 * @author Nebulous
+	 */
+	
+	public void pause() {
+		paused = true;
+	}
+	
+	/**
+	 * Unpauses the game loop.
+	 * @author Nebulous
+	 */
+	
+	public void unpause() {
+		paused = false;
 	}
 	
 	private void cleanUp() {		//TODO: Do
@@ -191,6 +220,10 @@ public abstract class Game {
 		this.frameCap = false;
 	}
 	
+	public boolean areFramesCapped() {
+		return frameCap;
+	}
+	
 	public double getMaxFrames() {
 		return FPS;
 	}
@@ -203,7 +236,7 @@ public abstract class Game {
 		return TPS;
 	}
 	
-	public void addLevel(String tag, Level level) {
+	public void add(String tag, Level level) {
 		levels.put(tag, level);
 	}
 	
@@ -211,12 +244,12 @@ public abstract class Game {
 		return levels.get(tag);
 	}
 	
-	public void unloadLevel() {
+	public void unloadActiveLevel() {
 		activeLevel.onUnload();
 		activeLevel = null;
 	}
 	
-	public void loadLevel(String tag) {
+	public void load(String tag) {
 		activeLevel = getLevel(tag);
 		activeLevel.initAll(this);
 	}
