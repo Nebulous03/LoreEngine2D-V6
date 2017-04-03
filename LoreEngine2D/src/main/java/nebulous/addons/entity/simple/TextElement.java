@@ -1,4 +1,4 @@
-package nebulous.entity.simple;
+package nebulous.addons.entity.simple;
 
 import nebulous.entity.Entity;
 import nebulous.graphics.component.Render;

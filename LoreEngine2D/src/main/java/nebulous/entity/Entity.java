@@ -3,9 +3,10 @@ package nebulous.entity;
 import java.util.ArrayList;
 
 import nebulous.Game;
+import nebulous.loading.ISavable;
 import nebulous.logic.Instance;
 
-public class Entity {
+public class Entity implements ISavable{
 	
 	public long ID = -1;
 	private boolean registered;
@@ -14,7 +15,9 @@ public class Entity {
 	
 	private ArrayList<Component> components = null;
 	
-	public void init(Game game) {}
+	public void init(Game game) {
+		instance = EntitySystem.getActiveInstance();
+	}
 	
 	public Entity add(Component component){
 		
@@ -84,6 +87,16 @@ public class Entity {
 
 	public void setRegistered(boolean registered) {
 		this.registered = registered;
+	}
+
+	@Override
+	public byte[] saveData() {
+		return null;
+	}
+
+	@Override
+	public byte[] readData() {
+		return null;
 	}
 
 }

@@ -3,7 +3,7 @@ package nebulous.testGame;
 import org.joml.Vector2f;
 
 import nebulous.Game;
-import nebulous.entity.simple.EntityMovable;
+import nebulous.addons.entity.simple.EntityMovable;
 
 public class BigBlock extends EntityMovable {
 

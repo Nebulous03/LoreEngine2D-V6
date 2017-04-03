@@ -1,4 +1,4 @@
-package nebulous.utils;
+package nebulous.addons.util;
 
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -9,7 +9,7 @@ import nebulous.graphics.Camera;
 import nebulous.graphics.Window;
 import nebulous.logic.Input;
 
-public class PositionHelper {
+public class VectorUtils {
 	
 	private static float nx = 0;
 	private static float ny = 0;

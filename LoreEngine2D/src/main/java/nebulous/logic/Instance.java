@@ -8,7 +8,7 @@ public class Instance {
 
 	protected EntitySystem entitySystem;
 	protected Game game;
-	
+
 	public Instance() {
 		entitySystem = new EntitySystem();
 	}
@@ -36,4 +36,8 @@ public class Instance {
 		return entitySystem;
 	}
 
+	public Game getGame() {
+		return game;
+	}
+	
 }

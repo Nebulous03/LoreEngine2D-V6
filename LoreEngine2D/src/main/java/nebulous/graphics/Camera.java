@@ -60,7 +60,7 @@ public class Camera {
 		scale.x = trans.scale.x;
 		scale.y = trans.scale.y;
 		modelMatrix.identity().translate(trans.position.x, trans.position.y, 0).
-			rotateX((float)Math.toRadians(-trans.rotation)).scale(scale);
+			rotateZ((float)Math.toRadians(-trans.rotation)).scale(scale);
 		return modelMatrix;
 		
 	}
@@ -70,7 +70,7 @@ public class Camera {
 		scale.x = scaleX;
 		scale.y = scaleY;
 		modelMatrix.identity().translate(x, y, 0).
-			rotateX((float)Math.toRadians(rotation)).scale(scale);
+			rotateZ((float)Math.toRadians(rotation)).scale(scale);
 		return modelMatrix;
 		
 	}

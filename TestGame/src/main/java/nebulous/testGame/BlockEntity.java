@@ -1,7 +1,7 @@
 package nebulous.testGame;
 
 import nebulous.Game;
-import nebulous.entity.simple.EntityMovable;
+import nebulous.addons.entity.simple.EntityMovable;
 
 public class BlockEntity extends EntityMovable {
 

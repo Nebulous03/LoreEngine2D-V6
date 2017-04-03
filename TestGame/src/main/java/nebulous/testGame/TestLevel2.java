@@ -70,6 +70,7 @@ public class TestLevel2 extends Level {
 
 	@Override
 	public void onUnload() {
-		
+		remove(player);
+		remove(map);
 	}
 }

@@ -1,16 +1,16 @@
 package nebulous.testGame;
 
 import nebulous.Game;
-import nebulous.graphics.Window;
+import nebulous.graphics.Window.DisplayMode;
 import nebulous.logic.Input;
 
 public class TestGame extends Game {
 	
 	@Override
 	public void preInit() {
-		window.setDisplayMode(Window.DisplayMode.WINDOWED);
-//		window.enableVSync(true);
-		window.setSize(640, 480);
+		window.setDisplayMode(DisplayMode.WINDOWED).vSync().setSize(640, 480);
+		window.vSync(false);
+//		window.setSize(640, 480);
 //		capFrames(60);
 	}
 	

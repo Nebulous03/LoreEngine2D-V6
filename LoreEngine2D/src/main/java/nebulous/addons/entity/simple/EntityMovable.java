@@ -1,4 +1,4 @@
-package nebulous.entity.simple;
+package nebulous.addons.entity.simple;
 
 import org.joml.Vector2f;
 

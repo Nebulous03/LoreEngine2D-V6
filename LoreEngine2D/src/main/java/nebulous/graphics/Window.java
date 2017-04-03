@@ -21,7 +21,7 @@ public class Window {
 	private long   WINDOW  		   = 0;
 	
 	private boolean WINDOW_RESIZED = false; 
-	private boolean VSYNC_ENABLED  = false;
+	private boolean VSYNC  = false;
 	
 	private DisplayMode MODE = DisplayMode.WINDOWED;
 	
@@ -110,7 +110,7 @@ public class Window {
 //		glEnable(GL_DEPTH_TEST);	// ENABLE IF IN 3D MODE!!
 		glEnable(GL_CULL_FACE);
 		
-		glfwSwapInterval(VSYNC_ENABLED ? 1 : 0);
+		glfwSwapInterval(VSYNC ? 1 : 0);
 		
 		glClearColor(0.01f, 0.04f, 0.04f, 0.0f);
 		
@@ -139,17 +139,19 @@ public class Window {
 		
 	}
 	
-	public void setDisplayMode(DisplayMode mode){
+	public Window setDisplayMode(DisplayMode mode){
 		this.MODE = mode;
+		return this;
 	}
 	
 	public DisplayMode getDisplayMode() {
 		return MODE;
 	}
 	
-	public void setWindowTitle(String title) {
+	public Window setWindowTitle(String title) {
 		this.WINDOW_TITLE = title;
 		glfwSetWindowTitle(WINDOW, title);
+		return this;
 	}
  	
 	public String getWindowTitle() {
@@ -160,10 +162,11 @@ public class Window {
 		return WINDOW;
 	}
 	
-	public void setSize(int width, int height) {
+	public Window setSize(int width, int height) {
 		this.WINDOW_WIDTH = width;
 		this.WINDOW_HEIGHT = height;
 		this.WINDOW_RESIZED = true;
+		return this;
 	}
 	
 	public void setWidth(int width) {
@@ -182,13 +185,18 @@ public class Window {
 		return WINDOW_HEIGHT;
 	}
 	
-	public void enableVSync(boolean vsync) {
+	public void vSync(boolean vsync) {
 		glfwSwapInterval(vsync ? 1 : 0);
-		this.VSYNC_ENABLED = vsync;
+		this.VSYNC = vsync;
+	}
+	
+	public Window vSync() {
+		VSYNC = true;
+		return this;
 	}
 	
 	public boolean isVSyncEnabled() {
-		return VSYNC_ENABLED;
+		return VSYNC;
 	}
 	
 	public void printGLStats(){
