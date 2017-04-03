@@ -1,7 +1,7 @@
 package example.game;
 
 import nebulous.Game;
-import nebulous.entity.simple.EntityMovable;
+import nebulous.addons.entity.simple.EntityMovable;
 
 public class ExampleEntity extends EntityMovable {
 
