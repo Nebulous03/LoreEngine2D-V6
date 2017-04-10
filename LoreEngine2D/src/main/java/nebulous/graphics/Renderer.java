@@ -1,15 +1,9 @@
 package nebulous.graphics;
 
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
-import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
-import static org.lwjgl.opengl.GL11.glBindTexture;
-import static org.lwjgl.opengl.GL11.glDrawElements;
-import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
-import static org.lwjgl.opengl.GL13.glActiveTexture;
-import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
-import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13.*;
+import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL30.*;
 
 import nebulous.Game;
 import nebulous.entity.Entity;
@@ -37,11 +31,15 @@ public class Renderer {
 		
 		shader.bind();
 		
-		shader.updateUniforms();
-
-		shader.setUniform("projectionMatrix", camera.calculateProjectionMatrix(window));
-		shader.setUniform("viewMatrix", camera.calculateViewMatrix(window));
-		shader.setUniform("modelMatrix", camera.getModelViewMatrix(entity.getComponent(Transform.class)));
+		if(!Window.isLegacy()) {
+		
+			shader.updateUniforms();
+	
+			shader.setUniform("projectionMatrix", camera.calculateProjectionMatrix(window));
+			shader.setUniform("viewMatrix", camera.calculateViewMatrix(window));
+			shader.setUniform("modelMatrix", camera.getModelViewMatrix(entity.getComponent(Transform.class)));
+			
+		}
 		
 		renderMesh((Mesh)entity.getComponent(Mesh.class), (Texture)entity.getComponent(Texture.class));
 		
@@ -49,24 +47,51 @@ public class Renderer {
 		
 	}
 
-	public void renderMesh(Mesh mesh, int id) {
+	public void renderMesh(Mesh mesh, int texID) {
 		
-        // Bind VAO Data
-        glBindVertexArray(mesh.vao);
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
-        
-        // Bind Texture Data
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, id);
-        
-        // Draw Mesh
-        glDrawElements(GL_TRIANGLES, mesh.vCount, GL_UNSIGNED_INT, 0);
-
-        // Restore state
-        glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
-        glBindVertexArray(0);
+		if(!Window.isLegacy()) {
+		
+	        // Bind VAO Data
+	        glBindVertexArray(mesh.vao);
+	        glEnableVertexAttribArray(0);
+	        glEnableVertexAttribArray(1);
+	        
+	        // Bind Texture Data
+	        glActiveTexture(GL_TEXTURE0);
+	        glBindTexture(GL_TEXTURE_2D, texID);
+	        
+	        // Draw Mesh
+	        glDrawElements(GL_TRIANGLES, mesh.vCount, GL_UNSIGNED_INT, 0);
+	        
+	        // Restore state
+	        glDisableVertexAttribArray(0);
+	        glDisableVertexAttribArray(1);
+	        glBindVertexArray(0);
+	        
+		} else {
+			
+			glActiveTexture(GL_TEXTURE0);
+		    glBindTexture(GL_TEXTURE_2D, texID);
+			
+			glBegin(GL_QUADS);
+			
+			glTexCoord2d(0.0,0.0);
+			glVertex2f(-0.5f, -0.5f); // BL
+			
+			glTexCoord2d(-1.0,-1.0);
+			glVertex2f(-0.5f, 0.5f);  // TL
+			
+			glTexCoord2d(1.0,-1.0);
+			glVertex2f(0.5f, 0.5f);   // TR
+			
+			glTexCoord2d(1.0,1.0);
+			glVertex2f(0.5f, -0.5f);  // BR
+			
+			glEnd();
+			
+			glFlush();
+			
+		}
         
 	}
 	

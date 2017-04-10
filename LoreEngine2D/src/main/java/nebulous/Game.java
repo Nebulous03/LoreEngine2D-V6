@@ -262,6 +262,10 @@ public abstract class Game {
 		activeLevel.onUnload();
 		activeLevel = null;
 	}
+	
+	public void unload(String tag) {
+		levels.get(tag).unload();
+	}
 
 	public void load(String tag) {
 		activeLevel = getLevel(tag);
