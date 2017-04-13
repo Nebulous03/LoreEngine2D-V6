@@ -40,11 +40,12 @@ public class Mesh extends Component {
 		this.vertices = vertices;
 		this.indices = indices;
 		this.texCoords = texCoords;
+		create();
 	}
 	
 	@Override
 	public void init(Game game) {
-		create();
+		//create();
 	}
 	
 	public Mesh create() {

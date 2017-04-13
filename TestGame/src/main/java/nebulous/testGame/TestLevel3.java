@@ -42,17 +42,16 @@ public class TestLevel3 extends Level {
 		if(Input.isKeyHeld(Input.KEY_S))
 			player.move(-(float)Math.cos(Math.toRadians(angle)) * speed * (float)delta, -(float)Math.sin(Math.toRadians(angle)) * speed * (float)delta);
 		
-		if(Input.isKeyHeld(Input.KEY_A))
-			player.move(-(float)Math.cos(Math.toRadians(angle + 90)) * speed * (float)delta, -(float)Math.sin(Math.toRadians(angle + 90)) * speed * (float)delta);
-		if(Input.isKeyHeld(Input.KEY_D))
-			player.move(-(float)Math.cos(Math.toRadians(angle - 90)) * speed * (float)delta, -(float)Math.sin(Math.toRadians(angle - 90)) * speed * (float)delta);
+//		if(Input.isKeyHeld(Input.KEY_A))
+//			player.move(-(float)Math.cos(Math.toRadians(angle + 90)) * speed * (float)delta, -(float)Math.sin(Math.toRadians(angle + 90)) * speed * (float)delta);
+//		if(Input.isKeyHeld(Input.KEY_D))
+//			player.move(-(float)Math.cos(Math.toRadians(angle - 90)) * speed * (float)delta, -(float)Math.sin(Math.toRadians(angle - 90)) * speed * (float)delta);
+		
+		if(Input.isMouseButtonHeld(1))
+			shoot(angle);
 		
 		if(Input.isMouseButtonClicked(0))
-			shoot(-angle);
-			
-		
-//		System.out.println(distance);
-		
+			shoot(angle);
 		
 		// Camera
 		
@@ -62,7 +61,7 @@ public class TestLevel3 extends Level {
 	}
 	
 	public void shoot(float angle) {
-		add(new Projectile(player.getPosition().x, player.getPosition().y, 45));
+		add(new Projectile(player.getPosition().x, player.getPosition().y, angle));
 	}
 
 	@Override
