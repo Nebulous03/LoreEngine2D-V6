@@ -14,7 +14,7 @@ public class VectorUtils {
 	private static float nx = 0;
 	private static float ny = 0;
 	
-	private static Vector4f clipCoords = null;
+	private static Vector4f clipCoords = new Vector4f(0, 0, 0, 1);
 	private static Matrix4f invertedProjection = null;
 	private static Vector4f eyeCoords = null;
 	private static Matrix4f invertedViewMatrix = null;
@@ -37,7 +37,7 @@ public class VectorUtils {
 		
 		// TO HOMOGENEOUS CLIP COORDS
 		
-		clipCoords = new Vector4f(nx, ny, -1.0f, 1.0f);
+		clipCoords.set(nx, ny, -1.0f, 1.0f);
 		
 		// TO EYESPACE COORDS
 		

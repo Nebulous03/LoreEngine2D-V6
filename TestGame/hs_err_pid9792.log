@@ -1,0 +1,296 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x000000001a4ffeab, pid=9792, tid=0x00000000000012e8
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_102-b14) (build 1.8.0_102-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.102-b14 mixed mode windows-amd64 compressed oops)
+# Problematic frame:
+# C  0x000000001a4ffeab
+#
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000000002b7e800):  JavaThread "main" [_thread_in_native, id=4840, stack(0x0000000002890000,0x0000000002990000)]
+
+siginfo: ExceptionCode=0xc0000005, reading address 0x0000000000000000
+
+Registers:
+RAX=0x000000001b5f27a0, RBX=0x0000000019f00000, RCX=0x0000000019f00000, RDX=0x0000000000000000
+RSP=0x000000000298ef90, RBP=0x0000000000000018, RSI=0x0000000019f00000, RDI=0x000000001a7cc040
+R8 =0x0000000000000000, R9 =0x0000000000000006, R10=0x000000001a7cc040, R11=0x0000000000000018
+R12=0x0000000000000060, R13=0x0000000000000006, R14=0x0000000000000000, R15=0x000000001b5f27a0
+RIP=0x000000001a4ffeab, EFLAGS=0x0000000000010206
+
+Top of Stack: (sp=0x000000000298ef90)
+0x000000000298ef90:   000000001ba36468 000000001a7cc040
+0x000000000298efa0:   0000000019f00000 0000000000000006
+0x000000000298efb0:   0000000000000000 000000006f5b01a2
+0x000000000298efc0:   0000000000000060 0000000000000000
+0x000000000298efd0:   0000000019f00000 0000000000000000
+0x000000000298efe0:   0000000000000000 0000000000000000
+0x000000000298eff0:   0000000000000000 0000000000000000
+0x000000000298f000:   0000000000000000 000000001b5f27a0
+0x000000000298f010:   0000000000000000 0000000000000000
+0x000000000298f020:   0000000000000006 000000001a4ffe80
+0x000000000298f030:   0000000019f56178 0000000000000000
+0x000000000298f040:   000000001a7cc040 000000001a7cc040
+0x000000000298f050:   000000001fa13650 000000006f594772
+0x000000000298f060:   0000000000000000 0000000000f22850
+0x000000000298f070:   000000001fa13650 0000000000000001
+0x000000000298f080:   00000000000005d0 000000006f5c2301 
+
+Instructions: (pc=0x000000001a4ffeab)
+0x000000001a4ffe8b:   5c 24 18 48 89 74 24 10 48 89 7c 24 08 48 8b d9
+0x000000001a4ffe9b:   48 8b c2 49 8b e9 49 8b d0 48 8d 2c aa 4c 8b dd
+0x000000001a4ffeab:   8b 0a 49 ba 40 6d f7 19 00 00 00 00 41 03 0a 48
+0x000000001a4ffebb:   83 c2 04 48 be 50 6c f5 19 00 00 00 00 48 8b 36 
+
+
+Register to memory mapping:
+
+RAX=0x000000001b5f27a0 is an unknown value
+RBX=0x0000000019f00000 is an unknown value
+RCX=0x0000000019f00000 is an unknown value
+RDX=0x0000000000000000 is an unknown value
+RSP=0x000000000298ef90 is pointing into the stack for thread: 0x0000000002b7e800
+RBP=0x0000000000000018 is an unknown value
+RSI=0x0000000019f00000 is an unknown value
+RDI=0x000000001a7cc040 is an unknown value
+R8 =0x0000000000000000 is an unknown value
+R9 =0x0000000000000006 is an unknown value
+R10=0x000000001a7cc040 is an unknown value
+R11=0x0000000000000018 is an unknown value
+R12=0x0000000000000060 is an unknown value
+R13=0x0000000000000006 is an unknown value
+R14=0x0000000000000000 is an unknown value
+R15=0x000000001b5f27a0 is an unknown value
+
+
+Stack: [0x0000000002890000,0x0000000002990000],  sp=0x000000000298ef90,  free space=1019k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  0x000000001a4ffeab
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+J 963  org.lwjgl.opengl.GL11.nglDrawElements(IIIJ)V (0 bytes) @ 0x0000000002efe00e [0x0000000002efdfc0+0x4e]
+J 1085 C1 nebulous.graphics.Renderer.renderMesh(Lnebulous/graphics/component/Mesh;I)V (148 bytes) @ 0x0000000002f46784 [0x0000000002f461a0+0x5e4]
+J 1084 C1 nebulous.graphics.Renderer.renderMesh(Lnebulous/graphics/component/Mesh;Lnebulous/graphics/component/Texture;)V (10 bytes) @ 0x0000000002f45b54 [0x0000000002f45a40+0x114]
+j  nebulous.graphics.renderers.ColorRenderer.render(Lnebulous/entity/Entity;)V+135
+J 1140 C1 nebulous.object.Level.renderAll()V (54 bytes) @ 0x0000000002f60974 [0x0000000002f60060+0x914]
+J 1162 C1 nebulous.Game.render()V (22 bytes) @ 0x0000000002f7c9c4 [0x0000000002f7c880+0x144]
+j  nebulous.Game.start()V+155
+j  nebulous.testGame.TestGame.main([Ljava/lang/String;)V+7
+v  ~StubRoutines::call_stub
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x00000000197ef000 JavaThread "Java2D Disposer" daemon [_thread_blocked, id=2308, stack(0x0000000020950000,0x0000000020a50000)]
+  0x00000000176fe000 JavaThread "Service Thread" daemon [_thread_blocked, id=10736, stack(0x0000000019400000,0x0000000019500000)]
+  0x0000000018f10800 JavaThread "C1 CompilerThread2" daemon [_thread_blocked, id=7544, stack(0x0000000019300000,0x0000000019400000)]
+  0x00000000176f6800 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=2036, stack(0x0000000018e00000,0x0000000018f00000)]
+  0x00000000176a0000 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=8376, stack(0x0000000018d00000,0x0000000018e00000)]
+  0x000000001769e800 JavaThread "Attach Listener" daemon [_thread_blocked, id=5380, stack(0x0000000018c00000,0x0000000018d00000)]
+  0x000000001769d800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=7468, stack(0x0000000018b00000,0x0000000018c00000)]
+  0x0000000002ace800 JavaThread "Finalizer" daemon [_thread_blocked, id=9060, stack(0x0000000018910000,0x0000000018a10000)]
+  0x0000000002ac3800 JavaThread "Reference Handler" daemon [_thread_blocked, id=2136, stack(0x0000000018810000,0x0000000018910000)]
+=>0x0000000002b7e800 JavaThread "main" [_thread_in_native, id=4840, stack(0x0000000002890000,0x0000000002990000)]
+
+Other Threads:
+  0x0000000017667800 VMThread [stack: 0x0000000018710000,0x0000000018810000] [id=1772]
+  0x0000000018f3d800 WatcherThread [stack: 0x0000000019500000,0x0000000019600000] [id=6764]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap:
+ PSYoungGen      total 38400K, used 32994K [0x00000000d5f80000, 0x00000000d8a00000, 0x0000000100000000)
+  eden space 33280K, 99% used [0x00000000d5f80000,0x00000000d7fb8b08,0x00000000d8000000)
+  from space 5120K, 0% used [0x00000000d8500000,0x00000000d8500000,0x00000000d8a00000)
+  to   space 5120K, 0% used [0x00000000d8000000,0x00000000d8000000,0x00000000d8500000)
+ ParOldGen       total 87552K, used 0K [0x0000000081e00000, 0x0000000087380000, 0x00000000d5f80000)
+  object space 87552K, 0% used [0x0000000081e00000,0x0000000081e00000,0x0000000087380000)
+ Metaspace       used 12300K, capacity 12501K, committed 12672K, reserved 1060864K
+  class space    used 1055K, capacity 1128K, committed 1152K, reserved 1048576K
+
+Card table byte_map: [0x0000000011f40000,0x0000000012340000] byte_map_base: 0x0000000011b31000
+
+Marking Bits: (ParMarkBitMap*) 0x000000007137a6c0
+ Begin Bits: [0x00000000129f0000, 0x0000000014978000)
+ End Bits:   [0x0000000014978000, 0x0000000016900000)
+
+Polling page: 0x0000000000df0000
+
+CodeCache: size=245760Kb used=4090Kb max_used=4103Kb free=241669Kb
+ bounds [0x0000000002b80000, 0x0000000002f90000, 0x0000000011b80000]
+ total_blobs=2079 nmethods=1169 adapters=823
+ compilation: enabled
+
+Compilation events (10 events):
+Event: 2.401 Thread 0x0000000018f10800 nmethod 1161 0x0000000002f7d2d0 code [0x0000000002f7d500, 0x0000000002f7e278]
+Event: 2.401 Thread 0x0000000018f10800 1162       3       nebulous.Game::render (22 bytes)
+Event: 2.402 Thread 0x0000000018f10800 nmethod 1162 0x0000000002f7c690 code [0x0000000002f7c880, 0x0000000002f7cee8]
+Event: 2.402 Thread 0x0000000018f10800 1163       3       nebulous.graphics.Window::render (17 bytes)
+Event: 2.402 Thread 0x0000000018f10800 nmethod 1163 0x0000000002f7bd10 code [0x0000000002f7bee0, 0x0000000002f7c3b8]
+Event: 2.402 Thread 0x0000000018f10800 1164       3       org.lwjgl.glfw.GLFW::glfwSwapBuffers (21 bytes)
+Event: 2.402 Thread 0x0000000018f10800 nmethod 1164 0x0000000002f7e890 code [0x0000000002f7ea20, 0x0000000002f7ecf8]
+Event: 2.418 Thread 0x0000000018f10800 1167       3       org.joml.Vector3f::mul (32 bytes)
+Event: 2.419 Thread 0x0000000018f10800 nmethod 1167 0x0000000002f72550 code [0x0000000002f726a0, 0x0000000002f72810]
+Event: 2.688 Thread 0x00000000176f6800 1169       4       sun.net.www.ParseUtil::encodePath (336 bytes)
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (5 events):
+Event: 0.260 Thread 0x0000000002b7e800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x0000000002d1b368 method=java.lang.String.indexOf([CII[CIII)I @ 3
+Event: 1.502 Thread 0x0000000002b7e800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x0000000002e5a3bc method=java.awt.image.ComponentColorModel.getRGB(Ljava/lang/Object;)I @ 4
+Event: 1.502 Thread 0x0000000002b7e800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x0000000002e5f4e0 method=java.awt.image.ComponentColorModel.getAlpha(Ljava/lang/Object;)I @ 4
+Event: 1.502 Thread 0x0000000002b7e800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x0000000002e59444 method=java.awt.image.ComponentColorModel.extractComponent(Ljava/lang/Object;II)I @ 4
+Event: 1.505 Thread 0x0000000002b7e800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x0000000002e8d704 method=java.awt.image.ComponentColorModel.getAlpha(Ljava/lang/Object;)I @ 4
+
+Internal exceptions (10 events):
+Event: 0.177 Thread 0x0000000002b7e800 Exception <a 'java/security/PrivilegedActionException'> (0x00000000d620a940) thrown at [C:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u102\7268\hotspot\src\share\vm\prims\jvm.cpp, line 1386]
+Event: 0.211 Thread 0x0000000002b7e800 Exception <a 'java/lang/NoSuchFieldError': method resolution failed> (0x00000000d62ef940) thrown at [C:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u102\7268\hotspot\src\share\vm\prims\methodHandles.cpp, line 1146]
+Event: 0.213 Thread 0x0000000002b7e800 Exception <a 'java/lang/NoSuchFieldError': method resolution failed> (0x00000000d62fd090) thrown at [C:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u102\7268\hotspot\src\share\vm\prims\methodHandles.cpp, line 1146]
+Event: 0.990 Thread 0x0000000002b7e800 Exception <a 'sun/nio/fs/WindowsException'> (0x00000000d6538920) thrown at [C:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u102\7268\hotspot\src\share\vm\prims\jni.cpp, line 709]
+Event: 0.990 Thread 0x0000000002b7e800 Exception <a 'sun/nio/fs/WindowsException'> (0x00000000d6539140) thrown at [C:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u102\7268\hotspot\src\share\vm\prims\jni.cpp, line 709]
+Event: 0.991 Thread 0x0000000002b7e800 Exception <a 'sun/nio/fs/WindowsException'> (0x00000000d653bd08) thrown at [C:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u102\7268\hotspot\src\share\vm\prims\jni.cpp, line 709]
+Event: 0.991 Thread 0x0000000002b7e800 Exception <a 'sun/nio/fs/WindowsException'> (0x00000000d653c230) thrown at [C:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u102\7268\hotspot\src\share\vm\prims\jni.cpp, line 709]
+Event: 0.991 Thread 0x0000000002b7e800 Exception <a 'sun/nio/fs/WindowsException'> (0x00000000d653cc08) thrown at [C:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u102\7268\hotspot\src\share\vm\prims\jni.cpp, line 709]
+Event: 0.991 Thread 0x0000000002b7e800 Exception <a 'sun/nio/fs/WindowsException'> (0x00000000d653d098) thrown at [C:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u102\7268\hotspot\src\share\vm\prims\jni.cpp, line 709]
+Event: 1.286 Thread 0x0000000002b7e800 Exception <a 'java/io/FileNotFoundException'> (0x00000000d6d54ce0) thrown at [C:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u102\7268\hotspot\src\share\vm\prims\jni.cpp, line 709]
+
+Events (10 events):
+Event: 2.136 Thread 0x0000000002b7e800 DEOPT PACKING pc=0x0000000002f4ad72 sp=0x000000000298f6e0
+Event: 2.136 Thread 0x0000000002b7e800 DEOPT UNPACKING pc=0x0000000002bc787f sp=0x000000000298f3e0 mode 0
+Event: 2.686 loading class nebulous/graphics/renderers/ColorRenderer
+Event: 2.687 loading class nebulous/graphics/renderers/ColorRenderer done
+Event: 2.687 loading class nebulous/graphics/shaders/ColorShader
+Event: 2.687 loading class nebulous/graphics/shaders/ColorShader done
+Event: 2.688 loading class java/awt/Color
+Event: 2.688 loading class java/awt/Paint
+Event: 2.688 loading class java/awt/Paint done
+Event: 2.688 loading class java/awt/Color done
+
+
+Dynamic libraries:
+0x00007ff615640000 - 0x00007ff615677000 	C:\Program Files\Java\jre1.8.0_102\bin\javaw.exe
+0x00007ffa66b20000 - 0x00007ffa66cf1000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007ffa640b0000 - 0x00007ffa6415b000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007ffa63150000 - 0x00007ffa6336d000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007ffa64950000 - 0x00007ffa649f2000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007ffa64a00000 - 0x00007ffa64a9e000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007ffa645d0000 - 0x00007ffa64629000 	C:\WINDOWS\System32\sechost.dll
+0x00007ffa669f0000 - 0x00007ffa66b11000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007ffa66650000 - 0x00007ffa667b5000 	C:\WINDOWS\System32\USER32.dll
+0x00007ffa630c0000 - 0x00007ffa630de000 	C:\WINDOWS\System32\win32u.dll
+0x00007ffa66910000 - 0x00007ffa66944000 	C:\WINDOWS\System32\GDI32.dll
+0x00007ffa63c00000 - 0x00007ffa63d82000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007ffa53860000 - 0x00007ffa53ada000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.14393.953_none_42151e83c686086b\COMCTL32.dll
+0x00007ffa64ab0000 - 0x00007ffa64d78000 	C:\WINDOWS\System32\combase.dll
+0x00007ffa63a50000 - 0x00007ffa63b45000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007ffa630e0000 - 0x00007ffa6314a000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x00007ffa64160000 - 0x00007ffa6418e000 	C:\WINDOWS\System32\IMM32.DLL
+0x00000000715d0000 - 0x00000000716a1000 	C:\Program Files\Java\jre1.8.0_102\bin\msvcr100.dll
+0x0000000070b60000 - 0x00000000713fa000 	C:\Program Files\Java\jre1.8.0_102\bin\server\jvm.dll
+0x00007ffa645c0000 - 0x00007ffa645c8000 	C:\WINDOWS\System32\PSAPI.DLL
+0x00007ffa5ad70000 - 0x00007ffa5ad79000 	C:\WINDOWS\SYSTEM32\WSOCK32.dll
+0x00007ffa663c0000 - 0x00007ffa6642a000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007ffa61230000 - 0x00007ffa61253000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007ffa5bdc0000 - 0x00007ffa5bdca000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007ffa60fa0000 - 0x00007ffa60fcb000 	C:\WINDOWS\SYSTEM32\WINMMBASE.dll
+0x00007ffa63e90000 - 0x00007ffa63ed2000 	C:\WINDOWS\System32\cfgmgr32.dll
+0x0000000070a70000 - 0x0000000070a7f000 	C:\Program Files\Java\jre1.8.0_102\bin\verify.dll
+0x0000000070a40000 - 0x0000000070a69000 	C:\Program Files\Java\jre1.8.0_102\bin\java.dll
+0x0000000070a20000 - 0x0000000070a36000 	C:\Program Files\Java\jre1.8.0_102\bin\zip.dll
+0x00007ffa64e40000 - 0x00007ffa66349000 	C:\WINDOWS\System32\SHELL32.dll
+0x00007ffa63370000 - 0x00007ffa63a4a000 	C:\WINDOWS\System32\windows.storage.dll
+0x00007ffa62fa0000 - 0x00007ffa62fec000 	C:\WINDOWS\System32\powrprof.dll
+0x00007ffa64de0000 - 0x00007ffa64e32000 	C:\WINDOWS\System32\shlwapi.dll
+0x00007ffa62f90000 - 0x00007ffa62f9f000 	C:\WINDOWS\System32\kernel.appcore.dll
+0x00007ffa63010000 - 0x00007ffa630b9000 	C:\WINDOWS\System32\shcore.dll
+0x00007ffa62ff0000 - 0x00007ffa63004000 	C:\WINDOWS\System32\profapi.dll
+0x0000000070a00000 - 0x0000000070a1a000 	C:\Program Files\Java\jre1.8.0_102\bin\net.dll
+0x00007ffa628b0000 - 0x00007ffa6290c000 	C:\WINDOWS\system32\mswsock.dll
+0x00000000709e0000 - 0x00000000709f1000 	C:\Program Files\Java\jre1.8.0_102\bin\nio.dll
+0x00007ffa4c860000 - 0x00007ffa4c8b7000 	C:\Users\Nebulous\AppData\Local\Temp\lwjglNebulous\3.1.1-build-16\lwjgl.dll
+0x00007ffa62a50000 - 0x00007ffa62a5b000 	C:\WINDOWS\SYSTEM32\CRYPTBASE.DLL
+0x00007ffa5a470000 - 0x00007ffa5a4ac000 	C:\Users\Nebulous\AppData\Local\Temp\lwjglNebulous\3.1.1-build-16\glfw.dll
+0x00007ffa41330000 - 0x00007ffa4136e000 	C:\Users\Nebulous\AppData\Local\Temp\lwjglNebulous\3.1.1-build-16\jemalloc.dll
+0x00007ffa616c0000 - 0x00007ffa61755000 	C:\WINDOWS\system32\uxtheme.dll
+0x00007ffa405f0000 - 0x00007ffa40630000 	C:\WINDOWS\SYSTEM32\dinput8.dll
+0x00007ffa5ea70000 - 0x00007ffa5ea7e000 	C:\WINDOWS\SYSTEM32\xinput1_4.dll
+0x00007ffa61b80000 - 0x00007ffa61ba8000 	C:\WINDOWS\SYSTEM32\DEVOBJ.dll
+0x00007ffa5fcb0000 - 0x00007ffa5fcd6000 	C:\WINDOWS\SYSTEM32\dwmapi.dll
+0x00007ffa61e60000 - 0x00007ffa61e6c000 	C:\WINDOWS\SYSTEM32\HID.DLL
+0x00007ffa64190000 - 0x00007ffa645b9000 	C:\WINDOWS\System32\SETUPAPI.DLL
+0x00007ffa63e30000 - 0x00007ffa63e85000 	C:\WINDOWS\System32\WINTRUST.dll
+0x00007ffa62f80000 - 0x00007ffa62f90000 	C:\WINDOWS\System32\MSASN1.dll
+0x00007ffa63ee0000 - 0x00007ffa640a9000 	C:\WINDOWS\System32\CRYPT32.dll
+0x00007ffa647f0000 - 0x00007ffa6494a000 	C:\WINDOWS\System32\MSCTF.dll
+0x00007ffa66590000 - 0x00007ffa6664f000 	C:\WINDOWS\System32\OLEAUT32.dll
+0x00007ffa63d90000 - 0x00007ffa63e2c000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007ffa40c50000 - 0x00007ffa40d73000 	C:\WINDOWS\SYSTEM32\opengl32.dll
+0x00007ffa46b90000 - 0x00007ffa46bbd000 	C:\WINDOWS\SYSTEM32\GLU32.dll
+0x00007ffa40e90000 - 0x00007ffa40f87000 	C:\WINDOWS\SYSTEM32\DDRAW.dll
+0x00007ffa57360000 - 0x00007ffa57368000 	C:\WINDOWS\SYSTEM32\DCIMAN32.dll
+0x000000006e850000 - 0x00000000709a0000 	C:\WINDOWS\SYSTEM32\nvoglv64.DLL
+0x00007ffa5f660000 - 0x00007ffa5f673000 	C:\WINDOWS\SYSTEM32\WTSAPI32.dll
+0x00007ffa62320000 - 0x00007ffa62352000 	C:\WINDOWS\SYSTEM32\ntmarta.dll
+0x00007ffa62410000 - 0x00007ffa62466000 	C:\WINDOWS\SYSTEM32\WINSTA.dll
+0x00007ffa61f00000 - 0x00007ffa61f9f000 	C:\WINDOWS\system32\dxgi.dll
+0x00007ffa5f700000 - 0x00007ffa5f9b6000 	C:\WINDOWS\system32\d3d11.dll
+0x00007ffa29370000 - 0x00007ffa2aaa2000 	C:\WINDOWS\System32\DriverStore\FileRepository\nvacwu.inf_amd64_31f4ef4821269ebb\nvwgf2umx.dll
+0x00007ffa62b60000 - 0x00007ffa62b8b000 	C:\WINDOWS\SYSTEM32\bcrypt.dll
+0x00007ffa358f0000 - 0x00007ffa35aa7000 	C:\WINDOWS\system32\nvspcap64.dll
+0x00007ffa667c0000 - 0x00007ffa668f7000 	C:\WINDOWS\System32\ole32.dll
+0x00007ffa5fee0000 - 0x00007ffa5ffad000 	C:\WINDOWS\SYSTEM32\WINHTTP.dll
+0x00007ffa4d980000 - 0x00007ffa4dd7a000 	C:\WINDOWS\system32\nvapi64.dll
+0x00007ffa62c80000 - 0x00007ffa62cac000 	C:\WINDOWS\SYSTEM32\SspiCli.dll
+0x00007ffa3a2d0000 - 0x00007ffa3a32f000 	C:\Users\Nebulous\AppData\Local\Temp\lwjglNebulous\3.1.1-build-16\lwjgl_opengl.dll
+0x000000006e6b0000 - 0x000000006e848000 	C:\Program Files\Java\jre1.8.0_102\bin\awt.dll
+0x00007ffa61500000 - 0x00007ffa6157a000 	C:\WINDOWS\SYSTEM32\apphelp.dll
+0x00007ffa62a60000 - 0x00007ffa62a77000 	C:\WINDOWS\SYSTEM32\CRYPTSP.dll
+0x00007ffa624b0000 - 0x00007ffa624e3000 	C:\WINDOWS\system32\rsaenh.dll
+0x00007ffa62730000 - 0x00007ffa6274f000 	C:\WINDOWS\SYSTEM32\USERENV.dll
+0x00007ffa62630000 - 0x00007ffa62668000 	C:\WINDOWS\SYSTEM32\IPHLPAPI.DLL
+0x00007ffa64aa0000 - 0x00007ffa64aa8000 	C:\WINDOWS\System32\NSI.dll
+0x00007ffa5e220000 - 0x00007ffa5e236000 	C:\WINDOWS\SYSTEM32\dhcpcsvc6.DLL
+0x00007ffa5e3f0000 - 0x00007ffa5e40a000 	C:\WINDOWS\SYSTEM32\dhcpcsvc.DLL
+0x00007ffa49c60000 - 0x00007ffa49df2000 	C:\WINDOWS\SYSTEM32\dbghelp.dll
+
+VM Arguments:
+jvm_args: -Dfile.encoding=Cp1252 
+java_command: nebulous.testGame.TestGame
+java_class_path (initial): C:\My Stuff\Java Development\LoreEngine2D-V7\TestGame\bin;C:\Users\Nebulous\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl\3.1.1\2b449bd5d8738abb138d6ad89d04b83d4ede504\lwjgl-3.1.1.jar;C:\Users\Nebulous\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl\3.1.1\87423e2d9816b5558d5ba121b2452ae11bec22f5\lwjgl-3.1.1-natives-windows.jar;C:\Users\Nebulous\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-glfw\3.1.1\292401460b1030da5626c23b9930fef29421d354\lwjgl-glfw-3.1.1.jar;C:\Users\Nebulous\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-glfw\3.1.1\cc1ee4fef774c879cd94f85112ddb70b773e46fb\lwjgl-glfw-3.1.1-natives-windows.jar;C:\Users\Nebulous\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-jemalloc\3.1.1\22d6f36387dbe8b13a419a8f8202b615144c7c49\lwjgl-jemalloc-3.1.1.jar;C:\Users\Nebulous\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-jemalloc\3.1.1\5bae0aaeddc6c4e4e4f07c1ea8492eba72e85f7d\lwjgl-jemalloc-3.1.1-natives-windows.jar;C:\Users\Nebulous\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-openal\3.1.1\376289e114245be947e7a3fafb845c2a17d0d8de\lwjgl-openal-3.1.1.jar;C:\Users\Nebulous\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-openal\3.1.1\1b709f6ebcae5d6134bc6b72170d35a2c4e1c61d\lwjgl-openal-3.1.1-natives-windows.jar;C:\Users\Nebulous\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-opencl\3.1.1\74c46c5190e0973a1f37bbfa714c25b1877d889f\lwjgl-opencl-3.1.1.jar;C:\Users\Nebulous\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-opengl\3.1.1\bf95209b5d3d484871812b5a7f5d8a9a147bdd0e\lwjgl-opengl-3.1.1.jar;C:\Users\Nebulous\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-opengl\3.1.1\f8307f731852493c70fd596e3aa90ca00b09411f\lwjgl-opengl-3.1.1-natives-windows.jar;C:\Users\Nebulous\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-stb\3.1.1\81501a680233f39954947ead3b4c15a9778b2425\lwjgl-stb-3.1.1.jar;C:\Users\Nebulous\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-stb\3.1.1\6d7c60edd0ebcd0664e1f7f8f5ea7c15d92b5
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+PATH=C:/Program Files/Java/jre1.8.0_102/bin/server;C:/Program Files/Java/jre1.8.0_102/bin;C:/Program Files/Java/jre1.8.0_102/lib/amd64;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Users\Nebulous\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Users\Nebulous\AppData\Local\Programs\Python\Python36\Scripts\;C:\Users\Nebulous\AppData\Local\Programs\Python\Python36\;C:\Users\Nebulous\AppData\Local\Microsoft\WindowsApps;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Users\Nebulous\AppData\Local\Programs\Python\Python36\Scripts\;C:\Users\Nebulous\AppData\Local\Programs\Python\Python36\;C:\Users\Nebulous\AppData\Local\Microsoft\WindowsApps;;C:\Users\Nebulous\eclipse\java-neon\eclipse;
+USERNAME=Nebulous
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 78 Stepping 3, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 10.0 , 64 bit Build 14393 (10.0.14393.0)
+
+CPU:total 4 (2 cores per cpu, 2 threads per core) family 6 model 78 stepping 3, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, clmul, erms, 3dnowpref, lzcnt, ht, tsc, tscinvbit, bmi1, bmi2, adx
+
+Memory: 4k page, physical 8259484k(3820004k free), swap 13764508k(8290168k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (25.102-b14) for windows-amd64 JRE (1.8.0_102-b14), built on Jun 22 2016 13:15:21 by "java_re" with MS VC++ 10.0 (VS2010)
+
+time: Wed Apr 12 11:25:05 2017
+elapsed time: 2 seconds (0d 0h 0m 2s)
+

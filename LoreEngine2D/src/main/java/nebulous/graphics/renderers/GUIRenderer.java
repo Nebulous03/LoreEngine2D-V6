@@ -7,14 +7,14 @@ import nebulous.graphics.Renderer;
 import nebulous.graphics.component.Mesh;
 import nebulous.graphics.component.Texture;
 import nebulous.graphics.component.Transform;
-import nebulous.graphics.shaders.DefaultShader;
+import nebulous.graphics.shaders.GUIShader;
 
 public class GUIRenderer extends Renderer {
 	
 	private static GUIRenderer instance = new GUIRenderer();
 
 	public GUIRenderer() {
-		super(DefaultShader.instance());
+		super(GUIShader.instance());
 		this.camera = new Camera().setPerspective(Camera.ORTHOGRAPHIC); //TODO: move back to init?
 	}
 	
