@@ -38,7 +38,7 @@ public class ColorRenderer extends Renderer {
 //			shader.setUniform("color", vecColor);
 			shader.setUniform("projectionMatrix", camera.calculateProjectionMatrix(window));
 			shader.setUniform("viewMatrix", camera.calculateViewMatrix(window));
-			shader.setUniform("modelMatrix", camera.getModelViewMatrix(entity.getComponent(Transform.class)));
+			shader.setUniform("modelMatrix", camera.getModelViewMatrix((Transform) entity.getComponent(Transform.class)));
 			
 		}
 		

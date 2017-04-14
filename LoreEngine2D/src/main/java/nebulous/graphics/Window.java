@@ -45,7 +45,6 @@ public class Window {
 		
 		GLFWErrorCallback errorCallback = new GLFWErrorCallback() {
 			
-			@Override
 			public void invoke(int error, long description) {
 				System.out.println(getDescription(description));
 				new Exception("Internal OpenGL error occurred...").printStackTrace();
@@ -82,7 +81,6 @@ public class Window {
 		glfwSwapInterval(0);	// VSync
 		
 		GLFWWindowSizeCallback windowSizeCallback = new GLFWWindowSizeCallback() {
-			@Override
 			public void invoke(long window, int width, int height) {
 				WINDOW_WIDTH = width;
 				WINDOW_HEIGHT = height;
@@ -94,7 +92,6 @@ public class Window {
 		
 		GLFWWindowCloseCallback windowCloseCallback = new GLFWWindowCloseCallback() {
 
-			@Override
 			public void invoke(long window) {	// TODO: Add more support for this.
 				glfwDestroyWindow(window);
 				glfwTerminate();
