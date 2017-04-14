@@ -1,5 +1,7 @@
 package nebulous.addons.entity.simple;
 
+import java.util.ArrayList;
+
 import org.joml.Vector2f;
 
 import nebulous.Game;
@@ -41,6 +43,7 @@ public abstract class EntityMovable extends Entity {
 	}
 	
 	Collision collision = null;
+	ArrayList<Collision> collisions = new ArrayList<Collision>(); 
 	
 	//TODO: Move these to a helper class
 	
@@ -50,14 +53,17 @@ public abstract class EntityMovable extends Entity {
 		box.origin.x += deltaX;
 		box.origin.y += deltaY;
 		
-		if(box.origin.x < 0) box.origin.x = 0;
-		if(box.origin.y < 0) box.origin.y = 0;
-		
 		// Check for collisions with entities
 		for(Entity entity : level.getEntitySystem().getAllEntities()) {
 			if(entity != this) {
 				if(entity instanceof TileMap){
 					collideWithTileMap((TileMap)entity);
+					if(((TileMap)entity).isCollider()) {
+						if(box.origin.x < 0) box.origin.x = 0;
+						if(box.origin.y < 0) box.origin.y = 0;
+						if(box.origin.x > ((TileMap)entity).getWidth() - 1) box.origin.x = ((TileMap)entity).getWidth() - 1;
+						if(box.origin.y > ((TileMap)entity).getHeight() - 1) box.origin.y = ((TileMap)entity).getHeight() - 1;
+					}
 				} else if(entity.hasComponent(CollisionBox.class)){
 					collision = Collision.getCollision(box, ((CollisionBox)entity.getComponent(CollisionBox.class)));
 					resolveCollision(collision);
@@ -222,12 +228,12 @@ public abstract class EntityMovable extends Entity {
 	}
 	
 	public EntityMovable setCollisionBox(float width, float height, Vector2f origin) {
-		((CollisionBox)getComponent(CollisionBox.class)).set(width, height, origin);
+		((CollisionBox)getComponent(CollisionBox.class)).setSize(width, height, origin);
 		return this;
 	}
 	
 	public EntityMovable setCollisionBox(float width, float height) {
-		((CollisionBox)getComponent(CollisionBox.class)).set(width, height);
+		((CollisionBox)getComponent(CollisionBox.class)).setSize(width, height);
 		return this;
 	}
 	
