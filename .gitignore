@@ -58,3 +58,6 @@ local.properties
 *.gen
 *.snap
 *.snap
+
+# Java log files
+*.log

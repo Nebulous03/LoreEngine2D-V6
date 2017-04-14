@@ -15,7 +15,7 @@ public class GUIRenderer extends Renderer {
 
 	public GUIRenderer() {
 		super(GUIShader.instance());
-		this.camera = new Camera().setPerspective(Camera.ORTHOGRAPHIC); //TODO: move back to init?
+		this.camera = new Camera().setPerspective(Camera.ORTHOGRAPHIC).setFOV(1f); //TODO: move back to init?
 	}
 	
 	@Override
@@ -32,7 +32,7 @@ public class GUIRenderer extends Renderer {
 
 		shader.setUniform("projectionMatrix", camera.calculateProjectionMatrix(window));
 		shader.setUniform("viewMatrix", camera.calculateViewMatrix(window));
-		shader.setUniform("modelMatrix", camera.getModelViewMatrix(entity.getComponent(Transform.class)));
+		shader.setUniform("modelMatrix", camera.getModelViewMatrix((Transform) entity.getComponent(Transform.class)));
 		
 		renderMesh((Mesh)entity.getComponent(Mesh.class), (Texture)entity.getComponent(Texture.class));
 		
