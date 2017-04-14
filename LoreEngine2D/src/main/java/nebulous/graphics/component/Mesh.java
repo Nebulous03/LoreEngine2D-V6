@@ -40,12 +40,11 @@ public class Mesh extends Component {
 		this.vertices = vertices;
 		this.indices = indices;
 		this.texCoords = texCoords;
-		create();
 	}
 	
 	@Override
 	public void init(Game game) {
-		//create();
+		create();
 	}
 	
 	public Mesh create() {
@@ -190,52 +189,6 @@ public class Mesh extends Component {
 		this.vertices = mesh.vertices;
 		this.indices = mesh.indices;
 		this.texCoords = mesh.texCoords;
-	}
-
-	public Mesh offset(float offX, float offY, float offZ) {
-		
-		vertices[0] += offX;
-		vertices[1] += offY;
-		vertices[2] += offZ;
-		
-		vertices[3] += offX;
-		vertices[4] += offY;
-		vertices[5] += offZ;
-		
-		vertices[6] += offX;
-		vertices[7] += offY;
-		vertices[8] += offZ;
-		
-		vertices[9] += offX;
-		vertices[10] += offY;
-		vertices[11] += offZ;
-		
-		return this;
-	}
-
-	public Mesh scale(float x, float y, float z) {
-		
-		vertices[0] *= x;
-		vertices[1] *= y;
-		vertices[2] *= z;
-		
-		vertices[3] *= x;
-		vertices[4] *= y;
-		vertices[5] *= z;
-	
-		vertices[6] *= x;
-		vertices[7] *= y;
-		vertices[8] *= z;
-		
-		vertices[9] *= x;
-		vertices[10] *= y;
-		vertices[11] *= z;
-
-		return this;
-	}
-
-	public void setVerticies(float[] verts) {
-		vertices = verts;
 	}
 
 }

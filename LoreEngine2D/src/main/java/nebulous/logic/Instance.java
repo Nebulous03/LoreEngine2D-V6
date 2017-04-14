@@ -13,13 +13,13 @@ public class Instance {
 		entitySystem = new EntitySystem();
 	}
 	
-	public void add(Entity entity) {
+	protected void add(Entity entity) {
 		entity.setInstance(this);
 		entity.init(game);
 		getEntitySystem().addEntity(entity, entity.getComponents());
 	}
 	
-	public void remove(Entity entity) {
+	protected void remove(Entity entity) {
 		getEntitySystem().removeEntity(entity);
 	}
 	

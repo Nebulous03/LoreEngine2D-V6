@@ -14,8 +14,6 @@ public class Window {
 		WINDOWED_FULLSCREEN,
 		FULLSCREEN
 	}
-	
-	private static boolean legacyMode = false;
 
 	private String WINDOW_TITLE    = "NebulousGameEngine V6.0";
 	private int    WINDOW_WIDTH    = 640;
@@ -45,6 +43,7 @@ public class Window {
 		
 		GLFWErrorCallback errorCallback = new GLFWErrorCallback() {
 			
+			@Override
 			public void invoke(int error, long description) {
 				System.out.println(getDescription(description));
 				new Exception("Internal OpenGL error occurred...").printStackTrace();
@@ -81,6 +80,7 @@ public class Window {
 		glfwSwapInterval(0);	// VSync
 		
 		GLFWWindowSizeCallback windowSizeCallback = new GLFWWindowSizeCallback() {
+			@Override
 			public void invoke(long window, int width, int height) {
 				WINDOW_WIDTH = width;
 				WINDOW_HEIGHT = height;
@@ -92,6 +92,7 @@ public class Window {
 		
 		GLFWWindowCloseCallback windowCloseCallback = new GLFWWindowCloseCallback() {
 
+			@Override
 			public void invoke(long window) {	// TODO: Add more support for this.
 				glfwDestroyWindow(window);
 				glfwTerminate();
@@ -104,23 +105,10 @@ public class Window {
 
 		GL.createCapabilities();
 		
-		int version = Integer.parseInt(glGetString(GL_VERSION).split(" ")[0].substring(0, 1));
-		
-		if(version < 3)
-			legacyMode = true;
-		
-		if(legacyMode) {
-			glMatrixMode(GL11.GL_PROJECTION) ;
-			glLoadIdentity();
-			glOrtho(0, 800, 0, 600, 1, -1) ; 
-			glMatrixMode(GL11.GL_MODELVIEW);
-			glLoadIdentity();
-			glFlush();
-		}
-		
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//		glEnable(GL_CULL_FACE);
+//		glEnable(GL_DEPTH_TEST);	// ENABLE IF IN 3D MODE!!
+		glEnable(GL_CULL_FACE);
 		
 		glfwSwapInterval(VSYNC ? 1 : 0);
 		
@@ -226,13 +214,5 @@ public class Window {
 
 	public boolean resized() {
 		return WINDOW_RESIZED;
-	}
-	
-	public static boolean isLegacy() {
-		return legacyMode;
-	}
-	
-	public void forceLegacyMode() {
-		legacyMode = true;
 	}
 }

@@ -9,19 +9,19 @@ import nebulous.graphics.component.Transform;
 public class Camera {
 	
 	public static final int ORTHOGRAPHIC = 0;
-	public static final int PERSPECTIVE = 1;
+	public static final int PERSPECTIVE  = 1;
 	
-	private float FOV = (float) Math.toRadians(60.0f);
-	private static final float Z_NEAR = 0.01f;
-	private static final float Z_FAR = 1000.f;
+	private static final float FOV 		= (float) Math.toRadians(60.0f);
+    private static final float Z_NEAR 	= 0.01f;
+    private static final float Z_FAR 	= 1000.f;
+    
+    private float aspectRatio = 0;
 	
-	private float aspectRatio = 0;
-	
-	private Matrix4f transformationMatrix = null;
-	private Matrix4f projectionMatrix = null;
-	private Matrix4f modelMatrix = null;
-	private Matrix4f viewMatrix = null;
-	
+    private Matrix4f transformationMatrix = null;
+	private Matrix4f projectionMatrix     = null;
+	private Matrix4f modelMatrix          = null;
+	private Matrix4f viewMatrix 	      = null;
+
 	private int perspective = 1;
 	
 	private Vector3f position = null;
@@ -42,8 +42,8 @@ public class Camera {
 	
 	public Matrix4f calculateProjectionMatrix(Window window) {
 		
-		if (perspective == ORTHOGRAPHIC) {
-			projectionMatrix.identity().ortho2D(-((float) window.getWidth() / window.getHeight())*(FOV), (float) (window.getWidth() / window.getHeight())*(FOV), -1*(FOV), 1*(FOV));
+		if(perspective == ORTHOGRAPHIC) {
+			projectionMatrix.identity().ortho2D(-((float)window.getWidth() / window.getHeight()), (float)window.getWidth() / window.getHeight(), -1, 1);
 			return projectionMatrix;
 		} else {
 			aspectRatio = (float) window.getWidth() / window.getHeight();
@@ -59,7 +59,8 @@ public class Camera {
 		
 		scale.x = trans.scale.x;
 		scale.y = trans.scale.y;
-		modelMatrix.identity().translate(trans.position.x, trans.position.y, 0).rotateZ((float) Math.toRadians(-trans.rotation)).scale(scale);
+		modelMatrix.identity().translate(trans.position.x, trans.position.y, 0).
+			rotateZ((float)Math.toRadians(-trans.rotation)).scale(scale);
 		return modelMatrix;
 		
 	}
@@ -68,18 +69,20 @@ public class Camera {
 		
 		scale.x = scaleX;
 		scale.y = scaleY;
-		modelMatrix.identity().translate(x, y, 0).rotateZ((float) Math.toRadians(rotation)).scale(scale);
+		modelMatrix.identity().translate(x, y, 0).
+			rotateZ((float)Math.toRadians(rotation)).scale(scale);
 		return modelMatrix;
 		
 	}
 	
-	Vector3f vec1X = new Vector3f(1, 0, 0);
-	Vector3f vec1Y = new Vector3f(0, 1, 0);
-	Vector3f vec1Z = new Vector3f(0, 1, 0);
+	Vector3f vec1X = new Vector3f(1,0,0);
+	Vector3f vec1Y = new Vector3f(0,1,0);
+	Vector3f vec1Z = new Vector3f(0,1,0);
 	
 	public Matrix4f calculateViewMatrix(Window window) {
 		
-		viewMatrix.identity().rotate((float) Math.toRadians(rotation.x), vec1X).rotate((float) Math.toRadians(rotation.y), vec1Y);
+		viewMatrix.identity().rotate((float)Math.toRadians(rotation.x), vec1X)
+        .rotate((float)Math.toRadians(rotation.y), vec1Y);
 		viewMatrix.translate(-position.x, -position.y, -position.z);
 		return viewMatrix;
 		
@@ -108,19 +111,11 @@ public class Camera {
 		rotation.y += offsetY;
 		rotation.z += offsetZ;
 	}
-	
-	public float getFOV() {
-		return FOV;
-	}
-	
-	public int getPerspective(){
-		return perspective;
-	}
-	
+
 	public Vector3f getPosition() {
 		return position;
 	}
-	
+
 	public void setPosition(Vector3f position) {
 		this.position = position;
 	}
@@ -129,21 +124,11 @@ public class Camera {
 		this.position.x = position.x;
 		this.position.y = position.y;
 	}
-	
+
 	public Vector3f getRotation() {
 		return rotation;
 	}
-	
-	public Camera addFOV(float amount){
-		this.FOV += amount;
-		return this;
-	}
-	
-	public Camera setFOV(float FOV){
-		this.FOV = FOV;
-		return this;
-	}
-	
+
 	public void setRotation(Vector3f rotation) {
 		this.rotation = rotation;
 	}
@@ -152,19 +137,19 @@ public class Camera {
 		this.perspective = perspective;
 		return this;
 	}
-	
+
 	public Matrix4f getTransformationMatrix() {
 		return transformationMatrix;
 	}
-	
+
 	public Matrix4f getProjectionMatrix() {
 		return projectionMatrix;
 	}
-	
+
 	public Matrix4f getModelMatrix() {
 		return modelMatrix;
 	}
-	
+
 	public Matrix4f getViewMatrix() {
 		return viewMatrix;
 	}

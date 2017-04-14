@@ -16,7 +16,6 @@ public class GUIShader extends Shader {
 		setUniform("sampler", 0);
 		
 		// Projection Uniform
-		addUniform("projectionMatrix");
 		addUniform("modelMatrix");
 		addUniform("viewMatrix");
 		

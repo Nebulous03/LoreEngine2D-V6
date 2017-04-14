@@ -31,15 +31,15 @@ public class CollisionBox extends Component {
 		this.origin = ((Transform)parent.getComponent(Transform.class)).position;
 	}
 	
-	public CollisionBox setSize(float width, float height, Vector2f origin) {
+	public CollisionBox set(float width, float height, Vector2f origin) {
 		this.width = width;
 		this.height = height;
 		this.origin = origin;
 		return this;
 	}
 	
-	public CollisionBox setSize(float width, float height) {
-		setSize(width, height, origin);
+	public CollisionBox set(float width, float height) {
+		set(width, height, origin);
 		return this;
 	}
 	
