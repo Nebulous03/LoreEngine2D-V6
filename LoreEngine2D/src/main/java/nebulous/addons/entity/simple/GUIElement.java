@@ -12,13 +12,18 @@ import nebulous.graphics.component.Render;
 import nebulous.graphics.component.Texture;
 import nebulous.graphics.component.Transform;
 import nebulous.graphics.renderers.GUIRenderer;
+import nebulous.logic.component.Update;
+import nebulous.logic.component.UpdateEvent;
 
 public class GUIElement extends Entity {
 	
-	private Snap snap = Snap.NONE;
+	protected Snap snap = Snap.NONE;
 	
-	private int offsetX = 0;
-	private int offsetY = 0;
+	protected float offsetX = 0;
+	protected float offsetY = 0;
+	
+	protected float scaleX = 0;
+	protected float scaleY = 0;
 	
 	public static enum Snap {
 		NORTH, SOUTH, EAST, WEST,
@@ -27,7 +32,7 @@ public class GUIElement extends Entity {
 		CENTER, NONE
 	}
 	
-	public GUIElement(Snap snap, int offsetX, int offsetY) {
+	public GUIElement(Snap snap, float offsetX, float offsetY) {
 		this.snap = snap;
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
@@ -35,30 +40,38 @@ public class GUIElement extends Entity {
 		add(Mesh.PLANE());
 		add(new Texture(Texture.UNKNOWN));
 		add(new Render(GUIRenderer.instance()));
+		add(new Update(new UpdateEvent() {
+			public void invoke(Game game, double delta) { update(game); }
+		}));
 	}
 	
 	public GUIElement(float x, float y) {
-		add(new Transform(x, y));
-		add(Mesh.PLANE());
-		add(new Texture(Texture.UNKNOWN));
-		add(new Render(GUIRenderer.instance()));
+		this(Snap.CENTER, x, y);
 	}
 	
 	public GUIElement() {
-		this(0,0);
+		this(Snap.CENTER, 0,0);
 	}
 	
 	@Override
 	public void init(Game game) {
-		updateGUIPosition(game);
+		updatePosition(game.getWindow());
 	}
 	
-	public void updateGUIPosition(Game game) {
-		
-		int width = game.getWindow().getWidth();
-		int height = game.getWindow().getHeight();
-		int halfWidth = game.getWindow().getWidth() / 2;
-		int halfHeight = game.getWindow().getHeight() / 2;
+	public void update(Game game) {	
+		updatePosition(game.getWindow());
+	}
+	
+	public Vector2f getPosition() {
+		return ((Transform)getComponent(Transform.class)).position;
+	}
+	
+	Mesh reset = Mesh.PLANE();
+	public void updatePosition(Window window) {
+		int width = window.getWidth();
+		int height = window.getHeight();
+		int halfWidth = window.getWidth() / 2;
+		int halfHeight = window.getHeight() / 2;
 		
 		switch(snap) {
 		case NORTH:
@@ -82,46 +95,56 @@ public class GUIElement extends Entity {
 		default:
 			break;
 		}
-		
 	}
 	
-	public GUIElement setPixelPosition(int x, int y) {
+	public GUIElement setPixelPosition(float x, float y) {
 		Window window = getInstance().getGame().getWindow();
 		Camera camera = GUIRenderer.instance().getCamera();
-		Vector2f test = VectorUtils.toWorldSpace2D(window, camera, x, y);
-		((Transform)getComponent(Transform.class)).position.x = ((float) test.x);
-		((Transform)getComponent(Transform.class)).position.y = ((float) test.y);
+		Vector2f pos = VectorUtils.toWorldSpace2D(window, camera, x, y);
+		((Transform)getComponent(Transform.class)).position.x = ((float) pos.x);
+		((Transform)getComponent(Transform.class)).position.y = ((float) pos.y);
 		return this;
 	}
 	
-	public GUIElement scale(float scaleX, float scaleY) {
+	public GUIElement setScale(float scaleX, float scaleY) {
 		((Transform)getComponent(Transform.class)).scale.x = scaleX;
 		((Transform)getComponent(Transform.class)).scale.y = scaleY;
+		this.scaleX = scaleX;
+		this.scaleY = scaleY;
 		return this;
 	}
 
 	public Snap getSnap() {
 		return snap;
 	}
-
-	public void setSnap(Snap snap) {
+	
+	public GUIElement snap(Snap snap) {
 		this.snap = snap;
+		return this;
 	}
 
-	public int getOffsetX() {
+	public float getOffsetX() {
 		return offsetX;
 	}
-
-	public void setOffsetX(int offsetX) {
-		this.offsetX = offsetX;
+	
+	public GUIElement offset(float x, float y) {
+		offsetX = x;
+		offsetY = y;
+		return this;
 	}
 
-	public int getOffsetY() {
+	public GUIElement setOffsetX(float offsetX) {
+		this.offsetX = offsetX;
+		return this;
+	}
+
+	public float getOffsetY() {
 		return offsetY;
 	}
 
-	public void setOffsetY(int offsetY) {
+	public GUIElement setOffsetY(int offsetY) {
 		this.offsetY = offsetY;
+		return this;
 	}
 	
 	public GUIElement setTexture(Texture texture) {

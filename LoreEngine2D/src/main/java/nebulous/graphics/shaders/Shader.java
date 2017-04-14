@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.joml.Matrix4f;
+import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 
 import nebulous.utils.Console;
@@ -83,6 +84,10 @@ public abstract class Shader {
 	
 	public void setUniform(String name, float[] value) {
 		glUniform1fv(uniforms.get(name), value);
+	}
+	
+	public void setUniform(String name, Vector4f value) {
+		glUniform4f(uniforms.get(name), value.x, value.y, value.z, value.w);
 	}
 	
 	FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
