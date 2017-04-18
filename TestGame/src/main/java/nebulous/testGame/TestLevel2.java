@@ -11,6 +11,7 @@ import nebulous.object.TileMap;
 
 public class TestLevel2 extends Level {
 	
+	private BackgroundEntity bg = null;
 	private Player player = null;
 	private TileMap map   = null;
 
@@ -20,6 +21,7 @@ public class TestLevel2 extends Level {
 		camera.setPerspective(Camera.PERSPECTIVE);
 		camera.setPosition(new Vector3f(0,0,10f));
 		
+		bg = new BackgroundEntity();
 		player = (Player) new Player(0, 0).setTexture(Texture.UNKNOWN2);
 		map = new TileMap(12, 12).populate(Texture.UNKNOWN);
 		
@@ -63,6 +65,7 @@ public class TestLevel2 extends Level {
 	
 	@Override
 	public void onLoad() {
+		add(bg);
 		add(map);
 		add(player);
 	}

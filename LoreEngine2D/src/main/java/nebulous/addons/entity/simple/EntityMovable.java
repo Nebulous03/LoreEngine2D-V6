@@ -65,8 +65,10 @@ public abstract class EntityMovable extends Entity {
 						if(box.origin.y > ((TileMap)entity).getHeight() - 1) box.origin.y = ((TileMap)entity).getHeight() - 1;
 					}
 				} else if(entity.hasComponent(CollisionBox.class)){
-					collision = Collision.getCollision(box, ((CollisionBox)entity.getComponent(CollisionBox.class)));
-					resolveCollision(collision);
+					if(((CollisionBox)entity.getComponent(CollisionBox.class)).enabled) {
+						collision = Collision.getCollision(box, ((CollisionBox)entity.getComponent(CollisionBox.class)));
+						resolveCollision(collision);
+					}
 				}
 			}
 		}
@@ -237,4 +239,8 @@ public abstract class EntityMovable extends Entity {
 		return this;
 	}
 	
+	public EntityMovable setCollidable(boolean collidable) {
+		((CollisionBox)getComponent(CollisionBox.class)).enabled = collidable;
+		return this;
+	}
 }

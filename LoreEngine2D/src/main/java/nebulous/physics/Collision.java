@@ -106,5 +106,5 @@ public class Collision {
 		
 		return "Collision " + sideName + "(" + side + ")" + " by (" + distanceX + ", " + distanceY + ")";
 	}
-
+	
 }

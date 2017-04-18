@@ -44,7 +44,7 @@ public class Projectile extends EntityMovable {
 		edge2 = VectorUtils.toWorldSpace2D(window, camera, window.getWidth(), window.getHeight()).mul(camera.getPosition().z);
 		
 		if(Time.getTime() > time + lifetime) game.getActiveLevel().remove(this);
-		attemptMove(game.getActiveLevel(), -(float)Math.cos(Math.toRadians(angle - 180)) * speed * (float)delta, -(float)Math.sin(Math.toRadians(angle - 180)) * speed * (float)delta);
+		move(-(float)Math.cos(Math.toRadians(angle - 180)) * speed * (float)delta, -(float)Math.sin(Math.toRadians(angle - 180)) * speed * (float)delta);
 		if(getX() > edge2.x || getX() < edge1.x) angle = -angle - 180;
 		if(getY() > edge1.y || getY() < edge2.y) angle = -angle;
 		
