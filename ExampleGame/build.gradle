@@ -43,5 +43,5 @@ dependencies {
 	runtime "org.lwjgl:lwjgl-opengl:${lwjglVersion}:${lwjglNatives}"
 	runtime "org.lwjgl:lwjgl-stb:${lwjglVersion}:${lwjglNatives}"
 	compile "org.joml:joml:${jomlVersion}"
-	compile "NebulousDev:LoreEngine2D:LoreEngine2D_V0.6.4@jar"
+	compile "NebulousDev:LoreEngine2D:LoreEngine2D_V0.6.5@jar"
 }
