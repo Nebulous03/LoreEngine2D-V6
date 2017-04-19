@@ -43,7 +43,7 @@ public class Camera {
 	public Matrix4f calculateProjectionMatrix(Window window) {
 		
 		if (perspective == ORTHOGRAPHIC) {
-			projectionMatrix.identity().ortho2D(-((float) window.getWidth() / window.getHeight())*(FOV), (float) (window.getWidth() / window.getHeight())*(FOV), -1*(FOV), 1*(FOV));
+			projectionMatrix.identity().ortho2D(-((float) window.getWidth() / (float) window.getHeight()) * FOV, ((float) window.getWidth() / (float) window.getHeight()) * FOV, -FOV, FOV);
 			return projectionMatrix;
 		} else {
 			aspectRatio = (float) window.getWidth() / window.getHeight();
@@ -113,7 +113,7 @@ public class Camera {
 		return FOV;
 	}
 	
-	public int getPerspective(){
+	public int getPerspective() {
 		return perspective;
 	}
 	
@@ -134,12 +134,12 @@ public class Camera {
 		return rotation;
 	}
 	
-	public Camera addFOV(float amount){
+	public Camera addFOV(float amount) {
 		this.FOV += amount;
 		return this;
 	}
 	
-	public Camera setFOV(float FOV){
+	public Camera setFOV(float FOV) {
 		this.FOV = FOV;
 		return this;
 	}
