@@ -16,4 +16,4 @@ include 'api'
 include 'services:webservice'
 */
 
-rootProject.name = 'DevelopmentKit'
+rootProject.name = 'LoreEngine2D-Example'
